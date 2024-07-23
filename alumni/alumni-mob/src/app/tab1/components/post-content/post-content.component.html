@@ -1,0 +1,16 @@
+<ion-card-content>
+  <article>
+    <header *ngIf="post.title">
+      <h2>{{ post.title }}</h2>
+    </header>
+    <p>
+      {{ post.content }}
+    </p>
+    <div>
+      <ion-note>
+        Posté le {{ post.postedAt | date: 'dd/MM/yyyy'}}
+      </ion-note>
+    </div>
+  </article>
+  
+</ion-card-content>

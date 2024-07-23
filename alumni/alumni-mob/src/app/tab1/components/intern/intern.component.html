@@ -1,0 +1,24 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+          <ion-item>
+            <ion-avatar slot="start">
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>{{ intern.firstname }} {{ intern.lastname }}</ion-label>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>
+              {{ intern.occupation }} chez 
+              <span>{{ intern.company.name }}</span>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-note>{{ intern.poe.name }} ({{ intern.poe.beginAt | date: 'dd-MM-yyyy'}} - {{ intern.poe.endAt | date: 'dd-MM-yyyy' }})</ion-note>
+          </ion-item>   
+    </ion-card-title>
+  </ion-card-header>
+  <app-post-content *ngIf="post" [post]="post"></app-post-content>
+</ion-card>
