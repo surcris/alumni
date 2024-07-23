@@ -1,0 +1,18 @@
+:host {
+    --warn: rgb(200, 10, 10);
+}
+ion-item {
+    &.warn {
+        color: var(--warn);
+    }
+}
+
+button {
+    &.alert-button {
+        &.sc-ion-alert-md {
+            &.warn {
+                color: var(--warn);
+            }
+        }    
+    }
+}

@@ -8,14 +8,14 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigurationModule } from './config/configuration.module';
 
 @Module({
-  imports: [
-    InternModule,
-    PostModule,
-    PoeModule,
-    DatabaseModule,
-    ConfigurationModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+	imports: [
+		InternModule,
+		PostModule,
+		PoeModule,
+		DatabaseModule,
+		ConfigurationModule
+	],
+	controllers: [AppController],
+	providers: [AppService]
 })
 export class AppModule {}
