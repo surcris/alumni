@@ -28,6 +28,8 @@ export class GiveEmailComponent  implements OnInit {
     })
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this._router
+  }
 
 }
