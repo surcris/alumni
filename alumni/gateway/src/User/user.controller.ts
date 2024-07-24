@@ -18,6 +18,11 @@ export class UserController {
 			take(1) // Autre façon d'arrêter d'observer
 		);
 	}
+	@Get(':login')
+	isValidEmailAelion(login: string): boolean {
+		const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+		return regex.test(login);
+	}
 
 	// 	@Get(':id')
 	// 	findOne(@Param('id') id: string) {
