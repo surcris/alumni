@@ -19,7 +19,7 @@ export class UserController {
 		);
 	}
 	@Get(':login')
-	isValidEmailAelion(login: string): boolean {
+	isValidEmailAelion(@Param('login') login: string): boolean {
 		const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 		return regex.test(login);
 	}
@@ -39,3 +39,7 @@ export class UserController {
 	// 		return this.userService.remove(+id);
 	// 	}
 }
+function Param(arg0: string): (target: UserController, propertyKey: "isValidEmailAelion", parameterIndex: 0) => void {
+  throw new Error('Function not implemented.');
+}
+
