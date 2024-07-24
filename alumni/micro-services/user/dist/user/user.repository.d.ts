@@ -1,6 +1,9 @@
-import { UserType } from "./entities/user.type";
-export declare class PostRepository {
+import { UserType } from './entities/user.type';
+import { UserEntity } from './entities/user.entity';
+import { Repository } from 'typeorm';
+export declare class UserRepository {
+    private _repository;
     private _users;
-    constructor();
-    findOne(): UserType;
+    constructor(_repository: Repository<UserEntity>);
+    findAll(): Promise<Array<UserType>>;
 }
