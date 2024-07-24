@@ -74,4 +74,10 @@ export class SigninComponent  implements OnInit {
         }
       })
   }
+
+  onClickActiveAccount(){
+    this._router.navigate(['tabs', 'tab1'])
+              .then(() => console.log('Routing complete'))
+  }
+
 }
