@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GiveEmailService } from '../../services/give-email.service';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-give-email',
@@ -14,6 +16,7 @@ export class GiveEmailComponent  implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private _service: GiveEmailService
 
   ) { }
 
@@ -28,8 +31,8 @@ export class GiveEmailComponent  implements OnInit {
     })
   }
 
-  onSubmit(): void {
-    this._router
+  onSubmit(): Observable<Boolean> {
+    return this._service.isValidateEmailAelion(this.form.value.Email).pipe(take(1));
   }
 
 }

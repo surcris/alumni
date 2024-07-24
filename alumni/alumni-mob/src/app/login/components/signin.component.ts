@@ -77,7 +77,6 @@ export class SigninComponent  implements OnInit {
 
   onClickActiveAccount(){
     this._router.navigate(['first-connexion'])
-              .then(() => console.log('Routing complete'))
   }
 
 }
