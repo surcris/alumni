@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Inject, Injectable } from '@nestjs/common';
+
+import { ClientProxy } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+import { UserType } from './user.type';
 
 @Injectable()
 export class UserService {
-	create(createUserDto: CreateUserDto) {
-		return 'This action adds a new user';
-	}
+	// create(createUserDto: CreateUserDto) {
+	// 	return 'This action adds a new user';
+	// }
 
-	findAll() {
-		return `This action returns all user`;
-	}
+	constructor(@Inject('USER') private _client: ClientProxy) {}
 
-	findOne(id: number) {
-		return `This action returns a #${id} user`;
-	}
+	findAll(): Observable<Array<UserType>> {
+		const pattern: any = { cmd: 'hello chai' };
+		return this._client.send<UserType[]>(pattern, {});
 
-	update(id: number, updateUserDto: UpdateUserDto) {
-		return `This action updates a #${id} user`;
-	}
+		// findOne(id: number) {
+		// 	return `This action returns a #${id} user`;
+		// }
 
-	remove(id: number) {
-		return `This action removes a #${id} user`;
+		// update(id: number, updateUserDto: UpdateUserDto) {
+		// 	return `This action updates a #${id} user`;
+		// }
+
+		// remove(id: number) {
+		// 	return `This action removes a #${id} user`;
+		// }
 	}
 }
