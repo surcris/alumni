@@ -1,7 +1,0 @@
-database: 
-  host: 'dbms_host_name_or_ip'
-  port: dbms_port
-  username: 'db_user_name'
-  password: 'db_user_password'
-  type: 'kind_of_dbms_or_driver'
-  name: 'db_name'

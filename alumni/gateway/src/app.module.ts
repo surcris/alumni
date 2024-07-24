@@ -6,6 +6,7 @@ import { PostModule } from './post/post.module';
 import { PoeModule } from './poe/poe.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigurationModule } from './config/configuration.module';
+import { UserModule } from './User/user.module';
 
 @Module({
 	imports: [
@@ -13,7 +14,8 @@ import { ConfigurationModule } from './config/configuration.module';
 		PostModule,
 		PoeModule,
 		DatabaseModule,
-		ConfigurationModule
+		ConfigurationModule,
+		UserModule
 	],
 	controllers: [AppController],
 	providers: [AppService]
