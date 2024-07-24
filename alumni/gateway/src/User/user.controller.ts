@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
@@ -39,7 +39,3 @@ export class UserController {
 	// 		return this.userService.remove(+id);
 	// 	}
 }
-function Param(arg0: string): (target: UserController, propertyKey: "isValidEmailAelion", parameterIndex: 0) => void {
-  throw new Error('Function not implemented.');
-}
-

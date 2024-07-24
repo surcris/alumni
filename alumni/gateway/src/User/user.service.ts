@@ -13,7 +13,7 @@ export class UserService {
 	constructor(@Inject('USER') private _client: ClientProxy) {}
 
 	findAll(): Observable<Array<UserType>> {
-		const pattern: any = { cmd: 'hello chai' };
+		const pattern: any = { user: 'all' };
 		return this._client.send<UserType[]>(pattern, {});
 	}
 	isValidEmailAelion(login: string): Observable<Array<UserType>> {
