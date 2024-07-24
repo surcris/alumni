@@ -1,0 +1,15 @@
+<div class="div-title">
+  <p>Veuillez renseigner votre email</p>
+</div>
+
+<div class="div-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-input formControlName="Email" placeholder="Votre Email..."></ion-input>
+    </ion-item>
+    
+    
+    <ion-button class="ion-button-form" type="submit" [disabled]="form.invalid">Allons-y</ion-button>
+  </form>
+</div>

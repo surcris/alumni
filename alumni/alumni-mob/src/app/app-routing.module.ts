@@ -13,6 +13,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
     canActivate: [NoAuthGuard]
+  },
+  {
+    path: 'first-connexion',
+    loadChildren: () => import('./first-connexion/first-connexion.module').then( m => m.FirstConnexionPageModule)
   }
 ];
 @NgModule({
