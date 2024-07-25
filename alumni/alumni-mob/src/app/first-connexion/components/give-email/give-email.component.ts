@@ -29,7 +29,8 @@ export class GiveEmailComponent  implements OnInit {
       Email: [
         '@poe.aelion.fr', // Default value for the control
         [
-          Validators.required
+          Validators.required,
+          Validators.email
         ]
       ],
     })
