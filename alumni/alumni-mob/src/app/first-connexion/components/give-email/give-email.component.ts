@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GiveEmailService } from '../../services/give-email.service';
 import { Observable, take } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-give-email',
@@ -19,6 +20,7 @@ export class GiveEmailComponent  implements OnInit {
     private _router: Router,
     private _service: GiveEmailService,
     private _toastController: ToastController,
+    private _storage: StorageService
 
   ) { }
 
@@ -40,6 +42,7 @@ export class GiveEmailComponent  implements OnInit {
     ).subscribe({
       next: async (isValidate: boolean) => {
         if (isValidate){
+          this._storage.store('Email', this.form.value.Email)
           this._router.navigate(['first-connexion/code'])
         }else {
           const toast = await this._toastController.create({
