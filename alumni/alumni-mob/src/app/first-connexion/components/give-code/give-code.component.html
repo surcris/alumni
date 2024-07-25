@@ -13,7 +13,15 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <ion-item>
-      <ion-input formControlName="Code" placeholder="Le code est..."></ion-input>
+      <ion-input
+        onPaste="return false" 
+        onCopy="return false" 
+        onCut="return false" 
+        onDrag="return false" 
+        onDrop="return false" 
+        autocomplete=off
+        formControlName="Code" placeholder="Le code est...">
+      </ion-input>
     </ion-item>
     
     
