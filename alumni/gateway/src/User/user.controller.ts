@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Get, Logger, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 @Controller('user')
@@ -19,9 +20,8 @@ export class UserController {
 		);
 	}
 	@Get(':login')
-	isValidEmailAelion(@Param('login') login: string): boolean {
-		const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-		return regex.test(login);
+	isValidEmailAelion(@Param('login') login: string): Observable<boolean> {
+			return this.userService.isValidEmailAelion(login)
 	}
 
 	// 	@Get(':id')

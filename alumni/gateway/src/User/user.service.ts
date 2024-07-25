@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@nestjs/common';
 
 import { ClientProxy } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserType } from './user.type';
 
 @Injectable()
@@ -16,10 +17,17 @@ export class UserService {
 		const pattern: any = { user: 'all' };
 		return this._client.send<UserType[]>(pattern, {});
 	}
-	isValidEmailAelion(login: string): Observable<Array<UserType>> {
+	isValidEmailAelion(login: string): Observable<boolean> {
 		const pattern: any = { cmd: 'user' };
 		const payload: string = login;
-		return this._client.send<UserType[]>(pattern, payload);
+		console.log('test: ' + login);
+    /*
+		if (this._client.send<UserType>(pattern, { payload })) {
+			return of(true);
+		}
+		return of(false);
+    */
+   return this._client.send<boolean>(pattern, { payload })
 	}
 
 	// findOne(id: number) {
