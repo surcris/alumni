@@ -19,7 +19,7 @@ export class GiveEmailService {
    */
     public isValidateEmailAelion(email: string): Observable<boolean>{
       return this._httpClient.get<boolean>(
-        this.URI + '/' + email
+        this.URI + '/log/' + email
       )
     }
 }

@@ -21,24 +21,22 @@ export class UserService {
 		const pattern: any = { cmd: 'user' };
 		const payload: string = login;
 		console.log('test: ' + login);
-    /*
-		if (this._client.send<UserType>(pattern, { payload })) {
-			return of(true);
-		}
-		return of(false);
-    */
+
    return this._client.send<boolean>(pattern, { payload })
 	}
 
-	// findOne(id: number) {
-	// 	return `This action returns a #${id} user`;
-	// }
-
-	// update(id: number, updateUserDto: UpdateUserDto) {
-	// 	return `This action updates a #${id} user`;
-	// }
-
-	// remove(id: number) {
-	// 	return `This action removes a #${id} user`;
-	// }
+	generateRandomNumber(length: number): Observable<number> {
+		if (length <= 0) {
+		  throw new Error('Length must be greater than zero');
+		}
+	
+	
+		
+		  const digit = Math.floor(Math.random() * 10000);
+	
+		
+		console.log("lecodeuser :" +digit)
+		return of(digit);
+	  }
+	
 }

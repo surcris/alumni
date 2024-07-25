@@ -19,7 +19,7 @@ export class GiveCodeService {
    */
     public generateCode(): Observable<number>{
       return this._httpClient.get<number>(
-        this.URI + '/code/' + 1
+        this.URI + '/code'
       )
     }
 }

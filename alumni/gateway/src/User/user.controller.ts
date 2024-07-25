@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Logger, Param } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 @Controller('user')
@@ -19,11 +19,16 @@ export class UserController {
 			take(1) // Autre façon d'arrêter d'observer
 		);
 	}
-	@Get(':login')
+	@Get('/log/:login')
 	isValidEmailAelion(@Param('login') login: string): Observable<boolean> {
 			return this.userService.isValidEmailAelion(login)
 	}
 
+	@Get('/code')
+	generateCode(): Observable<number> {
+		console.log("appelle du code user")
+		return this.userService.generateRandomNumber(6)
+	}
 	// 	@Get(':id')
 	// 	findOne(@Param('id') id: string) {
 	// 		return this.userService.findOne(+id);
