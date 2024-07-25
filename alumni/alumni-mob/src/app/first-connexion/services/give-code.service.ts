@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GiveEmailService {
+export class GiveCodeService {
 
   private readonly URI: string = 'http://localhost:3000/user'
 
@@ -13,13 +13,13 @@ export class GiveEmailService {
     private _httpClient: HttpClient
   ) { }
 
-  /**
+    /**
    * Get a boolean that show if an email is valid or not 
    * @returns Observable<Boolean>
    */
-    public isValidateEmailAelion(email: string): Observable<boolean>{
-      return this._httpClient.get<boolean>(
-        this.URI + '/' + email
+    public generateCode(): Observable<number>{
+      return this._httpClient.get<number>(
+        this.URI + '/code/' + 1
       )
     }
 }

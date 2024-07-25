@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GiveEmailService } from '../../services/give-email.service';
 import { Observable, take } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-give-email',
@@ -16,7 +17,8 @@ export class GiveEmailComponent  implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _service: GiveEmailService
+    private _service: GiveEmailService,
+    private _toastController: ToastController,
 
   ) { }
 
@@ -31,8 +33,33 @@ export class GiveEmailComponent  implements OnInit {
     })
   }
 
-  onSubmit(): Observable<Boolean> {
-    return this._service.isValidateEmailAelion(this.form.value.Email).pipe(take(1));
+  onSubmit(): void { 
+    this._service.isValidateEmailAelion(this.form.value.Email)
+    .pipe(
+      take(1)
+    ).subscribe({
+      next: async (isValidate: boolean) => {
+        if (isValidate){
+          this._router.navigate(['first-connexion/code'])
+        }else {
+          const toast = await this._toastController.create({
+            message: "Vous avez saisi une mauvaise adresse email ou vous n'êtes pas enregistrer dans le registre de Aelion",
+            duration: 10000,
+            position: 'middle',
+            buttons: [
+              {
+                text: 'Réessayer',
+              }
+            ]
+          })
+          toast.present().then(() => null)
+          toast.onWillDismiss()
+            .then(() => this.form.reset())
+        }
+      },
+      error: (error: any) => {},
+      complete: () => {}
+    })
   }
 
 }

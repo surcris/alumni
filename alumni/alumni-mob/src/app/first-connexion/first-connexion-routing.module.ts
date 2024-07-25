@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { GiveEmailComponent } from './components/give-email/give-email.component';
+import { GiveCodeComponent } from './components/give-code/give-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   {path: '',component: GiveEmailComponent},
-  // { path: '', component: AnotherFormComponent },
+  {path: 'code', component: GiveCodeComponent },
+  {path: 'password', component: ChangePasswordComponent },
 ];
 
 @NgModule({

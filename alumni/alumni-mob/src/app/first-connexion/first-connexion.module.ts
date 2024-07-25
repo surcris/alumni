@@ -8,6 +8,8 @@ import { FirstConnexionPageRoutingModule } from './first-connexion-routing.modul
 
 import { FirstConnexionPage } from './first-connexion.page';
 import { GiveEmailComponent } from './components/give-email/give-email.component';
+import { GiveCodeComponent } from './components/give-code/give-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -17,6 +19,6 @@ import { GiveEmailComponent } from './components/give-email/give-email.component
     FirstConnexionPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [FirstConnexionPage, GiveEmailComponent]
+  declarations: [FirstConnexionPage, GiveEmailComponent, GiveCodeComponent, ChangePasswordComponent]
 })
 export class FirstConnexionPageModule {}
