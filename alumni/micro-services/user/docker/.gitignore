@@ -2,3 +2,4 @@
 datas
 # Track folder only
 !datas/.gitkeep
+.env
