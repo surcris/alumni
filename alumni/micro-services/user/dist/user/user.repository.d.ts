@@ -5,5 +5,6 @@ export declare class UserRepository {
     private _repository;
     private _users;
     constructor(_repository: Repository<UserEntity>);
+    findOne(login: string): Promise<UserEntity>;
     findAll(): Promise<Array<UserType>>;
 }

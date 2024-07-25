@@ -19,6 +19,12 @@ let UserService = class UserService {
     findAll() {
         return this._repository.findAll();
     }
+    async findOne(login) {
+        const userEntry = await this._repository.findOne(login);
+        console.log("service" + JSON.stringify(userEntry));
+        console.log(login);
+        return userEntry ? true : false;
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

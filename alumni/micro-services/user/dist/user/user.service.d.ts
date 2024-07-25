@@ -4,4 +4,5 @@ export declare class UserService {
     private _repository;
     constructor(_repository: UserRepository);
     findAll(): Promise<Array<UserType>>;
+    findOne(login: string): Promise<boolean>;
 }

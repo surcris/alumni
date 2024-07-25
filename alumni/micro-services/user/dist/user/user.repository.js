@@ -16,10 +16,17 @@ exports.UserRepository = void 0;
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
+const common_1 = require("@nestjs/common");
 let UserRepository = class UserRepository {
     constructor(_repository) {
         this._repository = _repository;
         this._users = [];
+    }
+    findOne(login) {
+        console.log("test");
+        const tab = this._repository.findOneBy({ email: login });
+        console.log(tab);
+        return tab;
     }
     findAll() {
         return this._repository.find();
@@ -27,6 +34,7 @@ let UserRepository = class UserRepository {
 };
 exports.UserRepository = UserRepository;
 exports.UserRepository = UserRepository = __decorate([
+    (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UserRepository);

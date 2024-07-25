@@ -4,4 +4,5 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     findAll(): Promise<UserType[]>;
+    findOne(payload: any): Promise<boolean>;
 }
