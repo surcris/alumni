@@ -43,7 +43,7 @@ export class ChangePasswordComponent  implements OnInit {
 
   onSubmit() {
     if (this.form.value.password === this.form.value.confirmPassword){
-      const email = this._storage.retrieve('email')
+      const email = this._storage.retrieve('Email')
       if (email===null){
         this.createToast('Une erreur est survenue veuillez réessayer tout le processus','')
       }

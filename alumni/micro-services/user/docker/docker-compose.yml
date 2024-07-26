@@ -5,7 +5,7 @@ services:
     ports: 
       - 3306:3306
     volumes:
-      - ./datas:/var/lib/mysql
+      - ./data:/var/lib/mysql
     env_file:
       - .env
 

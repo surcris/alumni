@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, of } from 'rxjs';
 import { UserType } from './user.type';
+import { Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -29,14 +30,14 @@ export class UserService {
 		if (length <= 0) {
 		  throw new Error('Length must be greater than zero');
 		}
-	
-	
-		
-		  const digit = Math.floor(Math.random() * 10000);
-	
-		
-		console.log("lecodeuser :" +digit)
+		const digit = Math.floor(Math.random() * 10000);
 		return of(digit);
-	  }
+	}
+
+	changePassword(payload: object){
+		console.log('SERVICE: '+JSON.stringify(payload))
+		const pattern: any = {cmd: 'password'}
+		return this._client.send<Response>(pattern, payload)
+	}
 	
 }

@@ -1,0 +1,4 @@
+# Excludes node_modules
+node_modules
+environments/development/.config.yml
+environments/production/.config.yml

@@ -23,8 +23,9 @@ export class ChangePasswordService {
         password: password
       };
       return this._httpClient.patch<HttpResponse<any>>(
-        this.URI + '/' + email,
-        payload
+        this.URI + '/password',
+        payload,
+        {observe: 'response'}
       )
     }
 
