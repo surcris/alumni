@@ -7,4 +7,5 @@ export declare class UserRepository {
     constructor(_repository: Repository<UserEntity>);
     findOne(login: string): Promise<UserEntity>;
     findAll(): Promise<Array<UserType>>;
+    createUserPassword(login: string, password: string): Promise<import("typeorm").UpdateResult>;
 }

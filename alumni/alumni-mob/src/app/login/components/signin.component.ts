@@ -26,7 +26,7 @@ export class SigninComponent  implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const email = this._storage.retrieve('email')
+    const email = this._storage.retrieve('Email')
     this.form = this._formBuilder.group({
       login: [
         email!=null ? email : "", // Default value for the control

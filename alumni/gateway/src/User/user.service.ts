@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, of } from 'rxjs';
 import { UserType } from './user.type';
-import { Response } from 'express';
+
 
 @Injectable()
 export class UserService {
@@ -37,7 +37,7 @@ export class UserService {
 	changePassword(payload: object){
 		console.log('SERVICE: '+JSON.stringify(payload))
 		const pattern: any = {cmd: 'password'}
-		return this._client.send<Response>(pattern, payload)
+		return this._client.send<object>(pattern, payload)
 	}
 	
 }

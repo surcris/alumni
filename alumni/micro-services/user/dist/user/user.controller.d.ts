@@ -5,4 +5,8 @@ export declare class UserController {
     constructor(userService: UserService);
     findAll(): Promise<UserType[]>;
     findOne(payload: any): Promise<boolean>;
+    createUserPassword(receivedpayload: any): Promise<{
+        status: number;
+        message: string;
+    }>;
 }

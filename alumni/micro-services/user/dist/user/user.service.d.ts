@@ -5,4 +5,8 @@ export declare class UserService {
     constructor(_repository: UserRepository);
     findAll(): Promise<Array<UserType>>;
     findOne(login: string): Promise<boolean>;
+    createUserPassword(login: string, password: string): Promise<{
+        status: number;
+        message: string;
+    }>;
 }

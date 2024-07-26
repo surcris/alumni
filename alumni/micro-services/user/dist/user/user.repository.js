@@ -23,13 +23,14 @@ let UserRepository = class UserRepository {
         this._users = [];
     }
     findOne(login) {
-        console.log("test");
         const tab = this._repository.findOneBy({ email: login });
-        console.log(tab);
         return tab;
     }
     findAll() {
         return this._repository.find();
+    }
+    createUserPassword(login, password) {
+        return this._repository.update({ email: login }, { password: password });
     }
 };
 exports.UserRepository = UserRepository;

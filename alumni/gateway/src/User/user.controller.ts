@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Patch, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
@@ -34,8 +34,22 @@ export class UserController {
 	@Patch('/password')
 	changePassword(@Body() payload: any, @Res() resp: Response) {
 		console.log(JSON.stringify(payload))
-		resp.status(204).send()
-		// return this.userService.update(+id, updateUserDto);
+		const objectResponse = this.userService.changePassword(payload)
+		objectResponse.
+		pipe(
+			take(1)
+		)
+		.subscribe({
+			next: (response : any) => {
+				if (response.status === 204){
+					resp.status(HttpStatus.NO_CONTENT).send()
+				}else{
+					resp.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
+				}
+				
+			}
+		})
+		
 	}
 
 	// 	@Delete(':id')

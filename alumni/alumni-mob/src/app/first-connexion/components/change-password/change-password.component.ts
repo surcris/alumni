@@ -53,7 +53,7 @@ export class ChangePasswordComponent  implements OnInit {
       )
       .subscribe({
         next: async(response: HttpResponse<any>) => {
-          if (response.status === 200) {
+          if (response.status === 204) {
             this.createToast('Votre compte a bien été créé', 'Ok')
             this._router.navigate(['login'])
           } else {

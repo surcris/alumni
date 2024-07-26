@@ -27,6 +27,10 @@ let UserController = class UserController {
         common_1.Logger.log(`test : ${JSON.stringify(payload)}`);
         return this.userService.findOne(payload.payload);
     }
+    createUserPassword(receivedpayload) {
+        console.log('payloadms: ' + JSON.stringify(receivedpayload));
+        return this.userService.createUserPassword(receivedpayload.email, receivedpayload.password);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -42,6 +46,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'password' }),
+    __param(0, (0, microservices_1.Payload)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "createUserPassword", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

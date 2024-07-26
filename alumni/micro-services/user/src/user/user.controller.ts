@@ -25,7 +25,11 @@ export class UserController {
   findOne(@Payload() payload: any){
     Logger.log(`test : ${JSON.stringify(payload)}`  )
     return this.userService.findOne(payload.payload)
-   
-
      }
+
+  @MessagePattern({ cmd: 'password'})
+  createUserPassword(@Payload() receivedpayload: any) {
+    console.log('payloadms: '+JSON.stringify(receivedpayload))
+    return this.userService.createUserPassword(receivedpayload.email, receivedpayload.password)
+  }
 }

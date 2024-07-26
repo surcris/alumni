@@ -25,6 +25,12 @@ let UserService = class UserService {
         console.log(login);
         return userEntry ? true : false;
     }
+    async createUserPassword(login, password) {
+        const updateObject = await this._repository.createUserPassword(login, password);
+        if (updateObject.affected > 0)
+            return { status: 204, message: 'OK' };
+        return { status: 400, message: 'KO' };
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
