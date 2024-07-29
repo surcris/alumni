@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:winDev": "cd ./docker && docker-compose up -d && cd .. &&set NEST_ENV=development&& nest start --watch",
     "start:devel": "NEST_ENV=development nest start --watch",
     "start:production": "NEST_ENV=production nest start --watch",
     "start:debug": "nest start --debug --watch",

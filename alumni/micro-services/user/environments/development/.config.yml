@@ -1,7 +1,0 @@
-database: 
-  host: 'localhost'
-  port: 3306
-  db_username: 'user_db_admin'
-  password: '1234'
-  type: 'mariadb'
-  db_name: 'user_repository'

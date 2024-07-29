@@ -10,11 +10,11 @@ import { UserModule } from './User/user.module';
 
 @Module({
 	imports: [
-		InternModule,
-		PostModule,
-		PoeModule,
-		DatabaseModule,
-		ConfigurationModule,
+		// InternModule,
+		// PostModule,
+		// PoeModule,
+		// DatabaseModule,
+		// ConfigurationModule,
 		UserModule
 	],
 	controllers: [AppController],
