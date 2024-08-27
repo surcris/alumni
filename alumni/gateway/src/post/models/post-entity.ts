@@ -1,34 +1,33 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-/* eslint-disable prettier/prettier */
 @Entity({
-    name: 'post'
+  name: 'post'
 })
 export class PostEntity {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({length: 75})
-    title: string
+  @Column({ length: 75 })
+  title: string;
 
-    @Column()
-    postedAt: Date
+  @Column()
+  publicationDate: Date;
 
-    @Column({type: 'text'})
-    content: string
+  @Column()
+  content: string;
 
-    /**
-     * @todo move to OneToMany
-     */
-    @Column()
-    media: string
+  /**
+   * @todo move to OneToMany
+   */
+  @Column({ type: 'text' })
+  multimedia: string;
 
-    /**
-     * @todo Either move to ManyToOne or enum
-     */
-    @Column()
-    type: string
+  /**
+   * @todo move to ManyToOne or enum
+   */
+  @Column()
+  type: string;
 
-    @Column()
-    author: string
+  @Column()
+  owner: string;
 }

@@ -1,44 +1,114 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
-import { Controller, Get, Logger, Param, Req, Res } from '@nestjs/common';
-import { InternService } from './intern.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Res
+} from '@nestjs/common';
 import { InternType } from './models/intern.type';
-import { Observable, take } from 'rxjs';
-import { Request, Response } from 'express';
+import { InternService } from './intern.service';
+import { take } from 'rxjs';
+import { Response } from 'express';
 
-@Controller('api/v1/intern')
+@Controller('intern')
 export class InternController {
-    constructor(
-        private _service: InternService
-    ) {}
+  constructor(private _service: InternService) {}
 
-    @Get() // GET http://localhost:3000/api/v1/intern
-    findAll(): Observable<Array<InternType>> {
-        return this._service.findAll()
-            .pipe(
-                take(1) // Autre façon  d'arrêter d'observer
-            )
-    }
+  @Get()
+  findAll(@Res() res: Response) {
+    this._service
+      .findAll()
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            res.status(200).send(response);
+          } else {
+            res.status(404).send();
+          }
+        },
+        error: (error: any) => {
+          res.status(500).send(error);
+        }
+      }); //une autre façon de désouscrire
+  }
 
-    @Get(':id') // http://127.0.0.1:3000/api/v1/intern/99
-    findOne(@Param('id') id: number, @Res() res: Response): void {
-        
-        this._service.findOne(id)
-            .pipe(
-                take(1)
-            )
-            .subscribe({
-                next: (response: InternType | null) => {
-                    if (response) {
-                        res.status(200).send(response)
-                        // Your rest of logic after response was send here
-                    } else {
-                        res.status(404).send()
-                    }
-                },
-                error: (error: any) => {
-                    res.status(500).send(error)
-                }
-            })
-    }
+  @Get('findOne/:id')
+  findOne(@Param('id') id: string, @Res() res: Response) {
+    this._service
+      .findOne(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            res.status(200).send(response);
+          } else {
+            res.status(404).send();
+          }
+        },
+        error: (error: any) => {
+          res.status(500).send(error);
+        }
+      });
+  }
+
+  @Post()
+  add(@Body() intern: InternType, @Res() res: Response) {
+    this._service
+      .add(intern)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            res.status(200).send(response);
+          } else {
+            res.status(404).send();
+          }
+        },
+        error: (error: any) => {
+          res.status(500).send(error);
+        }
+      });
+  }
+
+  @Patch()
+  update(@Body() updateObject: any, @Res() res: Response) {
+    this._service
+      .update(updateObject)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            res.status(200).send(response);
+          } else {
+            res.status(404).send();
+          }
+        },
+        error: (error: any) => {
+          res.status(500).send(error);
+        }
+      });
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string, @Res() res: Response) {
+    this._service
+      .delete(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          if (response) {
+            res.status(200).send(response);
+          } else {
+            res.status(404).send();
+          }
+        },
+        error: (error: any) => {
+          res.status(500).send(error);
+        }
+      });
+  }
 }

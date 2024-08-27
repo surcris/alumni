@@ -1,18 +1,34 @@
-/* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { PostEntity } from './models/post-entity';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+import { PostType } from './models/post.type';
 
 @Injectable()
 export class PostService {
+  constructor(@Inject('POST') private _client: ClientProxy) {}
 
-    constructor(
-        @InjectRepository(PostEntity) private _repository: Repository<PostEntity>
-    ) {
-    }
+  findAll(): Observable<Array<PostType>> {
+    const pattern = { cmd: 'findAll' };
+    return this._client.send<PostType[]>(pattern, {});
+  }
 
-    findAll(): Promise<Array<PostEntity>> {
-        return this._repository.find()
-    }
+  findOne(id: string): Observable<PostType> {
+    const pattern = { cmd: 'findOne' };
+    return this._client.send<PostType>(pattern, { id });
+  }
+
+  add(post: PostType): Observable<PostType> {
+    const pattern = { cmd: 'add' };
+    return this._client.send<PostType>(pattern, post);
+  }
+
+  update(payload: any): Observable<string> {
+    const pattern = { cmd: 'update' };
+    return this._client.send<string>(pattern, payload);
+  }
+
+  delete(id: string): Observable<string> {
+    const pattern = { cmd: 'delete' };
+    return this._client.send<string>(pattern, { id });
+  }
 }
