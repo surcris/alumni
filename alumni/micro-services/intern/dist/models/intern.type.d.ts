@@ -4,7 +4,7 @@ export type InternType = {
     id?: number;
     lastname: string;
     firstname: string;
+    occupation?: string;
     company: CompanyType;
     poe: PoeType;
-    occupation?: string;
 };

@@ -11,21 +11,55 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
-const intern_repository_1 = require("./intern-repository");
 let AppService = class AppService {
-    constructor(_repository) {
-        this._repository = _repository;
+    constructor() {
+        this._interns = [];
+        this._populate();
+    }
+    getHelloR() {
+        return 'Hello RENAUD!!!!!!!!!!!';
     }
     findOne(id) {
-        return this._repository.findOne(id);
+        const result = this._interns.find((intern) => intern.id == id);
+        return result ? result : null;
     }
-    findAll() {
-        return this._repository.findAll();
+    _populate() {
+        this._interns.push({
+            id: 1,
+            lastname: 'momo',
+            firstname: 'azer',
+            company: {
+                id: 1,
+                name: 'AU BG BARBER',
+            },
+            poe: {
+                id: 1,
+                name: 'POEC Dev Mob',
+                beginAt: new Date(2024, 5, 24),
+                endAt: new Date(2024, 8, 24),
+            },
+        });
+        this._interns.push({
+            id: 2,
+            lastname: 'lolo',
+            firstname: 'tyui',
+            occupation: 'kebabier',
+            company: {
+                id: 2,
+                name: 'Chez le bon pote',
+            },
+            poe: {
+                id: 1,
+                name: 'POEC Dev Mob',
+                beginAt: new Date(2024, 5, 24),
+                endAt: new Date(2024, 8, 24),
+            },
+        });
     }
 };
 exports.AppService = AppService;
 exports.AppService = AppService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [intern_repository_1.InternRepository])
+    __metadata("design:paramtypes", [])
 ], AppService);
 //# sourceMappingURL=app.service.js.map

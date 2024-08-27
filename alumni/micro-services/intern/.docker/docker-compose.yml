@@ -1,0 +1,28 @@
+services:
+      intern_db:
+            image: mongo:latest
+            container_name: intern-db
+            restart: unless-stopped
+            ports:
+                - 27017:27017
+            env_file: .env
+            volumes:
+                  - ./data:/data/db:rw
+                  - ./entrypoint/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      
+      # mongoexpress:
+      #       image: mongo-express
+      #       container_name: interface-mongo
+      #       ports:
+      #             - "8081:8081"
+      #       environment:
+      #             - ME_CONFIG_MONGODB_URL=mongodb://intern_db:27017
+      #             - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      #             - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      #             - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
+      #             - ME_CONFIG_MONGODB_AUTH_PASSWORD=nimda
+      #             - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
+      #             - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+      #       depends_on:
+      #             - intern_db
+      #       restart: always

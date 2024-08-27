@@ -1,20 +1,58 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InternType } from './models/intern.type';
-import { InternRepository } from './intern-repository';
 
 @Injectable()
 export class AppService {
-  constructor(
-    private _repository: InternRepository
-  ) {}
-  
+  private _interns: Array<InternType> = [];
+
+  constructor() {
+    this._populate();
+  }
+  getHelloR(): string {
+    return 'Hello RENAUD!!!!!!!!!!!';
+  }
   findOne(id: number): InternType | null {
-    return this._repository.findOne(id)
+    const result: InternType | undefined = this._interns.find(
+      (intern: InternType) => intern.id == id,
+    ); // === vérifie valeur et type | == vérifié juste la valeur
+    return result ? result : null;
   }
 
-  findAll(): Array<InternType> {
-    return this._repository.findAll()
+  /**
+   * Just for mock purpose
+   * Populate a list with some fixed datas (Fixture)
+   */
+  private _populate(): void {
+    this._interns.push({
+      id: 1,
+      lastname: 'momo',
+      firstname: 'azer',
+      company: {
+        id: 1,
+        name: 'AU BG BARBER',
+      },
+      poe: {
+        id: 1,
+        name: 'POEC Dev Mob',
+        beginAt: new Date(2024, 5, 24),
+        endAt: new Date(2024, 8, 24),
+      },
+    });
+    this._interns.push({
+      id: 2,
+      lastname: 'lolo',
+      firstname: 'tyui',
+      occupation: 'kebabier',
+      company: {
+        id: 2,
+        name: 'Chez le bon pote',
+      },
+      poe: {
+        id: 1,
+        name: 'POEC Dev Mob',
+        beginAt: new Date(2024, 5, 24),
+        endAt: new Date(2024, 8, 24),
+      },
+    });
   }
 }

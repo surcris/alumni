@@ -10,15 +10,37 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const intern_repository_1 = require("./intern-repository");
+const mongoose_1 = require("@nestjs/mongoose");
+const config_1 = require("@nestjs/config");
+const configuration_1 = require("./configuration/configuration");
+const intern_schema_1 = require("./schemas/intern.schema");
+const intern_controller_1 = require("./controllers/intern.controller");
+const intern_service_1 = require("./services/intern.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, intern_repository_1.InternRepository],
+        imports: [
+            config_1.ConfigModule.forRoot({
+                envFilePath: `src/configuration/env/${process.env.NODE_ENV || 'development'}.env`,
+                isGlobal: true,
+                load: [configuration_1.default],
+            }),
+            mongoose_1.MongooseModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    uri: configService.get('MONGODB_URI') +
+                        ':' +
+                        configService.get('MONGODB_PORT'),
+                    dbName: configService.get('MONGODB_DATABASE'),
+                }),
+            }),
+            mongoose_1.MongooseModule.forFeature([{ name: 'Intern', schema: intern_schema_1.InternSchema }]),
+        ],
+        controllers: [app_controller_1.AppController, intern_controller_1.InternController],
+        providers: [app_service_1.AppService, intern_service_1.InternService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

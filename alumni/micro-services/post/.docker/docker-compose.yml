@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: post_db_container
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:              
+      - 3306:3306
+    env_file:
+      - .env
+
+  adminer:           
+    image: adminer:latest
+    container_name: adminer   
+    ports:              
+      - 8080:8080

@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
@@ -17,26 +20,27 @@ let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
-    findOne(payload) {
-        return this.appService.findOne(payload.id);
+    getHelloR() {
+        return this.appService.getHelloR();
     }
-    findAll() {
-        return this.appService.findAll();
+    findOne(object) {
+        return this.appService.findOne(parseInt(object.id, 10));
     }
 };
 exports.AppController = AppController;
 __decorate([
-    (0, microservices_1.MessagePattern)({ intern: 'one' }),
+    (0, microservices_1.MessagePattern)({ cmd: 'helloR' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], AppController.prototype, "getHelloR", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'findOne' }),
+    __param(0, (0, microservices_1.Payload)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Object)
 ], AppController.prototype, "findOne", null);
-__decorate([
-    (0, microservices_1.MessagePattern)({ intern: 'all' }),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "findAll", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
