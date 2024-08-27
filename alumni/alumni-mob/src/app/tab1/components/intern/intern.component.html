@@ -24,9 +24,9 @@
 
     <ion-card-content>
       <tbody>
-        <p><strong>POE:</strong> {{ intern.poe.name }}</p>
+        <p><strong>POE:</strong> {{ intern.poe?.name }}</p>
         <p><strong>Fonction:</strong> {{ intern.occupation }}</p>
-        <p><strong>Entreprise:</strong> {{ intern.company.name }}
+        <p><strong>Entreprise:</strong> {{ intern.company?.name }}
         </p>
       </tbody>
 
@@ -51,8 +51,8 @@
       <p><strong>Email:</strong> {{ intern.emails }}</p>
       <p><strong>Phone Number:</strong> {{ intern.phoneNumber }}</p>
       <p><strong>Gender:</strong> {{ intern.gender }}</p>
-      <p><strong>Poe begin at:</strong> {{ intern.poe.beginAt }}</p>
-      <p><strong>Poe end at:</strong> {{ intern.poe.endAt }}</p>
+      <p><strong>Poe begin at:</strong> {{ intern.poe?.beginAt }}</p>
+      <p><strong>Poe end at:</strong> {{ intern.poe?.endAt }}</p>
     </ion-card-content>
   </ion-card>
 </ng-container>

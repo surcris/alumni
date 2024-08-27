@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, Input, OnInit } from '@angular/core';
-import { PostType } from 'src/app/core/types/post/post.type';
+import { PostTransfo } from 'src/app/core/transformers/post-transfo';
+
 
 @Component({
   selector: 'app-post-content',
@@ -10,7 +11,7 @@ import { PostType } from 'src/app/core/types/post/post.type';
 export class PostContentComponent  implements OnInit {
 
   @Input()
-  public post!: PostType
+  public post!: PostTransfo
   
   constructor() { }
 

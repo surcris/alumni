@@ -5,30 +5,30 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class InternService {
-  constructor(@Inject('INTERN') private _client: ClientProxy) {}
+	constructor(@Inject('INTERN') private _client: ClientProxy) {}
 
-  findAll(): Observable<Array<InternType>> {
-    const pattern = { cmd: 'findAll' };
-    return this._client.send<InternType[]>(pattern, {});
-  }
+	findAll(): Observable<Array<InternType>> {
+		const pattern = { cmd: 'findAll' };
+		return this._client.send<InternType[]>(pattern, {});
+	}
 
-  findOne(id: string): Observable<InternType> {
-    const pattern = { cmd: 'findOne' };
-    return this._client.send<InternType>(pattern, { id });
-  }
+	findOne(id: string): Observable<InternType> {
+		const pattern = { cmd: 'findOne' };
+		return this._client.send<InternType>(pattern, { id });
+	}
 
-  add(intern: InternType): Observable<InternType> {
-    const pattern = { cmd: 'add' };
-    return this._client.send<InternType>(pattern, intern);
-  }
+	add(intern: InternType): Observable<InternType> {
+		const pattern = { cmd: 'add' };
+		return this._client.send<InternType>(pattern, intern);
+	}
 
-  update(payload: any): Observable<string> {
-    const pattern = { cmd: 'update' };
-    return this._client.send<string>(pattern, payload);
-  }
+	update(payload: any): Observable<string> {
+		const pattern = { cmd: 'update' };
+		return this._client.send<string>(pattern, payload);
+	}
 
-  delete(id: string): Observable<string> {
-    const pattern = { cmd: 'delete' };
-    return this._client.send<string>(pattern, { id });
-  }
+	delete(id: string): Observable<string> {
+		const pattern = { cmd: 'delete' };
+		return this._client.send<string>(pattern, { id });
+	}
 }

@@ -1,6 +1,7 @@
 import { Expose, Transform } from 'class-transformer';
-import { InternTransfo } from './intern-transfo';
 import { TypePost } from '../enums/post/type-post-enum';
+import { InternDTO } from '../internDto/internDto';
+
 
 
 export class PostTransfo {
@@ -27,5 +28,5 @@ export class PostTransfo {
     authorId!: string;
   
     @Expose()
-    author!: InternTransfo;
+    author!: InternDTO;
   }

@@ -1,29 +1,23 @@
 import { Expose } from 'class-transformer'; 
+import { CompanyType } from '../types/company/company-type';
+import { PoeType } from '../types/poe/poe-type';
 export class InternDTO { 
-    @Expose()
-    id!: number; 
+    @Expose({name: '_id'})
+    id?: number;
     @Expose() 
     lastname!: string; 
     @Expose() 
     firstname!: string; 
     @Expose() 
-    gender!: string; 
+    gender?: string; 
     @Expose() 
-    emails!: string[]; 
+    emails?: string[]; 
     @Expose() 
-    phoneNumber!: string; 
+    phoneNumber?: string; 
     @Expose() 
-    occupation!: string; 
-    @Expose() 
-    company!: { 
-        id: number; 
-        name: string; }; 
-    @Expose() 
-    poe!: { 
-        id: number; 
-        name: string;
-         beginAt: Date; 
-         endAt: Date; 
-        
-        };
+    occupation?: string; 
+    @Expose()
+    company?: CompanyType;
+    @Expose()
+    poe?: PoeType;
          }

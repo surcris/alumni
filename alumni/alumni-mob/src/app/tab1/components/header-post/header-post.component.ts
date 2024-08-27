@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { InternTransfo } from 'src/app/core/transformers/intern-transfo';
+import { InternDTO } from 'src/app/core/internDto/internDto';
 
 @Component({
   selector: 'app-header-post',
@@ -9,7 +9,7 @@ import { InternTransfo } from 'src/app/core/transformers/intern-transfo';
 export class HeaderPostComponent  implements OnInit {
 
   @Input()
-  intern!: InternTransfo
+  intern!: InternDTO
 
   constructor() { }
 

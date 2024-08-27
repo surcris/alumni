@@ -1,5 +1,5 @@
 services:
-  db:
+  db_post:
     image: mariadb:latest
     container_name: post_db_container
     volumes:
