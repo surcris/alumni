@@ -3,14 +3,24 @@
     <ion-title>
       Tab 1
     </ion-title>
+    <ion-icon slot="end" size="large" name="log-in-outline" (click)="logout()"></ion-icon>
   </ion-toolbar>
 </ion-header>
+
+<ion-alert
+  trigger="present-alert"
+  header="Alert!"
+  [buttons]="alertButtons"
+  (didDismiss)="logout()"
+></ion-alert>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Tab 1</ion-title>
+      
     </ion-toolbar>
+    
   </ion-header>
 
   <app-post></app-post>
