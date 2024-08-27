@@ -18,6 +18,6 @@ import { PostContentComponent } from './components/post-content/post-content.com
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page, PostComponent, InternComponent, PostContentComponent]
+  declarations: [Tab1Page, PostComponent, PostContentComponent]
 })
 export class Tab1PageModule {}

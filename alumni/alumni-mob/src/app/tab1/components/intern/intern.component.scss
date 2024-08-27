@@ -1,0 +1,119 @@
+// Variables for consistent theming
+$primary-color: #3880ff;
+$secondary-color: #3dc2ff;
+$background-color: #f4f5f8;
+$card-background-color: #ffffff;
+$text-color: #000000;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+:host {
+  display: block;
+  padding: 16px;
+  background-color: $background-color;
+}
+
+// Card styling
+ion-card {
+  margin: 16px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: $card-background-color;
+  box-shadow: 0 4px 8px $shadow-color;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px $shadow-color;
+  }
+
+  ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-top: 16px;
+    --inner-padding-bottom: 16px;
+    --background: transparent;
+  }
+
+  ion-avatar {
+    margin-right: 16px;
+
+    img {
+      border-radius: 50%;
+      border: 2px solid $primary-color;
+    }
+  }
+
+  ion-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3 {
+      margin: 4px 0;
+      font-size: 18px;
+      color: $text-color;
+    }
+
+    h2 {
+      margin: 4px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: $primary-color;
+    }
+
+    p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: $secondary-color;
+    }
+
+  }
+  .divider {
+    height: 0.6px;
+    background-color: black;
+    margin-right: 40px; // Adjust spacing as needed
+    margin-left: 20px;
+  }
+
+  ion-footer {
+    margin: 20px; // Add this if the divider is inside ion-footer
+  }
+  .footer-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+  }
+}
+
+// Button styling
+
+
+// Container styling
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: $background-color;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px $shadow-color;
+}
+postedAt {
+  text-align: right;
+}
+
+.gray-button {
+  --background: #cccccc !important; // Gray background color
+  --color: #ffffff !important; // White icon color
+  // --border-radius: 50%;
+  // --width: 48px;
+  // --height: 48px;
+  --icon-size: 24px;
+
+  ion-icon {
+    font-size: var(--icon-size);
+  }
+
+  &:hover {
+    --background: #999999 !important; // Darker gray on hover
+  }
+}

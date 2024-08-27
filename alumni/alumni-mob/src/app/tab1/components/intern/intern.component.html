@@ -1,24 +1,58 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>
-          <ion-item>
-            <ion-avatar slot="start">
-              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-            </ion-avatar>
-            <ion-label>{{ intern.firstname }} {{ intern.lastname }}</ion-label>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label>
-              {{ intern.occupation }} chez 
-              <span>{{ intern.company.name }}</span>
-            </ion-label>
-          </ion-item>
+<ng-container *ngFor="let intern of interns; let i = index">
+  <ion-card>
 
-          <ion-item>
-            <ion-note>{{ intern.poe.name }} ({{ intern.poe.beginAt | date: 'dd-MM-yyyy'}} - {{ intern.poe.endAt | date: 'dd-MM-yyyy' }})</ion-note>
-          </ion-item>   
-    </ion-card-title>
-  </ion-card-header>
-  <app-post-content *ngIf="post" [post]="post"></app-post-content>
-</ion-card>
+    <ion-card-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+
+        <ion-label>
+          <h3>
+            <div class="intern-details"></div>
+            {{ intern.lastname }} {{ intern.firstname }}
+          </h3>
+          <!-- <h2>Liste des Stagiaires</h2>  -->
+        </ion-label>
+        <ion-button (click)="openChat(intern)" class="gray-button" size="small" fill="solid" shape="round">
+          <ion-icon slot="icon-only" name="chatbubble-ellipses"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+    </ion-card-header>
+
+
+    <ion-card-content>
+      <tbody>
+        <p><strong>POE:</strong> {{ intern.poe.name }}</p>
+        <p><strong>Fonction:</strong> {{ intern.occupation }}</p>
+        <p><strong>Entreprise:</strong> {{ intern.company.name }}
+        </p>
+      </tbody>
+
+    </ion-card-content>
+
+
+
+    <div class="divider"></div>
+
+    <ion-card-content class="footer-buttons">
+
+
+
+      <ion-button (click)="viewDetails(i)" class="gray-button" fill="solid" shape="round">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+
+
+    </ion-card-content>
+
+    <ion-card-content *ngIf="detailsVisibility[i]">
+      <p><strong>Email:</strong> {{ intern.emails }}</p>
+      <p><strong>Phone Number:</strong> {{ intern.phoneNumber }}</p>
+      <p><strong>Gender:</strong> {{ intern.gender }}</p>
+      <p><strong>Poe begin at:</strong> {{ intern.poe.beginAt }}</p>
+      <p><strong>Poe end at:</strong> {{ intern.poe.endAt }}</p>
+    </ion-card-content>
+  </ion-card>
+</ng-container>

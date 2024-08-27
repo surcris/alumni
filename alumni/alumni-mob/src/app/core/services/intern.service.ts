@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
-import { InternType } from '../types/intern/intern-type';
+import { InternType } from '../types/intern/intern-type'; 
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { InternDTO } from '../internDto/internDto'; 
+import { InternTransformer } from '../transformers/intern.transformer'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class InternService {
   private _interns: Array<InternType> = []
-  private readonly URI: string = 'http://localhost:3000/api/v1/intern'
+  private readonly URI: string = 'http://localhost:3000/intern'
 
   constructor(
     private _httpClient: HttpClient
   ) {}
 
   public companyFilter(company: string): Array<InternType> {
-    throw new Error(`Not implemented yet`)
+    throw new Error('Not implemented yet')
   }
   
   /**
    * 
    * @returns Observable<InternType[]>
    */
-  public findAll(): Observable<Array<InternType>> {
-    return this._httpClient.get<Array<InternType>>(
-      this.URI
-    )
-  }
+  public findAll(): Observable<Array<InternDTO>> {
+    return this._httpClient.get<Array<any>>(this.URI).pipe(
+      map((interns: Array<any>) => {
+        return interns.map((intern: any) => {
+        return InternTransformer.transform(intern)})
+}))}
+
 }

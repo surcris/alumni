@@ -9,7 +9,7 @@ async function bootstrap() {
         transport: microservices_1.Transport.TCP,
         options: {
             host: '127.0.0.1',
-            port: 3100
+            port: 3300
         }
     });
     await app.listen();
