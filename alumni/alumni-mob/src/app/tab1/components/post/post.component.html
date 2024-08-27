@@ -1,5 +1,18 @@
 <ng-container *ngFor="let post of posts">
+  <ion-card>
+    <div class="header">
+      <app-header-post class="app-intern" [intern]="post.author"></app-header-post>
+      <div class="container-icon-type-post">
+        <div class="icon-type-post">
+          <ion-icon class="icon-element" name="{{post.type | typePostIcon}}"></ion-icon>
+        </div>
+      </div>
+      
+    </div>
+    <app-post-content [post]="post"></app-post-content>
+    <app-tools-bar></app-tools-bar>
+  </ion-card>
+    
   
-  <app-intern [intern]="post.author" [post]="post"></app-intern>
 
 </ng-container>

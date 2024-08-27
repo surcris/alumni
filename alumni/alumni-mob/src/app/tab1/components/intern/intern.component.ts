@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InternDTO } from 'src/app/core/internDto/internDto'; 
 import { InternService } from 'src/app/core/services/intern.service';
-import { InternType } from 'src/app/core/types/intern/intern-type'; 
 
 @Component({
   selector: 'app-intern',
@@ -11,7 +10,6 @@ import { InternType } from 'src/app/core/types/intern/intern-type';
 })
 export class InternComponent  implements OnInit {
   @Input() 
-
   interns: InternDTO[] = []; 
   detailsVisibility: boolean[] = [];
   constructor(private internService: InternService,
