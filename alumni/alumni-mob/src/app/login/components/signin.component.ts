@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
-import { take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -13,9 +13,8 @@ import { StorageService } from 'src/app/core/services/storage.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent  implements OnInit {
-
-  public form: FormGroup = new FormGroup({})
+export class SigninComponent implements OnInit {
+  public form: FormGroup = new FormGroup({});
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -23,61 +22,90 @@ export class SigninComponent  implements OnInit {
     private _toastController: ToastController,
     private _router: Router,
     private _storage: StorageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    const email = this._storage.retrieve('Email')
+    const email = this._storage.retrieve('Email');
     this.form = this._formBuilder.group({
       login: [
-        email!=null ? email : "", // Default value for the control
-        [
-          Validators.required
-        ]
+        email != null ? email : '', // Default value for the control
+        [Validators.required],
       ],
-      password: [
-        '',
-        [
-          Validators.required
-        ]
-      ]
-    })
+      password: ['', [Validators.required]],
+    });
   }
 
   onSubmit(): void {
-    this._service.doLogin(this.form.value)
-      .pipe(
-        take(1)
-      )
+    this._service
+      .doAuth(this.form.value)
+      .pipe(take(1))
       .subscribe({
-        next: async(response: HttpResponse<any>) => {
-          if (response.status === 200) {
-            this._storage.store('auth', response.body.token)
-            this._router.navigate(['tabs', 'tab1'])
-              .then(() => console.log('Routing complete'))
+        next: async (isValid) => {
+          // if (isValid.body.status === 204) {
+          //   console.log('Authentification réussie', isValid);
+          //   // Effectuer d'autres actions si l'authentification est réussie
+          // } else {
+          //   console.log('Authentification échouée');
+          //   // Gérer l'échec de l'authentification
+          // }
+          if (isValid.body.status === 204) {
+            this._storage.store('auth', "a.b.c");
+            this._router
+              .navigate(['tabs', 'tab1'])
+              .then(() => console.log('Routing complete'));
           } else {
             const toast = await this._toastController.create({
-              message: response.body.message,
+              message: isValid.body.message,
               duration: 2000,
               position: 'middle',
               buttons: [
                 {
                   text: 'Réessayer',
-                }
-              ]
-            })
-            toast.present().then(() => null)
-            toast.onWillDismiss()
-              .then(() => this.form.reset())
+                },
+              ],
+            });
+            toast.present().then(() => null);
+            toast.onWillDismiss().then(() => this.form.reset());
           }
         },
         error: (error: any) => {
-          console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`)
-        }
-      })
+          console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`);
+        },
+      });
+
+    // this._service.doLogin(this.form.value)
+    //   .pipe(
+    //     take(1)
+    //   )
+    //   .subscribe({
+    //     next: async(response: HttpResponse<any>) => {
+    //       if (response.status === 200) {
+    //         this._storage.store('auth', response.body.token)
+    //         this._router.navigate(['tabs', 'tab1'])
+    //           .then(() => console.log('Routing complete'))
+    //       } else {
+    //         const toast = await this._toastController.create({
+    //           message: response.body.message,
+    //           duration: 2000,
+    //           position: 'middle',
+    //           buttons: [
+    //             {
+    //               text: 'Réessayer',
+    //             }
+    //           ]
+    //         })
+    //         toast.present().then(() => null)
+    //         toast.onWillDismiss()
+    //           .then(() => this.form.reset())
+    //       }
+    //     },
+    //     error: (error: any) => {
+    //       console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`)
+    //     }
+    //   })
   }
 
-  onClickActiveAccount(){
-    this._router.navigate(['first-connexion'])
+  onClickActiveAccount() {
+    this._router.navigate(['first-connexion']);
   }
-
 }

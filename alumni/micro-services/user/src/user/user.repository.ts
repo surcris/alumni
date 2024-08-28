@@ -27,4 +27,14 @@ export class UserRepository {
     return this._repository.update({email:login}, {password:password})
     
   }
+
+  async validateUser(email: string, password: string): Promise<UserEntity | null> {
+    const user = await this._repository.findOneBy({ email });
+
+    if (user && password === user.password) {
+      return user; // Si l'email et le mot de passe correspondent, retourner l'utilisateur
+    } else {
+      return null; // Sinon, retourner null pour indiquer une échec d'authentification
+    }
+  }
 }

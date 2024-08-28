@@ -1,5 +1,5 @@
-/* eslint-disable prettier/prettier */
-import { Body, Controller, Get, HttpStatus, Param, Patch, Res } from '@nestjs/common';
+
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
@@ -24,6 +24,11 @@ export class UserController {
 	@Get('/log/:login')
 	isValidEmailAelion(@Param('login') login: string): Observable<boolean> {
 			return this.userService.isValidEmailAelion(login)
+	}
+
+	@Post('/auth/')
+	isValidEmailAndMdp(@Body() login: any) {
+			return this.userService.isValidEmailAndMdp(login.email,login.mdp)
 	}
 
 	@Get('/code')
