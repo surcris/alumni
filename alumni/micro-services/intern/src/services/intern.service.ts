@@ -13,7 +13,7 @@ export class InternService implements Crud {
   ) {}
 
   async findAll(): Promise<InterfaceIntern[]> {
-    const internData = await this.internModel.find().sort({ lastname: -1 });
+    const internData = await this.internModel.find().sort({ lastname: 1 });
     if (!internData || internData.length == 0) {
       throw new NotFoundException('Interns data not found!');
     }
