@@ -3,8 +3,8 @@
   <ion-row class="ion-justify-content-between">
     <ion-col>
       <div class="block-buttons">
-        <ion-button >
-          <ion-icon name="heart" aria-hidden="true"></ion-icon>
+        <ion-button (click)="changeColor()">
+          <ion-icon [color]="buttonColor" name="heart" aria-hidden="true"  ></ion-icon>
         </ion-button>
       </div>
     </ion-col>

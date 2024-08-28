@@ -7,8 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolsBarComponent  implements OnInit {
 
+  buttonColor: string = 'white';
+  isWhite: boolean = true;
+
   constructor() { }
 
   ngOnInit() {}
+
+  changeColor() {
+    this.isWhite = !this.isWhite
+    if(this.isWhite)
+      this.buttonColor = 'white';
+    else
+      this.buttonColor = 'danger'
+  }
 
 }
