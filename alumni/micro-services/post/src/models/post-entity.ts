@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { TypePost } from 'src/emums/type-post.enum';
 import { InternType } from 'src/types/intern.type';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'post',
@@ -23,6 +23,7 @@ export class PostEntity {
   media?: string;
 
   @Column()
+  @Index()
   postedAt: Date;
 
   @Column({ type: 'enum', enum: TypePost })

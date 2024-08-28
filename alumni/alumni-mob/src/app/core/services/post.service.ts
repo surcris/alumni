@@ -10,16 +10,20 @@ import { PostTransfo } from '../transformers/post-transfo';
 export class PostService {
   private readonly URI: string = 'http://localhost:3000/post'
 
+  private page: number;
+
   constructor(
     private _httpClient: HttpClient
   ) { 
+    this.page = 0;
   }
   /**
    * Get the list of post
    * @returns Observable<PostType[]>
    */
-  public findAll(): Observable<Array<PostTransfo>>{
-    return this._httpClient.get<Array<PostTransfo>>(this.URI).pipe(
+  public findAll(): Observable<Array<PostTransfo>> {
+    const params = { page: this.page };  // Create params object
+    return this._httpClient.get<Array<PostTransfo>>(this.URI, { params }).pipe(
       map(data => plainToInstance(PostTransfo, data))
     );
   }

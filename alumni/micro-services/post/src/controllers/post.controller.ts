@@ -9,9 +9,9 @@ export class PostController {
   constructor(private _service: PostService) {}
 
   @MessagePattern({ cmd: 'findAll' })
-  async findAll(): Promise<Array<InterfacePost>> {
+  async findAll(@Payload() payload: any): Promise<Array<InterfacePost>> {
     // retourne une promesse qui sera convertie par le await
-    return await this._service.findAll();
+    return await this._service.findAll(payload.page);
   }
 
   @MessagePattern({ cmd: 'findOne' })

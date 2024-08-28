@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { IonInfiniteScrollCustomEvent } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/core/services/post.service';
 import { PostTransfo } from 'src/app/core/transformers/post-transfo';
@@ -25,19 +27,29 @@ export class PostComponent implements OnInit, OnDestroy{
   ){}
 
   ngOnInit(): void {
-      this._subscription = this._service.findAll()
-      .subscribe({
-        next: (posts: Array<PostTransfo>) => {
-          this.posts = posts
-          this.posts = this._service.sortPost(this.posts)
-        },
-        error: (error: any) => {},
-        complete: () => {}
-      })
+    this.retriveAllPost()
   }
 
   ngOnDestroy(): void {
     this._subscription.unsubscribe()
+  }
+
+  onIonInfinite(ev: IonInfiniteScrollCustomEvent<void>) {
+    this.retriveAllPost();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
+  private retriveAllPost(){
+    this._subscription = this._service.findAll()
+    .subscribe({
+      next: (posts: Array<PostTransfo>) => {
+        this.posts.push(...posts)
+      },
+      error: (error: any) => {},
+      complete: () => {}
+    })
   }
 
 }

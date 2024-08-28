@@ -18,8 +18,14 @@ export class PostService implements Crud {
     @Inject('INTERN') private _client: ClientProxy,
   ) {}
 
-  async findAll(): Promise<Array<InterfacePost>> {
-    const postData = await this._repository.find();
+  async findAll(page: number): Promise<Array<InterfacePost>> {
+    const postData = await this._repository.find({
+      order: {
+        postedAt: 'DESC',
+      },
+      skip: 50 * page,
+      take: 50,
+    });
     if (!postData || postData.length == 0) {
       throw new NotFoundException('Posts data not found!');
     }
