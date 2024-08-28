@@ -16,11 +16,11 @@ $icon-size: 100px; // Taille de l'icône pour qu'elle soit plus visible
 $icon-margin: 6px; // Espacement autour de l'icône
 
 
-
 ion-header {
   // background-color: $primary-color;
   // color: $secondary-color;
-  background-color: $toolbar-background-color;
+  --ion-background-color: #FFA500;
+  
 
   ion-toolbar {
     box-shadow: 0 4px 6px $shadow-color;
