@@ -17,8 +17,9 @@ import { PostType } from './models/post.type';
 export class PostController {
 	constructor(private _service: PostService) {}
 
-	@Get()
+	@Get(':page')
 	findAll(@Param('page') page: number, @Res() res: Response) {
+		console.log('Page: ' + page);
 		this._service
 			.findAll(page)
 			.pipe(take(1))

@@ -21,12 +21,16 @@ export class PostComponent implements OnInit, OnDestroy{
   // private _subscriptionIntern!: Subscription
   private _subscription!: Subscription
 
+  private page: number = 0;
+
   constructor(
     // private _serviceIntern: InternService, // Dependency Injection
     private _service: PostService
-  ){}
+  ){
+  }
 
   ngOnInit(): void {
+    this.page = 0;
     this.retriveAllPost()
   }
 
@@ -42,10 +46,11 @@ export class PostComponent implements OnInit, OnDestroy{
   }
 
   private retriveAllPost(){
-    this._subscription = this._service.findAll()
+    this._subscription = this._service.findAll(this.page)
     .subscribe({
       next: (posts: Array<PostTransfo>) => {
         this.posts.push(...posts)
+        this.page += 1
       },
       error: (error: any) => {},
       complete: () => {}
