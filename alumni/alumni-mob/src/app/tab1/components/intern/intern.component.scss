@@ -1,10 +1,21 @@
 // Variables for consistent theming
-$primary-color: #3880ff;
-$secondary-color: #3dc2ff;
-$background-color: #f4f5f8;
-$card-background-color: #ffffff;
-$text-color: #000000;
-$shadow-color: rgba(0, 0, 0, 0.1);
+// $primary-color: #3880ff;
+// $secondary-color: #3dc2ff;
+// $background-color: #f4f5f8;
+// $card-background-color: #ffffff;
+// $text-color: #000000;
+// $shadow-color: rgba(0, 0, 0, 0.1);
+
+
+
+
+$primary-color: #4A90E2; // Bleu doux et moderne
+$secondary-color: #50E3C2; // Vert menthe pour les détails secondaires
+$background-color: #F0F3F7; // Gris très clair pour le fond
+$card-background-color: #FFFFFF; // Blanc pour les cartes
+$text-color: #333333; // Gris foncé pour le texte
+$shadow-color: rgba(0, 0, 0, 0.1); // Ombre subtile
+$divider-color: #E0E0E0; // Gris léger pour les séparateurs
 
 :host {
   display: block;
@@ -114,6 +125,9 @@ postedAt {
   }
 
   &:hover {
-    --background: #999999 !important; // Darker gray on hover
+    //--background: #999999 !important; // Darker gray on hover
+    --background: darken($primary-color, 10%) !important; // Couleur plus foncée au survol
   }
 }
+
+

@@ -48,11 +48,11 @@
     </ion-card-content>
 
     <ion-card-content *ngIf="detailsVisibility[i]">
-      <p><strong>Email:</strong> {{ intern.emails }}</p>
-      <p><strong>Phone Number:</strong> {{ intern.phoneNumber }}</p>
-      <p><strong>Gender:</strong> {{ intern.gender }}</p>
-      <p><strong>Poe begin at:</strong> {{ intern.poe?.beginAt }}</p>
-      <p><strong>Poe end at:</strong> {{ intern.poe?.endAt }}</p>
+      <p> <ion-icon name="mail-outline" style="margin-right: 8px;"></ion-icon><strong>Email:</strong> {{ intern.emails }}</p>
+      <p><ion-icon name="call-outline" style="margin-right: 8px;"></ion-icon><strong>Phone Number:</strong> {{ intern.phoneNumber }}</p>
+      <p><ion-icon name="male-female-outline" style="margin-right: 8px;"></ion-icon><strong>Gender:</strong> {{ intern.gender }}</p>
+      <p><ion-icon name="calendar-outline" style="margin-right: 8px;"></ion-icon><strong>Poe begin at:</strong> {{ intern.poe?.beginAt }}</p>
+      <p><ion-icon name="calendar-outline" style="margin-right: 8px;"></ion-icon><strong>Poe end at:</strong> {{ intern.poe?.endAt }}</p>
     </ion-card-content>
   </ion-card>
 </ng-container>

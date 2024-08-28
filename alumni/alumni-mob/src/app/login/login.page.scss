@@ -1,0 +1,140 @@
+/* Variables de couleur */
+/* Variables de couleur */
+$primary-color: #FFA500; // Orange
+$secondary-color: #FFFFFF; // Couleur de fond des éléments
+$background-color: #F0F3F8; // Couleur de fond générale
+$text-color: #333333; // Couleur du texte
+$button-color: #FFA500; // Couleur des boutons (orange)
+$button-text-color: #FFFFFF; // Couleur du texte des boutons
+$input-border-color: #D9E1E8; // Bordure des champs de saisie
+$shadow-color: rgba(0, 0, 0, 0.15); // Couleur de l'ombre
+$transition-duration: 0.3s; // Durée des transitions
+$toolbar-background-color: #FFA500; // Couleur de la barre d'outils (orange)
+$title-color: #FFFFFF; // Couleur du titre
+$icon-size: 100px; // Taille de l'icône pour qu'elle soit plus visible
+$icon-margin: 6px; // Espacement autour de l'icône
+
+
+
+ion-header {
+  // background-color: $primary-color;
+  // color: $secondary-color;
+  background-color: $toolbar-background-color;
+
+  ion-toolbar {
+    box-shadow: 0 4px 6px $shadow-color;
+    transition: background-color $transition-duration;
+    //color: #ffffff; // Couleur du texte
+    padding: 0 16px; // Espacement horizontal
+    color: $title-color;
+    display: flex;
+    justify-content: space-between; // Aligne le titre au centre et les boutons à droite
+
+
+    ion-title {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        //color: $secondary-color;
+        //color: #ffffff; // Couleur du texte
+        text-align: center;
+        color: $title-color;
+        margin: 0;
+    }
+  }
+  ion-buttons {
+    display: flex;
+    align-items: center; // Aligne verticalement l'icône
+    margin-left: auto; // Assure que les boutons sont alignés à droite
+    .header-icon {
+      width: $icon-size; // Taille de l'icône
+      height: $icon-size; // Taille de l'icône
+      object-fit: contain; // Garde les proportions de l'icône
+      margin-left: $icon-margin; // Espacement autour de l'icône
+    }
+  }
+  &.condense ion-toolbar {
+    background-color: lighten($primary-color, 10%);
+  }
+}
+
+
+ion-content {
+  background-color: $background-color;
+  padding: 20px;
+
+  ion-header {
+    ion-toolbar {
+      ion-title {
+        size: large;
+        color: darken($primary-color, 20%);
+      }
+    }
+  }
+  
+  app-signin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    
+    .signin-form {
+        background-color: $secondary-color;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px $shadow-color;
+        width: 100%;
+        max-width: 450px;
+        transition: box-shadow $transition-duration;
+  
+        &:hover {
+          box-shadow: 0 12px 24px $shadow-color;
+        }
+
+        ion-input {
+            margin-bottom: 20px;
+            border: 1px solid $input-border-color;
+            padding: 12px;
+            border-radius: 6px;
+            transition: border-color $transition-duration;
+    
+            &:focus {
+              border-color: $primary-color;
+              box-shadow: 0 0 4px $primary-color;
+            }
+    
+            &::placeholder {
+              color: lighten($text-color, 30%);
+            }
+          }
+
+
+      
+      ion-button {
+        background-color: $button-color;
+        color: $button-text-color;
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        font-weight: bold;
+        box-shadow: 0 4px 8px $shadow-color;
+        transition: background-color $transition-duration, box-shadow $transition-duration;
+        
+        .header-icon {
+          width: 24px; // Taille de l'icône
+          height: 24px; // Taille de l'icône
+          margin-right: 8px; // Espace entre l'icône et le texte
+          object-fit: contain; // Garder les proportions de l'icône
+        }
+
+        &:hover {
+          background-color: darken($button-color, 10%);
+          box-shadow: 0 6px 12px $shadow-color;
+        }
+      }
+    }
+  }
+}
