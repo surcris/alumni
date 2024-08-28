@@ -9,17 +9,27 @@ export class ToolsBarComponent  implements OnInit {
 
   buttonColor: string = 'white';
   isWhite: boolean = true;
+  listButtonColor: [string, Boolean][] = []
+  private maxButton: number = 2
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fillListButtonColor()
+  }
 
-  changeColor() {
-    this.isWhite = !this.isWhite
-    if(this.isWhite)
-      this.buttonColor = 'white';
+  changeColor(indiceButton: number) {
+    this.listButtonColor[indiceButton][1] = !this.listButtonColor[indiceButton][1]
+    if(this.listButtonColor[indiceButton][1])
+      this.listButtonColor[indiceButton][0] = 'white';
     else
-      this.buttonColor = 'danger'
+    this.listButtonColor[indiceButton][0] = 'danger'
+  }
+
+  private fillListButtonColor(){
+    for(let i = 0; i < this.maxButton; i++){
+      this.listButtonColor.push(["white", true])
+    }
   }
 
 }
