@@ -19,69 +19,41 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
     @WebSocketServer()
     wsServer: Server
 
-    private _clients: Map<string, SocketUserType> = new Map<string, SocketUserType>()
+    private _clients: Map<string,any> = new Map<string, any>()
 
     @SubscribeMessage('message')
     async chat(@MessageBody() data: RequestMessageType): Promise<any> {
         Logger.log(`Received ${JSON.stringify(data)}`)
         // Find the recipient
-        const recipientSocket: SocketUserType = this._userToSocket(data.recipient)
+        const recipientSocket: any = this._userToSocket(data.recipient)
 
         const payload: any = {
-            emitter: data.recipient,
-            recipient: data.emitter,
             datetime: new Date(),
             content: data.content
         }
-        Logger.log(`Emit : ${JSON.stringify(payload)} to ${recipientSocket.socket.id}`)
+        Logger.log(`Emit : ${JSON.stringify(payload)} to ${recipientSocket.id}`)
 
-        recipientSocket.socket.emit('message', payload)
+        recipientSocket.emit('message', payload)
     }
 
-    @SubscribeMessage('identity')
-    async identity(@MessageBody() identity: ResponseConnectionType): Promise<any> {
-        return identity
-    }
-
-    @SubscribeMessage('userId:Identity')
-    async setUserId(@MessageBody() user: any): Promise<any> {
-        Logger.log(`Store DNS for : ${JSON.stringify(user)}`)
-        this._clients.get(user.socketId).userId = user.id
-    }
-
+    
     handleConnection(client: any, ...args: any[]): void {
         const { sockets } = this.wsServer.sockets
+        const userId = client.handshake.query.userId
+                    
+        Logger.log(`Connection was established for ${userId}`)
 
-        Logger.log(`Connection was established for ${client.id}`)
-
-        sockets.forEach((socket: any) => {
-            if (socket.id === client.id) {
-                this._clients.set(client.id, {socket})
-            }
-        })
-        
-
-        const identity: ResponseConnectionType = {
-            datetime: new Date(),
-            socketId: client.id
-        }
-
-        this._clients.get(client.id).socket.emit('identity', identity)
+        this._clients.set(userId, sockets.get(client.id))
     }
 
     handleDisconnect(client: any) {
-        Logger.log(`Client ${client.id} was disconnected`)
-        this._clients.delete(client.id)
+        Logger.log(`Client ${client.handshake.query.userId} was disconnected`)
+        const userId = client.handshake.query.userId
+        this._clients.delete(userId)
     }
 
-    private _userToSocket(user: string): SocketUserType {
-        let recipient: SocketUserType
-        this._clients.forEach((value: SocketUserType, sid: string) => {
-            if (value.userId === user) {
-                recipient = value
-                return
-            }
-        })
-        return recipient
+    private _userToSocket(userId: string): SocketUserType {
+        return this._clients.get(userId)
+
     }
 }
