@@ -56,8 +56,10 @@ ion-card {
 
   ion-label {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
 
     h3 {
       margin: 4px 0;
@@ -129,5 +131,24 @@ postedAt {
     --background: darken($primary-color, 10%) !important; // Couleur plus foncée au survol
   }
 }
+.square-button {
+   width: 10px; /* Vous pouvez ajuster cette valeur selon vos besoins */
+  height: 10px; /* Assurez-vous que la hauteur est égale à la largeur */
+  // display: flex;
+  align-items: center;
+  // justify-content: center;
+  border-radius: 50%;/* Pour rendre le bouton rond, si nécessaire */
+}
 
+.online {
+  background-color: green;
+  color: white;
+ 
+}
+
+.offline {
+  background-color: red;
+  color: white;
+ 
+}
 

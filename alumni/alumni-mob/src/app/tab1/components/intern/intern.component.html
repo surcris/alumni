@@ -6,19 +6,22 @@
         <ion-avatar slot="start">
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
-
+       
         <ion-label>
           <h3>
             <div class="intern-details"></div>
             {{ intern.lastname }} {{ intern.firstname }}
           </h3>
+          <div disabled class="square-button" [class.online]="detailsVisibility" [class.offline]="!detailsVisibility">
+            {{ detailsVisibility ? '' : '' }}
+          </div>
           <!-- <h2>Liste des Stagiaires</h2>  -->
         </ion-label>
         <ion-button (click)="openChat(intern)" class="gray-button" size="small" fill="solid" shape="round">
           <ion-icon slot="icon-only" name="chatbubble-ellipses"></ion-icon>
         </ion-button>
       </ion-item>
-
+     
     </ion-card-header>
 
 
