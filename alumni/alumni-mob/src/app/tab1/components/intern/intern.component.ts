@@ -3,8 +3,8 @@ import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
 import { take } from 'rxjs';
 
 import { WsChatService } from 'src/app/core/services/ws-chat-service'; 
-import { SocketConnectionType } from '../Dto/socket-connection.type'; 
-import { SocketMessageType } from '../Dto/socket-message.type'; 
+import { SocketConnectionType } from '../../../tab3/Dto/socket-connection.type'; 
+import { SocketMessageType } from '../../../tab3/Dto/socket-message.type'; 
 import { InternService } from 'src/app/core/services/intern.service';
 import { InternType } from 'src/app/core/types/intern/inter-type'; 
 import { InternDTO } from 'src/app/core/internDto/internDto';
