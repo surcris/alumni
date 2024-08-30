@@ -20,4 +20,7 @@ export class InternDTO {
     company?: CompanyType;
     @Expose()
     poe?: PoeType;
-         }
+    @Expose()
+    userId?: number;
+
+}

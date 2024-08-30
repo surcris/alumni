@@ -5,8 +5,6 @@ import { Poe, PoeSchema } from './poe.schema';
 @Schema()
 export class Intern {
   @Prop()
-  id?: number;
-  @Prop()
   lastname: string;
   @Prop()
   firstname: string;
@@ -22,5 +20,7 @@ export class Intern {
   company: Company;
   @Prop({ type: PoeSchema })
   poe: Poe;
+  @Prop()
+  userId: number;
 }
 export const InternSchema = SchemaFactory.createForClass(Intern);

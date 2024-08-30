@@ -19,5 +19,5 @@ export type PostType = {
   media?: string; //path
   postedAt: Date;
   type: TypePost;
-  author: InternType['id'];
+  author: InternType['_id'];
 };

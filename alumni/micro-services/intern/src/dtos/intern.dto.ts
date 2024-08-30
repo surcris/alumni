@@ -12,7 +12,7 @@ import { PoeType } from 'src/models/poe.type';
 
 export class InternDto {
   // @IsNumber()
-  readonly id?: number;
+  readonly _id?: number;
 
   @IsString()
   @IsNotEmpty()
@@ -45,4 +45,7 @@ export class InternDto {
 
   @IsNotEmpty()
   readonly poe: PoeType;
+
+  @IsNotEmpty()
+  readonly userId: number;
 }

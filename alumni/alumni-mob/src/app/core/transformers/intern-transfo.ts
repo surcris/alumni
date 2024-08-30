@@ -1,4 +1,4 @@
-import { Expose, Type } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { CompanyType } from '../types/company/company-type';
 import { PoeType } from '../types/poe/poe-type';
 
@@ -29,4 +29,7 @@ export class InternTransfo {
   
     @Expose()
     poe?: PoeType;
+
+    @Expose()
+    userId?: number;
   }

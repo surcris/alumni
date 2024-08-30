@@ -3,7 +3,7 @@ import { CompanyType } from 'src/models/company.type';
 import { PoeType } from 'src/models/poe.type';
 
 export interface InterfaceIntern extends Document {
-  readonly id?: number;
+  readonly _id?: number;
   readonly lastname: string;
   readonly firstname: string;
   readonly gender: string;
@@ -12,4 +12,5 @@ export interface InterfaceIntern extends Document {
   readonly occupation?: string;
   readonly company: CompanyType;
   readonly poe: PoeType;
+  readonly userId: number;
 }

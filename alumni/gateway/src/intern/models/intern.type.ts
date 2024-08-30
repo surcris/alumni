@@ -2,7 +2,7 @@ import { CompanyType } from './company.type';
 import { PoeType } from './poe.type';
 
 export type InternType = {
-	id?: number;
+	_id?: number;
 	lastname: string;
 	firstname: string;
 	gender: string;
@@ -11,4 +11,5 @@ export type InternType = {
 	occupation?: string;
 	company: CompanyType;
 	poe: PoeType;
+	userId: number;
 };

@@ -11,4 +11,5 @@ export type InternType = {
   occupation?: string;
   company: CompanyType;
   poe: PoeType;
+  userId: number
 };
