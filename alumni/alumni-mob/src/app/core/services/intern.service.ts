@@ -12,6 +12,7 @@ import { InternTransformer } from '../transformers/intern.transformer';
 export class InternService {
   private _interns: Array<InternType> = []
   private readonly URI: string = 'http://localhost:3000/intern'
+  private _intern: InternType | null = null
 
   constructor(
     private _httpClient: HttpClient
@@ -34,9 +35,16 @@ export class InternService {
       }))
   }
 
-  public getInternId(): void {
-    const getId = this.findAll()
+  // public getInternId(): void {
+  //   const getId = this.findAll()
 
-    console.log(getId)
+  //   console.log(getId)
+  // }
+  set intern(intern: InternType) {
+    this._intern = intern
+  }
+
+  get intern(): InternType | null {
+    return this._intern
   }
 }
