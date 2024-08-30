@@ -7,7 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -23,9 +23,11 @@ import { environment } from 'src/environments/environment';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {public static wsConfig: SocketIoConfig = {
-  url: `http://${environment.socketServerUrl}`, // c'est un peu plus beau
-  options: {
-    autoConnect: false,
+export class AppModule {
+  public static wsConfig: SocketIoConfig = {
+    url: `http://${environment.socketServerUrl}`, // c'est un peu plus beau
+    options: {
+      autoConnect: false, // désactiver la connection automation au chargement de l'app 
+    }
   }
-}}
+}
