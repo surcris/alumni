@@ -20,16 +20,12 @@ export class UserService {
 	isValidEmailAelion(login: string): Observable<boolean> {
 		const pattern: any = { cmd: 'user' };
 		const payload: string = login;
-		console.log('test: ' + login);
-
 		return this._client.send<boolean>(pattern, { payload });
 	}
 
 	isValidEmailAndMdp(email: string, mdp: string) {
 		const pattern: any = { cmd: 'auth' };
 		const payload: { email: string; mdp: string } = { email, mdp };
-		console.log('test: ' + payload);
-
 		return this._client.send<object>(pattern, { payload });
 	}
 	generateRandomNumber(length: number): Observable<number> {

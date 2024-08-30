@@ -34,7 +34,7 @@ export class UserService {
   async authUser(login: any){
     const userEntry = await this._repository.validateUser(login.email,login.mdp);
     if(userEntry)
-      return {status: 204, message: 'OK'}   
+      return {status: 204, message: 'OK', id: userEntry.id}   
     return {status: 400, message: 'Echec lors de l\'identification'}  
     
   }
