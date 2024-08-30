@@ -39,7 +39,7 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
     
     handleConnection(client: any, ...args: any[]): void {
         const { sockets } = this.wsServer.sockets
-        const userId = client.handshake.query.userId
+        const userId = client.handshake.query.id
                     
         Logger.log(`Connection was established for ${userId}`)
 
