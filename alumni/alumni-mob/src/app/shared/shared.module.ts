@@ -10,7 +10,7 @@
 
 // @NgModule({
 //   declarations: [
-   
+//     InternComponent,
 //     PostComponent,
 //     PostContentComponent,
   
@@ -20,6 +20,7 @@
 //     IonicModule,
 //   ],
 //   exports: [
+//     InternComponent,
 //     PostComponent,
 //     PostContentComponent,
 //     SocketIoModule

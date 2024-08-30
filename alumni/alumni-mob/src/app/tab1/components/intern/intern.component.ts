@@ -38,9 +38,12 @@ export class InternComponent  implements OnInit {
   }
 
   openChat(intern: InternDTO): void {
-    alert(`Ouverture du chat pour ${intern.firstname} ${intern.lastname}`);
-  } } 
 
+    //alert(`Ouverture du chat pour ${intern.firstname} ${intern.lastname}`);
+    this.router
+      .navigate(['tabs', 'tab3'])  // Navigation vers la route 'tabs/tab3/chat/:id'
+      .then(() => console.log('Routing complete'));  // Log dans la console après la navigation
+  }
 
-
+ } 
 
