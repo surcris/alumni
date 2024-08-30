@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: 'first-connexion',
     loadChildren: () => import('./first-connexion/first-connexion.module').then( m => m.FirstConnexionPageModule)
-  }
+  },
 ];
 @NgModule({
   imports: [

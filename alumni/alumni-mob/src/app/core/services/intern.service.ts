@@ -40,11 +40,11 @@ export class InternService {
 
   //   console.log(getId)
   // }
-  set intern(intern: InternType) {
+  set intern(intern: any) {
     this._intern = intern
   }
 
-  get intern(): InternType | null {
+  get intern(): any| null {
     return this._intern
   }
 }

@@ -3,7 +3,7 @@ import { CompanyType } from '../types/company/company-type';
 import { PoeType } from '../types/poe/poe-type';
 export class InternDTO { 
     @Expose({name: '_id'})
-    id?: number;
+    id?: string;
     @Expose() 
     lastname!: string; 
     @Expose() 
