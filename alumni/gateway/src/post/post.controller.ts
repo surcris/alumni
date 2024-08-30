@@ -19,7 +19,6 @@ export class PostController {
 
 	@Get(':page')
 	findAll(@Param('page') page: number, @Res() res: Response) {
-		console.log('Page: ' + page);
 		this._service
 			.findAll(page)
 			.pipe(take(1))
