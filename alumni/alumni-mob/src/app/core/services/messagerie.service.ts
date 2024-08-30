@@ -31,7 +31,7 @@ export class MessagerieService {
     let senderId;
 
     //envoie du message 
-    this._socket.emit()
+    // this._socket.emit()
   }
 
 
