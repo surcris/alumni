@@ -1,34 +1,60 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { InternDTO } from 'src/app/core/internDto/internDto'; 
+import { Component, OnInit } from '@angular/core';
+import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
+import { take } from 'rxjs';
+
+import { WsChatService } from 'src/app/core/services/ws-chat-service'; 
+import { SocketConnectionType } from '../Dto/socket-connection.type'; 
+import { SocketMessageType } from '../Dto/socket-message.type'; 
 import { InternService } from 'src/app/core/services/intern.service';
-import { MessagerieService } from 'src/app/core/services/messagerie.service';
+import { InternType } from 'src/app/core/types/intern/inter-type'; 
 
 @Component({
-  selector: 'app-intern',
-  templateUrl: './intern.component.html',
-  styleUrls: ['./intern.component.scss'],
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.scss'],
 })
-export class InternComponent  implements OnInit {
-  @Input() 
-  interns: InternDTO[] = []; 
-  detailsVisibility: boolean[] = [];
-  constructor(private internService: InternService,
-    private router: Router,
-    private _mesService: MessagerieService
-  ) {
-    this.detailsVisibility = new Array(this.interns.length).fill(false);
-  } 
-  
-  ngOnInit(): void { 
-    this.internService.findAll().subscribe((data: InternDTO[]) => { 
-      this.interns = data; });
-   }
-   viewDetails(index: number): void {
-    this.detailsVisibility[index] = !this.detailsVisibility[index];
-    this._mesService.connexion()
+export class ChatComponent  implements OnInit {
+
+  public message: string = ''
+  public recievedMessages: Array<SocketMessageType> = []
+  public sendedMessages: Array<SocketMessageType> = []
+
+  private _sid: string = ''
+  public intern!: InternType
+  public messages: Array<any> = []
+
+  constructor(
+    private _modalController: ModalController,
+    private _wsService: WsChatService,
+    private _internService: InternService
+  ) { }
+
+  ngOnInit() {
+    this.intern = this._internService.intern!
+
+    this._wsService.receiveMessage()
+      .subscribe((filteredMessages: Array<any>) => {
+        this.messages = filteredMessages
+      })
   }
 
-  openChat(intern: InternDTO): void {
-    alert(`Ouverture du chat pour ${intern.firstname} ${intern.lastname}`);
-  } } 
+  onSend(): void {
+    this._wsService.sendMessage(this.message)
+      .subscribe((filteredMessages: Array<any>) => {
+        this.message = ''
+        this.messages = filteredMessages
+      })
+    
+  }
+
+  onCancel(): void {
+    this._modalController.dismiss()
+    this._wsService.disconnect()
+  }
+
+  onIonInfinite(ev: any) {
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+}
