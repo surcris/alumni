@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InternService } from 'src/app/core/services/intern.service';
 import { InternType } from 'src/app/core/types/intern/inter-type';
 import { InternDTO } from '../core/internDto/internDto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-messagerie',
@@ -12,7 +13,8 @@ export class MessagerieComponent implements OnInit {
   public interns: Array<InternDTO> = [];
 
   constructor(
-    private _internService: InternService,
+    private _internService: InternService,    
+    private _router: Router // Inject the Router
   ) {}
 
   ngOnInit() {
@@ -23,11 +25,12 @@ export class MessagerieComponent implements OnInit {
   }
 
   // Method to select an intern and set it in the service
-  selectIntern(intern: InternType): void {
+  selectIntern(intern: InternDTO): void {
     this._internService.intern = intern;
   }
-  openChat(intern: InternDTO): void {
-    this._internService.intern = intern;
-    // Navigate to the chat component, pass the selected intern
+  openChat(intern: InternDTO) {
+    this.selectIntern(intern);
+    // Navigate to the ChatComponent within the same tab
+    this._router.navigate(['/chat']);
   }
 }

@@ -10,11 +10,11 @@ import { InternType } from '../core/types/intern/inter-type';
 })
 export class Tab3Page implements OnInit {
 
-  //public interns: Array<InternType> = []
+  // public interns: Array<InternType> = []
 
-  constructor(
-    //private _service: InternService,
-  ) {}
+  // constructor(
+  //   private _service: InternService,
+  // ) {}
 
   ngOnInit(): void {
   //   this._service.findAll()
@@ -27,8 +27,9 @@ export class Tab3Page implements OnInit {
   //       },
   //       error: (error: any) => {}
   //     })
-   }
+  // }
 
   // onCancel(): void {
   //   return
    }
+}

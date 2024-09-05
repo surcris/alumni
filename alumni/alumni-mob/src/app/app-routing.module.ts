@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/no-auth.guard';
+import { MessagerieComponent } from './messagerie/messagerie.component';
+import { ChatComponent } from './tab3/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,9 @@ const routes: Routes = [
     path: 'first-connexion',
     loadChildren: () => import('./first-connexion/first-connexion.module').then( m => m.FirstConnexionPageModule)
   },
+  { path: 'messagerie', component: MessagerieComponent },
+  { path: 'chat', component: ChatComponent },
+  { path: '', redirectTo: '/messagerie', pathMatch: 'full' }, // Redirect to messagerie by default
 ];
 @NgModule({
   imports: [
