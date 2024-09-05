@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    @for (user of users; track user.id) {
+      <ion-card>
+        <img alt="avatar" [src]="user.avatar" />
+        <ion-card-header>
+          <ion-card-title>{{user.first_name}}</ion-card-title>
+          <ion-card-subtitle>{{user.last_name}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{user.email}}
+        </ion-card-content>
+      </ion-card>
+    }
+  </div>
+</ion-content>
