@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Roles } from '../models/roles.enum';
 
 @Entity({
     name: 'user'
 })
 export class UserEntity {
     @PrimaryGeneratedColumn()
-    id: number
+    id?: number
 
     @Column()
     email: string
@@ -14,7 +15,7 @@ export class UserEntity {
     @Column()
     password: string
 
-    @Column()
-    role: string
+    @Column({ type: 'enum', enum: Roles, default: Roles.Intern })
+    role: Roles
 
 }

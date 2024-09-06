@@ -10,37 +10,47 @@ import {
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
-import { UserType } from './entities/user.type';
+import { UserTypeDto } from './dto/user-type.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-
-  // @MessagePattern({user: 'one'})
-  // findOne(payload: any): UserType | null {
-  //   return this.userService.findOne(payload.id);
-  // }
+  constructor(private readonly _userService: UserService) {}
 
   @MessagePattern({ user: 'all' })
   findAll() {
-    return this.userService.findAll();
+    return this._userService.findAll();
   }
-  @MessagePattern({ cmd: 'user' })
+  
+  @MessagePattern({ user: 'user' })
   findOne(@Payload() payload: any) {
-    Logger.log(`test : ${JSON.stringify(payload)}`);
-    return this.userService.findOne(payload.payload);
+    return this._userService.findOne(payload.payload);
   }
 
-  @MessagePattern({ cmd: 'auth' })
+  @MessagePattern({ user: 'createUser' })
+  createUser(@Payload() payload: UserTypeDto) {
+    return this._userService.createUser(plainToInstance(UserTypeDto, payload))
+  }
+
+  @MessagePattern({ user: 'updateUser' })
+  updateUser(@Payload() payload: any) {
+    return this._userService.updateUser(payload.id, payload)
+  }
+
+  @MessagePattern({ user: 'deleteUser' })
+  deleteUser(@Payload() payload: any){
+    return this._userService.deleteUser(payload.id)
+  }
+
+  @MessagePattern({ user: 'auth' })
   authUser(@Payload() payload: any) {
-    Logger.log(`test Auth : ${JSON.stringify(payload)}`);
-    return this.userService.authUser(payload.payload);
+    return this._userService.authUser(payload.payload);
   }
 
-  @MessagePattern({ cmd: 'password' })
+  @MessagePattern({ user: 'password' })
   createUserPassword(@Payload() receivedpayload: any) {
     console.log('payloadms: ' + JSON.stringify(receivedpayload));
-    return this.userService.createUserPassword(
+    return this._userService.createUserPassword(
       receivedpayload.email,
       receivedpayload.password,
     );
