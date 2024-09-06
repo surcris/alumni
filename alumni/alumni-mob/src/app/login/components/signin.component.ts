@@ -5,7 +5,7 @@ import { LoginService } from '../services/login.service';
 import { map, take } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
@@ -15,13 +15,15 @@ import { StorageService } from 'src/app/core/services/storage.service';
 })
 export class SigninComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
+  private desiredUrl = ''
 
   constructor(
     private _formBuilder: FormBuilder,
     private _service: LoginService,
     private _toastController: ToastController,
     private _router: Router,
-    private _storage: StorageService
+    private _storage: StorageService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -50,9 +52,13 @@ export class SigninComponent implements OnInit {
           // }
           if (isValid.body.status === 204) {
             this._storage.store('auth', "a.b.c");
-            this._router
-              .navigate(['tabs', 'tab1'])
-              .then(() => console.log('Routing complete'));
+            this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
+            console.log('url' + this.desiredUrl)
+            debugger
+            if (this.desiredUrl){
+              this._router.navigateByUrl(this.desiredUrl);
+            } else
+            this._router.navigateByUrl('tabs/tab1');
           } else {
             const toast = await this._toastController.create({
               message: isValid.body.message,
