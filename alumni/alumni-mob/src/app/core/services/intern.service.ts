@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { InternDTO } from '../internDto/internDto';
 import { InternTransformer } from '../transformers/intern.transformer';
+import { StorageService } from './storage.service';
 
 
 @Injectable({
@@ -15,7 +16,8 @@ export class InternService {
   private _intern: InternType | null = null
 
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _storage: StorageService
   ) { }
 
   public companyFilter(company: string): Array<InternType> {
@@ -27,7 +29,13 @@ export class InternService {
    * @returns Observable<InternType[]>
    */
   public findAll(): Observable<Array<InternDTO>> {
-    return this._httpClient.get<Array<any>>(this.URI).pipe(
+    
+    return this._httpClient.get<Array<any>>(this.URI,{
+      headers:{
+        authorization: 'Bearer '+this._storage.retrieve('auth')
+      }
+    }
+    ).pipe(
       map((interns: Array<any>) => {
         return interns.map((intern: any) => {
           return InternTransformer.transform(intern)

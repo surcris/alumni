@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { PostTransfo } from '../transformers/post-transfo';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class PostService {
   
 
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _storage: StorageService
   ) { 
     
   }
@@ -22,7 +24,11 @@ export class PostService {
    * @returns Observable<PostType[]>
    */
   public findAll(page: number): Observable<Array<PostTransfo>> {  // Create params object
-    return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`).pipe(
+    return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`,{
+      headers:{
+        authorization: 'Bearer '+this._storage.retrieve('auth')
+      }
+    }).pipe(
       map(data => plainToInstance(PostTransfo, data))
     );
   }

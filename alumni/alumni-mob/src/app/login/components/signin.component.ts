@@ -51,7 +51,7 @@ export class SigninComponent implements OnInit {
           //   // Gérer l'échec de l'authentification
           // }
           if (isValid.body.status === 204) {
-            this._storage.store('auth', "a.b.c");
+            this._storage.store('auth', isValid.body.token);
             this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
             console.log('url' + this.desiredUrl)
             debugger
