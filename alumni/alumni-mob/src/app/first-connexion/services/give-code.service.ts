@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class GiveCodeService {
   private readonly URI: string = 'http://localhost:3000/user'
 
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _storage: StorageService
   ) { }
 
     /**
@@ -19,7 +21,8 @@ export class GiveCodeService {
    */
     public generateCode(): Observable<number>{
       return this._httpClient.get<number>(
-        this.URI + '/code'
+        this.URI + '/code',
+        
       )
     }
 }

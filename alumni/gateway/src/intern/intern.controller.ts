@@ -6,17 +6,20 @@ import {
 	Param,
 	Patch,
 	Post,
-	Res
+	Res,
+	UseGuards
 } from '@nestjs/common';
 import { InternType } from './models/intern.type';
 import { InternService } from './intern.service';
 import { take } from 'rxjs';
 import { Response } from 'express';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('intern')
 export class InternController {
 	constructor(private _service: InternService) {}
 
+	@UseGuards(AuthGuard)
 	@Get()
 	findAll(@Res() res: Response) {
 		this._service

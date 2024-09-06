@@ -5,6 +5,7 @@ import { UserType } from './entities/user.type';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { cp } from 'fs';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserTypeDto } from './dto/user-type.dto';
@@ -25,6 +26,7 @@ export class UserRepository {
     return this._repository.find()
   }
 
+
   createUser(user: UserTypeDto) {
     return this._repository.insert(user)
   }
@@ -37,14 +39,21 @@ export class UserRepository {
     return this._repository.delete({id: id})
   }
 
-  createUserPassword(login: string, password: string) {
-    return this._repository.update({email:login}, {password:password})
+
+  async createUserPassword(login: string, password: string) {
+    
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(password, salt);
+    return this._repository.update({email:login}, {password:hash})
+
   }
 
   async validateUser(email: string, password: string): Promise<UserEntity | null> {
     const user = await this._repository.findOneBy({ email });
 
-    if (user && password === user.password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (user && isMatch) {
       return user; // Si l'email et le mot de passe correspondent, retourner l'utilisateur
     } else {
       return null; // Sinon, retourner null pour indiquer une échec d'authentification

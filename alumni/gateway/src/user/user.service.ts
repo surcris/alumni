@@ -6,6 +6,8 @@ import { Observable, of } from 'rxjs';
 import { UserType } from './user.type';
 import { UserTypeDto } from './dto/user-type.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtService } from '@nestjs/jwt';
+
 
 @Injectable()
 export class UserService {
@@ -13,7 +15,9 @@ export class UserService {
 	// 	return 'This action adds a new user';
 	// }
 
-	constructor(@Inject('USER') private _client: ClientProxy) {}
+	constructor(
+		@Inject('USER') private _client: ClientProxy,
+		private jwtService: JwtService) {}
 
 	findAll(): Observable<Array<UserType>> {
 		const pattern: any = { user: 'all' };
@@ -95,4 +99,14 @@ export class UserService {
 		const pattern: any = { user: 'password' };
 		return this._client.send<object>(pattern, payload);
 	}
+
+	async generateToken(email:string):Promise<any>{
+		const payload = { email };
+
+		return await this.jwtService.signAsync(payload)
+	}
+
+	// verifyToken(token:string){
+	// 	this.jwtService.verify(token)
+	// }
 }
