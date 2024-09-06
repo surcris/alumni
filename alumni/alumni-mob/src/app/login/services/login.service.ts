@@ -11,7 +11,7 @@ export class LoginService {
   constructor(private _httpClient: HttpClient) { }
 
   doLogin(credentials: any): Observable<HttpResponse<any>> {
-    if (credentials.login === 'admin' && credentials.password === 'admin') {
+    if (credentials.login === 'stagiaire' && credentials.password === 'password') {
       // Ici retourner un 200 ok
       return of(
         new HttpResponse<any>({
