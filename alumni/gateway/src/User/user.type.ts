@@ -1,5 +1,5 @@
 export type UserType = {
-	id: number;
+	id?: number;
 	login: string;
 	password: string;
 	role: string;

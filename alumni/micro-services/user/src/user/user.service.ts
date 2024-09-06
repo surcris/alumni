@@ -4,6 +4,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UserType } from './entities/user.type';
 import { response } from 'express';
+import { UserEntity } from './entities/user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserTypeDto } from './dto/user-type.dto';
 
 @Injectable()
 export class UserService {
@@ -11,26 +14,31 @@ export class UserService {
   constructor(
     private _repository: UserRepository,
   ) {}
-  
-  //  create(createUserDto: CreateUserDto) {
-  //   return 'This action adds a new user';
-  // }
 
-
-  // findOne(id: number): UserType | null {
-  //   return this._repository.findOne(id)
-  // }
-
-  findAll(): Promise<Array<UserType>> {
+  findAll(): Promise<Array<UserEntity>> {
     return this._repository.findAll()
   }
-  async findOne(login: string){
 
+  async findOne(login: string){
     const userEntry = await this._repository.findOne(login);
     console.log("service" + JSON.stringify(userEntry))
     console.log(login)
     return userEntry ? true : false
   }
+
+  createUser(user: UserTypeDto) {
+    return this._repository.createUser(user)
+  }
+
+  updateUser(id: number, updateItem: UpdateUserDto) {
+    return this._repository.updateUser(id, updateItem)
+  }
+
+  deleteUser(id: number){
+    return this._repository.deleteUser(id)
+  }
+
+  
 
   async authUser(login: any){
     const userEntry = await this._repository.validateUser(login.email,login.mdp);

@@ -6,6 +6,8 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { cp } from 'fs';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserTypeDto } from './dto/user-type.dto';
 
 @Injectable()
 export class UserRepository {
@@ -19,13 +21,24 @@ export class UserRepository {
     return tab;
   }
 
-  findAll(): Promise<Array<UserType>> {
+  findAll(): Promise<Array<UserEntity>> {
     return this._repository.find()
+  }
+
+  createUser(user: UserTypeDto) {
+    return this._repository.insert(user)
+  }
+
+  updateUser(id: number, updateItem: UpdateUserDto) {
+    return this._repository.update({id: id}, updateItem)
+  }
+
+  deleteUser(id: number){
+    return this._repository.delete({id: id})
   }
 
   createUserPassword(login: string, password: string) {
     return this._repository.update({email:login}, {password:password})
-    
   }
 
   async validateUser(email: string, password: string): Promise<UserEntity | null> {
