@@ -3,6 +3,9 @@ import { InternService } from 'src/app/core/services/intern.service';
 import { InternType } from 'src/app/core/types/intern/inter-type';
 import { InternDTO } from '../core/internDto/internDto';
 import { Router } from '@angular/router';
+import { WsChatService } from '../core/services/ws-chat-service';
+import { MessagerieService } from '../core/services/messagerie.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-messagerie',
@@ -14,10 +17,14 @@ export class MessagerieComponent implements OnInit {
 
   constructor(
     private _internService: InternService,    
-    private _router: Router // Inject the Router
+    private _router: Router, // Inject the Router
+    private _messagerieService: MessagerieService,
+    private _userService: UserService
   ) {}
 
   ngOnInit() {
+    
+    this._messagerieService.connexion()
     // Load all interns when the component initializes
     this._internService.findAll().subscribe((interns: Array<InternDTO>) => {
       this.interns = interns;

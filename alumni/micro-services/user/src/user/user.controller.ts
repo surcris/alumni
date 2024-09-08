@@ -45,4 +45,12 @@ export class UserController {
       receivedpayload.password,
     );
   }
+
+  @MessagePattern({ cmd: 'getId' })
+  getUserIdByEmail(@Payload() receivedpayload: any) {
+    console.log('payload Id : ' + JSON.stringify(receivedpayload));
+    return this.userService.getUserIdByEmail(
+      receivedpayload.email
+    );
+  }
 }

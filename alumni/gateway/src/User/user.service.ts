@@ -36,6 +36,12 @@ export class UserService {
 		return of(digit);
 	}
 
+	getMyId(email: string):Observable<string>{
+		const pattern: any = { cmd: 'getId' };
+		const payload: { email: string } = { email };
+		return this._client.send<string>(pattern, { payload });
+	}
+
 	changePassword(payload: object) {
 		console.log('SERVICE: ' + JSON.stringify(payload));
 		const pattern: any = { cmd: 'password' };

@@ -1,5 +1,5 @@
 
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Logger, Param, Patch, Post, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
@@ -36,6 +36,11 @@ export class UserController {
 		return this.userService.generateRandomNumber(6)
 	}
 
+	@Post('/getId')
+	getMyId(@Body() info:any): Observable<string>{
+		Logger.log(info.email)
+		return this.userService.getMyId(info.email)
+	}
 	@Patch('/password')
 	changePassword(@Body() payload: any, @Res() resp: Response) {
 		console.log(JSON.stringify(payload))
@@ -56,6 +61,7 @@ export class UserController {
 		})
 		
 	}
+
 
 	// 	@Delete(':id')
 	// 	remove(@Param('id') id: string) {

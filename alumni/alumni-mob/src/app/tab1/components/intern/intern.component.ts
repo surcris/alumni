@@ -10,6 +10,7 @@ import { InternType } from 'src/app/core/types/intern/inter-type';
 import { InternDTO } from 'src/app/core/internDto/internDto';
 import { Router } from '@angular/router';
 import { MessagerieService } from 'src/app/core/services/messagerie.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-intern', 
@@ -23,7 +24,8 @@ export class InternComponent  implements OnInit {
   detailsVisibility: boolean[] = [];
   constructor(private internService: InternService,
     private router: Router,
-    private _mesService: MessagerieService
+    private _mesService: MessagerieService,
+    // private _userService: UserService
   ) {
     this.detailsVisibility = new Array(this.interns.length).fill(false);
   } 
@@ -34,7 +36,7 @@ export class InternComponent  implements OnInit {
    }
    viewDetails(index: number): void {
     this.detailsVisibility[index] = !this.detailsVisibility[index];
-    this._mesService.connexion('string ça marche n\'importe quoi')
+    this._mesService.connexion()
   }
 
   openChat(intern: InternDTO): void {

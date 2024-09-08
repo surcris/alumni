@@ -7,6 +7,7 @@ import { response } from 'express';
 
 @Injectable()
 export class UserService {
+  
   constructor(
     private _repository: UserRepository,
   ) {}
@@ -44,5 +45,11 @@ export class UserService {
     if(updateObject.affected >0)
       return {status: 204, message: 'OK'}   
     return {status: 400, message: 'KO'}  
+  }
+
+  async getUserIdByEmail(email: any) {
+    const userEntry = await this._repository.findOne(email);
+    console.log("service Id" + JSON.stringify(userEntry.id))
+    return userEntry.id
   }
 }

@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Injectable, Logger, Post } from "@nestjs/common";
 import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server } from "socket.io";
 import { RequestMessageType } from "./dto/request-message.type";
@@ -25,7 +25,7 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
     async chat(@MessageBody() data: RequestMessageType): Promise<any> {
         Logger.log(`Received ${JSON.stringify(data)}`)
         // Find the recipient
-        const recipientSocket: any = this._userToSocket(data.recipient)
+        const recipientSocket: any = this.userToSocket(data.recipient)
 
         const payload: any = {
             datetime: new Date(),
@@ -39,7 +39,7 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
     
     handleConnection(client: any, ...args: any[]): void {
         const { sockets } = this.wsServer.sockets
-        const userId = client.handshake.query.id
+        const userId = client.handshake.query.userId
                     
         Logger.log(`Connection was established for ${userId}`)
 
@@ -52,8 +52,10 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
         this._clients.delete(userId)
     }
 
-    private _userToSocket(userId: string): SocketUserType {
+    userToSocket(userId: string): SocketUserType {
         return this._clients.get(userId)
 
     }
+
+    
 }
