@@ -1,7 +1,5 @@
 {
   "name": "myPwaApp",
-  "integrations": {
-    "capacitor": {}
-  },
+  "integrations": {"capacitor": {}},
   "type": "angular"
 }

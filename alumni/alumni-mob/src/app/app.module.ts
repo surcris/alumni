@@ -12,11 +12,7 @@ import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    SocketIoModule.forRoot(AppModule.wsConfig),
-    AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), SocketIoModule.forRoot(AppModule.wsConfig),AppRoutingModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideHttpClient()
