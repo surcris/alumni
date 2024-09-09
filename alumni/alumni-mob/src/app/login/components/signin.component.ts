@@ -43,17 +43,9 @@ export class SigninComponent implements OnInit {
       .subscribe({
         next: async (isValid) => {
           console.log(isValid)
-          // if (isValid.body.status === 204) {
-          //   console.log('Authentification réussie', isValid);
-          //   // Effectuer d'autres actions si l'authentification est réussie
-          // } else {
-          //   console.log('Authentification échouée');
-          //   // Gérer l'échec de l'authentification
-          // }
           if (isValid.body.status === 204) {
             this._storage.store('auth', isValid.body.token);
             this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
-            console.log('url' + this.desiredUrl)
             
             if (this.desiredUrl){
               this._router.navigateByUrl(this.desiredUrl);

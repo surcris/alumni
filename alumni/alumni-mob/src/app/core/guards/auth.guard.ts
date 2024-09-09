@@ -15,16 +15,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    console.log('stat : '+state.toString())
-    console.log(' un truc '+ state.url)
-    console.log(' un truc '+ route.toString())
-    console.log(' un truc '+ state.root.toString())
     if (this._storageService.retrieve('auth')) {
       return true
     }
     // Enregistre l'URL demandée dans localStorage pour redirection après connexion
     this._storageService.store('redirectUrl', state.url);
-    console.log('stat : '+state.toString())
     this._router.navigate(['/', 'login'],{queryParams:{desiredUrl:state.url}})
     return false
   }
