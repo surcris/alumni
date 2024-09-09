@@ -13,7 +13,6 @@ import { JwtStrategy } from './jwt-strategy/jwt-strategy';
 		
 		JwtModule.register({
 			secret: jwtConstants.secret, // Clé secrète utilisée pour signer le JWT
-			signOptions: { expiresIn: '1440m' } // Facultatif : durée de validité du token
 		}),
 		ClientsModule.register([
 			{

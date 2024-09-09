@@ -1,7 +1,7 @@
 
 import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 import { Response } from 'express';
@@ -25,42 +25,45 @@ export class UserController {
 	}
 
 	@Post('/auth')
-	async isValidEmailAndMdp(@Body() login: any) {
+	async isValidEmailAndMdp(@Body() login: any,@Res() response: Response) {
 		try {
 			// Générez le token JWT avant de vérifier les identifiants
 
 			// Utilisez une promesse pour attendre la réponse de l'observable
-			const isValid = await new Promise((resolve, reject) => {
-			  this.userService.isValidEmailAndMdp(login.email, login.mdp).subscribe({
-				next: async (value:any) => {
-				  console.log('Valeur capturée:', JSON.stringify(value));
-				  
-				  if (value.status === "204") {
-					const generatetoken = await this.userService.generateToken(value.payload);
-					// Si les identifiants sont valides, retournez une réponse avec le token
-					return {
-					  status: 204,
-					  message: 'OK',
-					  token: generatetoken // Retourne le token JWT généré
-					};
-				  } else {
-					// Si l'authentification échoue
-					return {
-					  status: 401,
-					  message: 'Email ou mot de passe incorrect'
-					};
-				  }
-				  resolve(value);  // Renvoie la valeur si la validation réussit
-				},
-				error: (err) => {
-				  console.error('Erreur:', err);
-				  reject(err);  // Rejette la promesse en cas d'erreur
-				},
-				complete: () => {
-				  console.log('Validation terminée');
-				}
-			  });
-			});
+			
+			//la valeur observable sert juste a conprendre le 
+			  return this.userService.isValidEmailAndMdp(login.email, login.mdp)
+			  .pipe(
+				map(async (value:any) => {
+					if (value.status === 204) {
+						const generatetoken = await this.userService.generateToken(value.payload);
+						// Si les identifiants sont valides, retournez une réponse avec le token
+						Logger.log("Success")
+						// resultat de l'observable 
+						response.status(204).send ({
+						  status: 204,
+						  message: 'OK',
+						  token: generatetoken // Retourne le token JWT généré
+						});
+						return ;
+					  } else {
+						Logger.log("err")
+						response.status(401).send({
+							status: 401,
+							message: 'Email ou mot de passe incorrect',
+							token:null
+						  })
+						// Si l'authentification échoue
+						return ;
+					  }
+				})
+			  )
+			  
+			  
+			
+		
+			
+			
 		  } catch (err) {
 			// Gérer les erreurs potentielles ici
 			return {

@@ -53,22 +53,23 @@ export class SigninComponent implements OnInit {
             this._router.navigateByUrl('tabs/tab1');
           } else {
             
-            const toast = await this._toastController.create({
-              message: isValid.body.message,
-              duration: 2000,
-              position: 'middle',
-              buttons: [
-                {
-                  text: 'Réessayer',
-                },
-              ],
-            });
-            toast.present().then(() => null);
-            toast.onWillDismiss().then(() => this.form.reset());
+            
           }
         },
-        error: (error: any) => {
+        error: async (error: any) => {
           console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`);
+          const toast = await this._toastController.create({
+            message: error.message,
+            duration: 2000,
+            position: 'middle',
+            buttons: [
+              {
+                text: 'Réessayer',
+              },
+            ],
+          });
+          toast.present().then(() => null);
+          toast.onWillDismiss().then(() => this.form.reset());
         },
       });
 
