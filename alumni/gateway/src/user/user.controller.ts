@@ -1,11 +1,13 @@
 
-import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 import { Response } from 'express';
 import { UserTypeDto } from './dto/user-type.dto';
+import { AdminGuard } from 'src/guards/admin.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -15,7 +17,7 @@ export class UserController {
 	// create(@Body() createUserDto: CreateUserDto) {
 	// 	return this.userService.create(createUserDto);
 	// }
-
+	@UseGuards(AdminGuard)
 	@Get()
 	findAll(): Observable<Array<UserType>> {
 		return this.userService.findAll().pipe(
@@ -27,9 +29,55 @@ export class UserController {
 			return this.userService.isValidEmailAelion(login)
 	}
 
-	@Post('/auth/')
-	isValidEmailAndMdp(@Body() login: any) {
-			return this.userService.isValidEmailAndMdp(login.email,login.mdp)
+	@Post('/auth')
+	async isValidEmailAndMdp(@Body() login: any) {
+		try {
+			// Générez le token JWT avant de vérifier les identifiants
+			
+			
+			// Utilisez une promesse pour attendre la réponse de l'observable
+			const isValid = await new Promise((resolve, reject) => {
+			  this.userService.isValidEmailAndMdp(login.email, login.mdp).subscribe({
+				next: async (value:any) => {
+				  console.log('Valeur capturée:', JSON.stringify(value));
+				  
+				  if (value.status === "204") {
+					const generatetoken = await this.userService.generateToken(value.payload);
+					// Si les identifiants sont valides, retournez une réponse avec le token
+					return {
+					  status: 204,
+					  message: 'OK',
+					  token: generatetoken // Retourne le token JWT généré
+					};
+				  } else {
+					// Si l'authentification échoue
+					return {
+					  status: 401,
+					  message: 'Email ou mot de passe incorrect'
+					};
+				  }
+				  resolve(value);  // Renvoie la valeur si la validation réussit
+				},
+				error: (err) => {
+				  console.error('Erreur:', err);
+				  reject(err);  // Rejette la promesse en cas d'erreur
+				},
+				complete: () => {
+				  console.log('Validation terminée');
+				}
+			  });
+			});
+		
+			
+			
+		  } catch (err) {
+			// Gérer les erreurs potentielles ici
+			return {
+			  status: 500,
+			  message: 'Une erreur est survenue lors de l\'authentification',
+			  error: err
+			};
+		  }
 	}
 
 	@Get('/code')
@@ -37,6 +85,7 @@ export class UserController {
 		return this.userService.generateRandomNumber(6)
 	}
 
+	@UseGuards(AuthGuard)
 	@Post('/getId')
 	getMyId(@Body() info:any): Observable<string>{
 		// Logger.log(info.email)
@@ -73,6 +122,7 @@ export class UserController {
 	expects a request body containing user data in the format of `UserTypeDto`. The method then calls
 	the `createUser` method of the `userService` instance to actually create the user based on the
 	provided data. */
+	@UseGuards(AdminGuard)
 	@Post('/createUser')
 	createUser(@Body() user:UserTypeDto){
 		return this.userService.createUser(user)
@@ -81,6 +131,7 @@ export class UserController {
 	/* The `@Patch('/updateUser')` decorator is defining a PATCH endpoint for updating an existing user in
 	the UserController class. The `updateUser` method is responsible for handling the PATCH request and
 	expects a request body containing user data in the format of `UserTypeDto`. */
+	@UseGuards(AdminGuard)
 	@Patch('/updateUser')
 	updateUser(@Body() user:UserTypeDto) {
 		return this.userService.updateUser(user)
@@ -90,6 +141,7 @@ export class UserController {
 	expects an `id` parameter in the URL. When a DELETE request is made to this endpoint with a specific
 	`id`, the `deleteUser` method is called with the `id` parameter extracted from the URL using the
 	`@Param('id')` decorator. */
+	@UseGuards(AdminGuard)
 	@Delete('/deleteUser/:id')
 	deleteUser(@Param('id') id: number) {
 		return this.userService.deleteUser(id);

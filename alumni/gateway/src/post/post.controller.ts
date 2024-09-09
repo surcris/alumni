@@ -6,17 +6,20 @@ import {
 	Param,
 	Patch,
 	Post,
-	Res
+	Res,
+	UseGuards
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { take } from 'rxjs';
 import { Response } from 'express';
 import { PostType } from './models/post.type';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller(`post`)
 export class PostController {
 	constructor(private _service: PostService) {}
 
+	@UseGuards(AuthGuard)
 	@Get(':page')
 	findAll(@Param('page') page: number, @Res() res: Response) {
 		this._service
@@ -36,6 +39,7 @@ export class PostController {
 			}); //une autre façon de désouscrire
 	}
 
+	@UseGuards(AuthGuard)
 	@Get('findOne/:id')
 	findOne(@Param('id') id: string, @Res() res: Response) {
 		this._service
@@ -55,6 +59,7 @@ export class PostController {
 			});
 	}
 
+	@UseGuards(AuthGuard)
 	@Post()
 	add(@Body() post: PostType, @Res() res: Response) {
 		this._service
@@ -74,6 +79,7 @@ export class PostController {
 			});
 	}
 
+	@UseGuards(AuthGuard)
 	@Patch()
 	update(@Body() updateObject: any, @Res() res: Response) {
 		this._service
@@ -93,6 +99,7 @@ export class PostController {
 			});
 	}
 
+	@UseGuards(AuthGuard)
 	@Delete(':id')
 	delete(@Param('id') id: string, @Res() res: Response) {
 		this._service

@@ -26,7 +26,8 @@ export class PostService {
   public findAll(page: number): Observable<Array<PostTransfo>> {  // Create params object
     return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`,{
       headers:{
-        authorization: 'Bearer '+this._storage.retrieve('auth')
+        authorization: 'Bearer '+this._storage.retrieve('auth').accessToken,
+        authorizationRefresh: 'Bearer '+this._storage.retrieve('auth').refreshToken,
       }
     }).pipe(
       map(data => plainToInstance(PostTransfo, data))

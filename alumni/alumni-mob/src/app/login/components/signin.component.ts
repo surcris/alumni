@@ -38,11 +38,11 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this._service
-      .doAuth(this.form.value)
-      .pipe(take(1))
+    console.log(this.form.value)
+    this._service.doAuth(this.form.value)
       .subscribe({
         next: async (isValid) => {
+          console.log(isValid)
           // if (isValid.body.status === 204) {
           //   console.log('Authentification réussie', isValid);
           //   // Effectuer d'autres actions si l'authentification est réussie
@@ -54,12 +54,13 @@ export class SigninComponent implements OnInit {
             this._storage.store('auth', isValid.body.token);
             this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
             console.log('url' + this.desiredUrl)
-            debugger
+            
             if (this.desiredUrl){
               this._router.navigateByUrl(this.desiredUrl);
             } else
             this._router.navigateByUrl('tabs/tab1');
           } else {
+            
             const toast = await this._toastController.create({
               message: isValid.body.message,
               duration: 2000,

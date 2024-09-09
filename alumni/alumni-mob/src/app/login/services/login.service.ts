@@ -35,7 +35,7 @@ export class LoginService {
       email: credentials.login,
       mdp: credentials.password
     };
-    return this._httpClient.post<Observable<object>>(
+    return this._httpClient.post<Observable<any>>(
       this.URI + '/auth',
       payload,
       { observe: 'response' }

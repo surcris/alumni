@@ -32,7 +32,8 @@ export class InternService {
     
     return this._httpClient.get<Array<any>>(this.URI,{
       headers:{
-        authorization: 'Bearer '+this._storage.retrieve('auth')
+        authorization: 'Bearer '+this._storage.retrieve('auth').accessToken,
+        authorizationRefresh: 'Bearer '+this._storage.retrieve('auth').refreshToken,
       }
     }
     ).pipe(

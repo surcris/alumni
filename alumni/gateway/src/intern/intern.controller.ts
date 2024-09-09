@@ -14,6 +14,7 @@ import { InternService } from './intern.service';
 import { take } from 'rxjs';
 import { Response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('intern')
 export class InternController {
@@ -39,6 +40,7 @@ export class InternController {
 			}); //une autre façon de désouscrire
 	}
 
+	@UseGuards(AuthGuard)
 	@Get('findOne/:id')
 	findOne(@Param('id') id: string, @Res() res: Response) {
 		this._service
@@ -77,6 +79,7 @@ export class InternController {
 			});
 	}
 
+	@UseGuards(AuthGuard)
 	@Patch()
 	update(@Body() updateObject: any, @Res() res: Response) {
 		this._service
@@ -95,7 +98,7 @@ export class InternController {
 				}
 			});
 	}
-
+	@UseGuards(AdminGuard)
 	@Delete(':id')
 	delete(@Param('id') id: string, @Res() res: Response) {
 		this._service

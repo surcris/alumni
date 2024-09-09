@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserType } from './entities/user.type';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { cp } from 'fs';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -53,7 +53,7 @@ export class UserRepository {
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if (user && isMatch) {
+    if (isMatch) {
       return user; // Si l'email et le mot de passe correspondent, retourner l'utilisateur
     } else {
       return null; // Sinon, retourner null pour indiquer une échec d'authentification

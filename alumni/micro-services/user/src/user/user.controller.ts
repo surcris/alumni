@@ -44,6 +44,7 @@ export class UserController {
 
   @MessagePattern({ user: 'auth' })
   authUser(@Payload() payload: any) {
+    Logger.log(JSON.stringify(payload))
     return this._userService.authUser(payload.payload);
   }
 

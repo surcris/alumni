@@ -1,5 +1,5 @@
 
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, of } from 'rxjs';
@@ -7,6 +7,7 @@ import { UserType } from './user.type';
 import { UserTypeDto } from './dto/user-type.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from 'src/constante';
 
 
 @Injectable()
@@ -100,12 +101,41 @@ export class UserService {
 		return this._client.send<object>(pattern, payload);
 	}
 
-	async generateToken(email:string):Promise<any>{
-		const payload = { email };
+	async generateToken(infoU:any):Promise<any>{
+		const payload = { infoU };
 
-		return await this.jwtService.signAsync(payload)
+		const accessToken = await this.jwtService.signAsync(payload, {
+			secret: jwtConstants.secret,
+			expiresIn: '15m', // Expire dans 15 minutes
+		  });
+	  
+		  const refreshToken = await this.jwtService.signAsync(payload, {
+			secret: jwtConstants.secretRefresh,
+			expiresIn: '7d', // Expire dans 7 jours
+		  });
+	  
+		  return {
+			accessToken,
+			refreshToken,
+		  };
 	}
 
+	async refreshAccessToken(refreshToken: string,infoU:any): Promise<{ accessToken: string }> {
+		try {
+		  const payload = await this.jwtService.verifyAsync(refreshToken, {
+			secret: jwtConstants.secretRefresh, // Vérifier avec le secret du refresh token
+		  });
+	
+		  const newAccessToken = await this.jwtService.signAsync(
+			infoU,
+			{ secret: jwtConstants.secret, expiresIn: '15m' } // Nouveau access token
+		  );
+	
+		  return { accessToken: newAccessToken };
+		} catch (error) {
+		  throw new UnauthorizedException('Invalid refresh token');
+		}
+	  }
 	// verifyToken(token:string){
 	// 	this.jwtService.verify(token)
 	// }
