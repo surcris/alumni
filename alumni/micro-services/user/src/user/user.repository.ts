@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { cp } from 'fs';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserTypeDto } from './dto/user-type.dto';
+import { Roles } from './models/roles.enum';
 
 @Injectable()
 export class UserRepository {
@@ -22,7 +23,10 @@ export class UserRepository {
     return tab;
   }
 
-  findAll(): Promise<Array<UserEntity>> {
+  findAll(role: Roles): Promise<Array<UserEntity>> {
+    if (Roles.Admin) {
+      return this._repository.find({where:{role: Roles.Intern}})
+    }
     return this._repository.find()
   }
 

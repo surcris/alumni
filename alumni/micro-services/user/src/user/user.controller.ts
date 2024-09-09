@@ -12,14 +12,15 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
 import { UserTypeDto } from './dto/user-type.dto';
 import { plainToInstance } from 'class-transformer';
+import { Roles } from './models/roles.enum';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 
   @MessagePattern({ user: 'all' })
-  findAll() {
-    return this._userService.findAll();
+  findAll(@Payload() payload: any) {
+    return this._userService.findAll(Roles[payload.role]);
   }
   
   @MessagePattern({ user: 'user' })

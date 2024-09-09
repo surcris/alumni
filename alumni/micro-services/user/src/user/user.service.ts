@@ -7,6 +7,7 @@ import { response } from 'express';
 import { UserEntity } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserTypeDto } from './dto/user-type.dto';
+import { Roles } from './models/roles.enum';
 
 @Injectable()
 export class UserService {
@@ -15,8 +16,8 @@ export class UserService {
     private _repository: UserRepository,
   ) {}
 
-  findAll(): Promise<Array<UserEntity>> {
-    return this._repository.findAll()
+  findAll(role: Roles): Promise<Array<UserEntity>> {
+    return this._repository.findAll(role)
   }
 
   async findOne(login: string){

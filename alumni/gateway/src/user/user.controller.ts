@@ -1,5 +1,5 @@
 
-import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { UserType } from './user.type';
@@ -13,16 +13,11 @@ import { AuthGuard } from 'src/guards/auth.guard';
 export class UserController {
 	constructor(private userService: UserService) {}
 
-	// @Post()
-	// create(@Body() createUserDto: CreateUserDto) {
-	// 	return this.userService.create(createUserDto);
-	// }
+
 	@UseGuards(AdminGuard)
 	@Get()
-	findAll(): Observable<Array<UserType>> {
-		return this.userService.findAll().pipe(
-			take(1) // Autre façon d'arrêter d'observer
-		);
+	findAll(@Request() req): Observable<Array<UserType>> {
+		return this.userService.findAll(req.admin.role)
 	}
 	@Get('/log/:login')
 	isValidEmailAelion(@Param('login') login: string): Observable<boolean> {
@@ -33,8 +28,7 @@ export class UserController {
 	async isValidEmailAndMdp(@Body() login: any) {
 		try {
 			// Générez le token JWT avant de vérifier les identifiants
-			
-			
+
 			// Utilisez une promesse pour attendre la réponse de l'observable
 			const isValid = await new Promise((resolve, reject) => {
 			  this.userService.isValidEmailAndMdp(login.email, login.mdp).subscribe({
@@ -67,9 +61,6 @@ export class UserController {
 				}
 			  });
 			});
-		
-			
-			
 		  } catch (err) {
 			// Gérer les erreurs potentielles ici
 			return {
@@ -91,7 +82,7 @@ export class UserController {
 		// Logger.log(info.email)
 		return this.userService.getMyId(info.email)
 	}
-
+	
 	@Patch('/password')
 	changePassword(@Body() payload: any, @Res() resp: Response) {
 		console.log(JSON.stringify(payload))
@@ -111,11 +102,6 @@ export class UserController {
 		})
 	}
 
-
-	// 	@Delete(':id')
-	// 	remove(@Param('id') id: string) {
-	// 		return this.userService.remove(+id);
-	// 	}
 
 	/* The `@Post('/createUser')` decorator is defining a POST endpoint for creating a new user in the
 	UserController class. The `createUser` method is responsible for handling the POST request and
@@ -137,7 +123,7 @@ export class UserController {
 		return this.userService.updateUser(user)
 	}
 
-	/* The `@Delete('/deleteUser/:id')` decorator in the `UserController` class is defining a DELETE endpoint that
+	/** The `@Delete('/deleteUser/:id')` decorator in the `UserController` class is defining a DELETE endpoint that
 	expects an `id` parameter in the URL. When a DELETE request is made to this endpoint with a specific
 	`id`, the `deleteUser` method is called with the `id` parameter extracted from the URL using the
 	`@Param('id')` decorator. */
@@ -146,8 +132,4 @@ export class UserController {
 	deleteUser(@Param('id') id: number) {
 		return this.userService.deleteUser(id);
 	}
-
-
-
-
 }

@@ -20,9 +20,9 @@ export class UserService {
 		@Inject('USER') private _client: ClientProxy,
 		private jwtService: JwtService) {}
 
-	findAll(): Observable<Array<UserType>> {
+	findAll(request: string): Observable<Array<UserType>> {
 		const pattern: any = { user: 'all' };
-		return this._client.send<UserType[]>(pattern, {});
+		return this._client.send<UserType[]>(pattern, {role: request});
 	}
 
 	/**
