@@ -1,9 +1,9 @@
+import { Roles } from './roles.enum';
+
 export type User = {
-  id: number;
+  id?: number;
   email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
+  role: Roles;
 }
 
 export type Users = User[];

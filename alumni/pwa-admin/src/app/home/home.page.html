@@ -16,10 +16,9 @@
   <div id="container">
     @for (user of users; track user.id) {
       <ion-card>
-        <img alt="avatar" [src]="user.avatar" />
         <ion-card-header>
-          <ion-card-title>{{user.first_name}}</ion-card-title>
-          <ion-card-subtitle>{{user.last_name}}</ion-card-subtitle>
+          <ion-card-title>{{user.email}}</ion-card-title>
+          <ion-card-subtitle>{{user.role}}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>

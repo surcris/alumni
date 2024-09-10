@@ -18,10 +18,6 @@ export class HomePage implements OnInit {
   }
 
   loadUsers(){
-    // with mock data
-    // this.users = this.userSerivce.getUsersWithMock();
-
-    // with api
     this.userSerivce.getUsers().subscribe((users: Users) => {
       this.users = users;
     });

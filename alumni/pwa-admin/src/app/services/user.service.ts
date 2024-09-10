@@ -19,9 +19,7 @@ export class UserService {
   }
 
   getUsers(): Observable<Users> {
-    return this.http.get(this.endpoint).pipe(
-      map((responseBody: any) => responseBody.data)
-    )
+    return this.http.get<Users>(`${this.endpoint}/authAdmin`)
   }
 
   demosObservable(): void {
