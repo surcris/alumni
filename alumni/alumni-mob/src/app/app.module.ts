@@ -6,9 +6,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { cookieInterceptor } from './core/interceptors/cookie.interceptor';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([cookieInterceptor])
+    )
   ],
   bootstrap: [AppComponent],
 })
