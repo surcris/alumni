@@ -10,9 +10,14 @@ import { provideHttpClient } from '@angular/common/http';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), SocketIoModule.forRoot(AppModule.wsConfig),AppRoutingModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    SocketIoModule.forRoot(AppModule.wsConfig),
+    AppRoutingModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideHttpClient()
@@ -24,6 +29,7 @@ export class AppModule {
     url: `http://${environment.socketServerUrl}`, // c'est un peu plus beau
     options: {
       autoConnect: false, // désactiver la connection automation au chargement de l'app 
+      reconnection:false
     }
   }
 }
