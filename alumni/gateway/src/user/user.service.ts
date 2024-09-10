@@ -81,6 +81,14 @@ export class UserService {
 		const payload: { email: string; mdp: string } = { email, mdp };
 		return this._client.send<object>(pattern, { payload });
 	}
+
+	authUserAdmin(email: string, mdp: string) {
+		const pattern: any = { user: 'authAdmin' };
+		const payload: { email: string; mdp: string } = { email, mdp };
+		return this._client.send<object>(pattern, { payload });
+	}
+
+
 	generateRandomNumber(length: number): Observable<number> {
 		if (length <= 0) {
 			throw new Error('Length must be greater than zero');

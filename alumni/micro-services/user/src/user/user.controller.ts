@@ -45,8 +45,13 @@ export class UserController {
 
   @MessagePattern({ user: 'auth' })
   authUser(@Payload() payload: any) {
-    Logger.log(JSON.stringify(payload))
     return this._userService.authUser(payload.payload);
+  }
+
+  @MessagePattern({ user: 'authAdmin' })
+  authUserAdmin(@Payload() payload: any) {
+    Logger.log(JSON.stringify(payload))
+    return this._userService.authUserAdmin(payload.payload);
   }
 
   @MessagePattern({ user: 'password' })

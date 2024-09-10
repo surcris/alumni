@@ -1,7 +1,7 @@
 
 import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, OperatorFunction } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 import { Response } from 'express';
@@ -25,41 +25,35 @@ export class UserController {
 	}
 
 	@Post('/auth')
-	async isValidEmailAndMdp(@Body() login: any,@Res() response: Response) {
+	async isValidEmailAndMdp(@Body() login: any, @Res() response: Response) {
 		try {
 			// Générez le token JWT avant de vérifier les identifiants
 
 			// Utilisez une promesse pour attendre la réponse de l'observable
 			
 			//la valeur observable sert juste a conprendre le 
-			  return this.userService.isValidEmailAndMdp(login.email, login.mdp)
-			  .pipe(
-				map(async (value:any) => {
-					if (value.status === 204) {
-						const generatetoken = await this.userService.generateToken(value.payload);
-						// Si les identifiants sont valides, retournez une réponse avec le token
-						Logger.log("Success")
-						// resultat de l'observable 
-						response.status(204).send ({
-						  status: 204,
-						  message: 'OK',
-						  token: generatetoken // Retourne le token JWT généré
-						});
-						return ;
-					  } else {
-						Logger.log("err")
-						response.status(401).send({
-							status: 401,
-							message: 'Email ou mot de passe incorrect',
-							token:null
-						  })
-						// Si l'authentification échoue
-						return ;
-					  }
-				})
+			  return this.userService.isValidEmailAndMdp(login.email, login.password)
+			  .pipe( 
+				this.mapAuthUser(response)
 			  )
 		  } catch (err) {
 			// Gérer les erreurs potentielles ici
+			return {
+			  status: 500,
+			  message: 'Une erreur est survenue lors de l\'authentification',
+			  error: err
+			};
+		  }
+	}
+
+	@Post('/authAdmin')
+	async authUserAdmin(@Body() login: any, @Res() response: Response) {
+		try {
+			  return this.userService.authUserAdmin(login.email, login.password)
+			  .pipe( 
+				this.mapAuthUser(response)
+			  )
+		  } catch (err) {
 			return {
 			  status: 500,
 			  message: 'Une erreur est survenue lors de l\'authentification',
@@ -76,7 +70,6 @@ export class UserController {
 	@UseGuards(AuthGuard)
 	@Post('/getId')
 	getMyId(@Body() info:any): Observable<string>{
-		// Logger.log(info.email)
 		return this.userService.getMyId(info.email)
 	}
 	
@@ -128,5 +121,27 @@ export class UserController {
 	@Delete('/deleteUser/:id')
 	deleteUser(@Param('id') id: number) {
 		return this.userService.deleteUser(id);
+	}
+
+
+	private mapAuthUser(response: Response): OperatorFunction<object, unknown>{
+		return map(async (value: any) => {
+			if (value.status === 204) {
+				const generatetoken = await this.userService.generateToken(value.payload);
+				response.status(200).send({
+					status: 204,
+					message: 'OK',
+					token: generatetoken
+				});
+				return;
+			} else {
+				response.status(401).send({
+					status: 401,
+					message: 'Email ou mot de passe incorrect',
+					token: null
+				});
+				return;
+			}
+		});
 	}
 }

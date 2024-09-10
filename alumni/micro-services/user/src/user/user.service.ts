@@ -48,7 +48,14 @@ export class UserService {
       
       return {status: 204, message: 'OK', payload:{id: userEntry.id,role:userEntry.role, email:userEntry.email}}  
     }else return {status: 400, message: 'Echec lors de l\'identification'}  
-    
+  }
+
+  async authUserAdmin(login: any){
+    const userEntry = await this._repository.validateUser(login.email,login.mdp);
+    Logger.log(JSON.stringify(userEntry))
+    if(userEntry && userEntry.role != Roles.Intern){
+      return {status: 204, message: 'OK', payload:{id: userEntry.id,role:userEntry.role, email:userEntry.email}}  
+    }else return {status: 400, message: `Echec lors de l\'identification ou Vous n'avez pas les droits`}  
   }
 
   async createUserPassword(login: string, password: string){

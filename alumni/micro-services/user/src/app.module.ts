@@ -27,10 +27,10 @@ const envfile = 'environments/' + process.env.NEST_ENV + '/.config.yml';
         entities: [UserEntity],
       }),
     }),
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    //   envFilePath: [envfile],
-    // }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [envfile],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
