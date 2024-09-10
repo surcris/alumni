@@ -33,7 +33,7 @@ export class LoginService {
   public doAuth(credentials: any): Observable<any>{
     const payload = { 
       email: credentials.login,
-      mdp: credentials.password
+      password: credentials.password
     };
     return this._httpClient.post<Observable<any>>(
       this.URI + '/auth',
