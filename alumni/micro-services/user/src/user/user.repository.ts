@@ -55,6 +55,7 @@ export class UserRepository {
 
   async validateUser(email: string, password: string): Promise<UserEntity | null> {
     const user = await this._repository.findOneBy({ email });
+    Logger.log(JSON.stringify(user))
     const pepper = this.configService.get<string>('hash.pepper')
     const isMatch = await bcrypt.compare(password + pepper, user.password);
 

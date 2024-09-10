@@ -43,7 +43,7 @@ export class SigninComponent implements OnInit {
       .subscribe({
         next: async (isValid) => {
           console.log(isValid.body)
-          if (isValid.body.status === 200) {
+          if (isValid.body.status === 204) {
             this._storage.store('auth', isValid.body.token);
             this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
             

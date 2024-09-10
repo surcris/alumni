@@ -30,7 +30,7 @@ export class UserController {
 			// Générez le token JWT avant de vérifier les identifiants
 
 			// Utilisez une promesse pour attendre la réponse de l'observable
-			
+			Logger.log(JSON.stringify(login))
 			//la valeur observable sert juste a conprendre le 
 			  return this.userService.isValidEmailAndMdp(login.email, login.password)
 			  .pipe( 
