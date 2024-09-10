@@ -42,8 +42,8 @@ export class SigninComponent implements OnInit {
     this._service.doAuth(this.form.value)
       .subscribe({
         next: async (isValid) => {
-          console.log(isValid)
-          if (isValid.body.status === 204) {
+          console.log(isValid.body)
+          if (isValid.body.status === 200) {
             this._storage.store('auth', isValid.body.token);
             this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
             
@@ -57,9 +57,9 @@ export class SigninComponent implements OnInit {
           }
         },
         error: async (error: any) => {
-          console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`);
+          // console.log(error);
           const toast = await this._toastController.create({
-            message: error.message,
+            message: error.error.message,
             duration: 2000,
             position: 'middle',
             buttons: [

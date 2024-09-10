@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	Logger,
 	Param,
 	Patch,
 	Post,
@@ -23,6 +24,7 @@ export class InternController {
 	@UseGuards(AuthGuard)
 	@Get()
 	findAll(@Res() res: Response) {
+		Logger.log('find all back')
 		this._service
 			.findAll()
 			.pipe(take(1))
