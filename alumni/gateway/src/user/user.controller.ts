@@ -1,5 +1,5 @@
 
-import { Body, Controller, Delete, Get, HttpStatus, Logger, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Logger, Options, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { map, Observable, OperatorFunction } from 'rxjs';
 import { UserType } from './user.type';
@@ -24,6 +24,13 @@ export class UserController {
 			return this.userService.isValidEmailAelion(login)
 	}
 
+  	@Get('set-cookie')
+  	setCookie(@Res({ passthrough: true }) res: Response) {
+    res.cookie('mySecureCookie', 'cookieValue', {
+      httpOnly: true
+    });
+    res.send('Cookie sécurisé défini avec succès');
+  }
 	@Post('/auth')
 	async isValidEmailAndMdp(@Body() login: any, @Res() response: Response) {
 		try {
@@ -128,7 +135,9 @@ export class UserController {
 		return map(async (value: any) => {
 			if (value.status === 204) {
 				const generatetoken = await this.userService.generateToken(value.payload);
-				response.status(200).send({
+				response.cookie('mySecureCookie', generatetoken, {
+					httpOnly: true
+				  }).status(200).send({
 					status: 204,
 					message: 'OK',
 					token: generatetoken
