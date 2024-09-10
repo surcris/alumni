@@ -58,12 +58,6 @@ export class UserController {
 					  }
 				})
 			  )
-			  
-			  
-			
-		
-			
-			
 		  } catch (err) {
 			// Gérer les erreurs potentielles ici
 			return {

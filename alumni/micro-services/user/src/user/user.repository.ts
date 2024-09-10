@@ -25,9 +25,9 @@ export class UserRepository {
 
   findAll(role: Roles): Promise<Array<UserEntity>> {
     if (Roles.Admin) {
-      return this._repository.find({where:{role: Roles.Intern}})
+      return this._repository.find({select: {id: true, email: true, role: true} ,where:{role: Roles.Intern}})
     }
-    return this._repository.find()
+    return this._repository.find({select: {id: true, email: true, role: true}})
   }
 
 
