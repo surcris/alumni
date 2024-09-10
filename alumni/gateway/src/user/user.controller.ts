@@ -28,9 +28,9 @@ export class UserController {
   	setCookie(@Res({ passthrough: true }) res: Response) {
     res.cookie('mySecureCookie', 'cookieValue', {
       httpOnly: true
-    });
-    res.send('Cookie sécurisé défini avec succès');
+    }).send('Cookie sécurisé défini avec succès');
   }
+
 	@Post('/auth')
 	async isValidEmailAndMdp(@Body() login: any, @Res() response: Response) {
 		try {
@@ -137,7 +137,7 @@ export class UserController {
 				const generatetoken = await this.userService.generateToken(value.payload);
 				response.cookie('mySecureCookie', generatetoken, {
 					httpOnly: true
-				  }).status(200).send({
+				  }).send({
 					status: 204,
 					message: 'OK',
 					token: generatetoken
