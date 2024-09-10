@@ -8,6 +8,7 @@ import { environment } from "src/environments/environment";
 })
 export class AuthService {
 
+
   // /!\ encapsulation with private  (for more security)!
   loggedIn = false;
 
@@ -37,8 +38,16 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('token'); //recupère le token stocker dans le localstorage
   }
 
-  // storeUser / getUser...
+  removeToken(): void {
+    localStorage.removeItem('token'); //supprime le token 
+  }
+
+  isLoggedIn(): any {
+    this.loggedIn = false;
+    this.removeToken();
+    this.router.navigateByUrl('/login'); // vérification si l'admin est bien connecté en vérifiant la propriété 'loggedIn' et la présence du token dans le localstorage
+  }
 }
