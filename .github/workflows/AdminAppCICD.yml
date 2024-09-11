@@ -25,4 +25,4 @@ jobs:
     # install du projet  
     - name: npm install
       run: npm install
-      working-directory: ./pwa-admin
+      working-directory: pwa-admin
