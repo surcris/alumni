@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): void {
-    this.http.post(`${environment.apiBaseUrl}/login`, { email, password } )
+    this.http.post(`${environment.apiBaseUrl}/user/authAdmin`, { email, password } )
       .subscribe((responseBody: any) => {
         if(responseBody.hasOwnProperty('token')){
           this.loggedIn = true;

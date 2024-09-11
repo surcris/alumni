@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Users } from "../models/user";
-import { USERS_MOCK } from "../mocks/users.mock";
 import { HttpClient } from "@angular/common/http";
 import { map, Observable, of } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -10,16 +9,12 @@ import { environment } from "src/environments/environment";
 })
 export class UserService {
 
-  private endpoint = `${environment.apiBaseUrl}/users`;
+  private endpoint = `${environment.apiBaseUrl}/user`;
 
   constructor(private http: HttpClient) { }
 
-  getUsersWithMock(): Users {
-    return USERS_MOCK;
-  }
-
   getUsers(): Observable<Users> {
-    return this.http.get<Users>(`${this.endpoint}/authAdmin`)
+    return this.http.get<Users>(`${this.endpoint}`)
   }
 
   demosObservable(): void {
