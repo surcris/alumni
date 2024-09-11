@@ -1,17 +1,22 @@
 
-import { Body, Controller, Delete, Get, HttpStatus, Logger, Options, Param, Patch, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Logger, Options, Param, Patch, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { map, Observable, OperatorFunction } from 'rxjs';
 import { UserType } from './user.type';
 import { take } from 'rxjs';
 import { Response } from 'express';
+import * as expr from 'express';
 import { UserTypeDto } from './dto/user-type.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from 'src/constante';
 
 @Controller('user')
 export class UserController {
-	constructor(private userService: UserService) {}
+	constructor(private userService: UserService,
+		private _jwtService: JwtService
+	) {}
 
 
 	@UseGuards(AdminGuard)
@@ -75,9 +80,15 @@ export class UserController {
 	}
 
 	@UseGuards(AuthGuard)
-	@Post('/getId')
-	getMyId(@Body() info:any): Observable<string>{
-		return this.userService.getMyId(info.email)
+	@Get('/getId')
+	async getMyId(@Body() info:any,@Req() request: expr.Request){
+		const token = request.cookies["mySecureCookie"].refreshToken;  // Obtenez tous les cookies
+    	
+		const verif = await this._jwtService.verifyAsync(token, {
+			secret: jwtConstants.secretRefresh
+		});
+		Logger.log("Get Id",verif)
+		return verif.infoU.id
 	}
 	
 	@Patch('/password')

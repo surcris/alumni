@@ -3,7 +3,7 @@ import { InternService } from './intern.service';
 import { Socket } from 'ngx-socket-io';
 import { InternDTO } from '../internDto/internDto';
 import { UserService } from './user.service';
-import { take } from 'rxjs';
+import { catchError, EMPTY, Observable, of, switchMap, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -19,45 +19,50 @@ export class MessagerieService {
     private _httpClient: HttpClient
   ) {}
 
-  connexion(): boolean {
-    let connexionResultat: boolean = true;
-    let userId;
-
-    this._httpClient
-      .post<any>(this.URI + `/socket/getMy`, { id: '1' })
-      .subscribe({
-        next: async (responce: boolean) => {
-          if (!responce) {
-            console.log(responce)
-            this._userService
-              .getMyId()
-              .pipe(take(1))
-              .subscribe({
-                next: async (data: string) => {
-                  if (data) {
-                    userId = data;
-                    console.log(userId);
-                    this._socket.ioSocket.io.opts.query = { userId };
-                    this._socket.connect((error: any) => {
-                      console.error(`Erreur lors de la connexion : ${error}`);
-                      connexionResultat = false;
-                    });
+  connexion(): void {
+    this._userService.getMyId().pipe(
+      take(1),
+      switchMap((data: string) => {
+        if (data) {
+          console.log('ID reçu du gateway :', data);
+          
+          // Vérification de l'existence d'un socket pour cet utilisateur
+          return this._httpClient.post<boolean>(this.URI + `/socket/getMy`, { id: data }).pipe(
+            tap((response: boolean) => {
+              if (!response) {
+                console.log('Création du socket utilisateur');
+                const userId = data;
+                
+                // Mise à jour de la configuration du socket
+                this._socket.ioSocket.io.opts.query = { userId };
+                
+                // Connexion au socket
+                this._socket.connect((error: any) => {
+                  if (error) {
+                    console.error(`Erreur lors de la connexion : ${error}`);
                   } else {
-                    console.error(`Problème lors de la requète`);
+                    console.log('Connexion réussie au socket.');
                   }
-                },
-                error: (error: any) => {},
-                complete: () => {},
-              });
-          }
-        },
-      });
-    //obtenir l'id de l'intern
-
-    //faire l'envoi de l'id au gateway
-
-    // console.log(connexionResultat)
-    return connexionResultat;
+                });
+              } else {
+                console.log('Le socket existe déjà pour cet utilisateur.');
+              }
+            })
+          );
+        } else {
+          console.error('Problème lors de la requête pour récupérer l’ID');
+          return EMPTY;  // Observable vide si pas d'ID
+        }
+      }),
+      catchError((error: any) => {
+        console.error('Erreur lors de la connexion :', error);
+        return EMPTY;  // Observable vide en cas d'erreur
+      })
+    ).subscribe();  // On s'abonne à l'Observable, même si rien n'est retourné
+  }
+  
+  getAllConnected(){
+    return this._httpClient.get<any>(this.URI + `/socket/geAll`)
   }
 
   send(message: string, destId: string) {

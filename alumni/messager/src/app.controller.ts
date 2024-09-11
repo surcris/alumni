@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ChatEventGateway } from './chat-event/chat-event.gateway';
 
@@ -14,7 +14,15 @@ export class AppController {
   @Post("/socket/getMy")
     ifConnected(@Body() userId:any):Boolean{
       
-
+      Logger.log("La")
       return this._chatService.userToSocket(userId.id) ? true : false;
     }
+
+  @Get("/socket/getAll")
+  getAllConnected(){
+    
+    Logger.log("All")
+    const connectedUsers = this._chatService.usersToSocket();
+    return this._chatService.usersToSocket();
+  }
 }

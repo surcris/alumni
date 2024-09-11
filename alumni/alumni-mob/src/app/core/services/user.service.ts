@@ -11,7 +11,7 @@ export class UserService {
   constructor(private _httpClient: HttpClient) {}
 
   public getMyId(): Observable<any> {  // Create params object
-    return this._httpClient.post<any>(this.URI +`/getId`,{email: "toto.2@poe.aelion.fr"})
+    return this._httpClient.get<any>(this.URI +`/getId`)
     
   }
 }

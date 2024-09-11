@@ -36,7 +36,17 @@ export class InternComponent  implements OnInit {
    }
    viewDetails(index: number): void {
     this.detailsVisibility[index] = !this.detailsVisibility[index];
-    this._mesService.connexion()
+    this._mesService.getAllConnected().subscribe({
+      next: (value: any) => {
+        console.log("Connected users:", value);
+      },
+      error: (err: any) => {
+        console.error("Error fetching connected users:", err);
+      },
+      complete: () => {
+        console.log("Fetch complete");
+      }
+    });
   }
 
   openChat(intern: InternDTO): void {

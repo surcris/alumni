@@ -46,7 +46,7 @@ export class MailerController {
 			const verif = await this._jwtService.verifyAsync(tokenParam, {
 				secret: jwtConstants.secret
 			});
-			const objectResponse = this.userService.changePassword({email:"toto.2@poe.aelion.fr",password:body.password,});
+			const objectResponse = this.userService.changePassword({email:"toto.3@poe.aelion.fr",password:body.password,});
 			return objectResponse.pipe(take(1)).subscribe({
 				next: (response: any) => {
 					if (response.status === 204) {

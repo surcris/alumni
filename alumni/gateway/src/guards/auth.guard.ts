@@ -19,9 +19,9 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = request.cookies["mySecureCookie"].refreshToken;
     if (!token) {
-      // Logger.log("err")
+      Logger.log("to : ",token)
       throw new UnauthorizedException();
     }
     try {
@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(
         token,
         {
-          secret: jwtConstants.secret
+          secret: jwtConstants.secretRefresh
         }
       );
       // Vérification du rôle dans le token
