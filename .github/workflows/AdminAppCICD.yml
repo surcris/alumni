@@ -23,7 +23,7 @@ jobs:
         node-version: 20.x
         # install du projet  
     - name: go to pwa-admin folder
-      run: cd pwa-admin
+      run: cd ./alumni/pwa-admin/
     # install du projet  
     - name: npm install
       run: npm install
