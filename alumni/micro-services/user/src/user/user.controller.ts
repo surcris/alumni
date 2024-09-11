@@ -57,6 +57,7 @@ export class UserController {
   @MessagePattern({ user: 'password' })
   createUserPassword(@Payload() receivedpayload: any) {
     console.log('payloadms: ' + JSON.stringify(receivedpayload));
+    // Logger.log(JSON.stringify(receivedpayload))
     return this._userService.createUserPassword(
       receivedpayload.email,
       receivedpayload.password,

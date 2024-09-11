@@ -21,11 +21,11 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      Logger.log("err")
+      // Logger.log("err")
       throw new UnauthorizedException();
     }
     try {
-      Logger.log("Try catch")
+      // Logger.log("Try catch")
       const payload = await this.jwtService.verifyAsync(
         token,
         {
@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
       // Vérification du rôle dans le token
       if (!payload.infoU.role || !['Admin', 'Intern','SuperAdmin'].includes(payload.infoU.role)) {
         // Par exemple, ici on vérifie si le rôle est 'admin'
-        Logger.log(payload.infoU.role)
+        // Logger.log(payload.infoU.role)
         throw new ForbiddenException('Access denied: insufficient permissions');
       }
       // 💡 We're assigning the payload to the request object here

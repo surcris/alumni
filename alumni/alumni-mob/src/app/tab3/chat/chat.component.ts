@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, NavController } from '@ionic/angular';
 import { WsChatService } from 'src/app/core/services/ws-chat-service'; 
 import { SocketMessageType } from '../Dto/socket-message.type'; 
 import { InternService } from 'src/app/core/services/intern.service';
@@ -23,7 +23,8 @@ export class ChatComponent  implements OnInit {
   constructor(
     private _modalController: ModalController,
     private _wsService: WsChatService,
-    private _internService: InternService
+    private _internService: InternService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -46,7 +47,8 @@ export class ChatComponent  implements OnInit {
 
   onCancel(): void {
     this._modalController.dismiss()
-    this._wsService.disconnect()
+    // this._wsService.disconnect()
+    this.navCtrl.back()
   }
 
   onIonInfinite(ev: any) {

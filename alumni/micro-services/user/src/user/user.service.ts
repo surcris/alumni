@@ -59,7 +59,10 @@ export class UserService {
   }
 
   async createUserPassword(login: string, password: string){
+    Logger.log(JSON.stringify(login))
+    Logger.log(JSON.stringify(password))
     const updateObject = await this._repository.createUserPassword(login, password)
+    Logger.log(JSON.stringify(updateObject))
     if(updateObject.affected >0)
       return {status: 204, message: 'OK'}   
     return {status: 400, message: 'KO'}  
