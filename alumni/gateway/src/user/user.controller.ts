@@ -17,7 +17,7 @@ export class UserController {
 	@UseGuards(AdminGuard)
 	@Get()
 	findAll(@Request() req): Observable<Array<UserType>> {
-		return this.userService.findAll(req.admin.role)
+		return this.userService.findAll(req.admin.infoU.role)
 	}
 	@Get('/log/:login')
 	isValidEmailAelion(@Param('login') login: string): Observable<boolean> {

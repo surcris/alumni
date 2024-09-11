@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = request.cookies["mySecureCookie"].refreshToken;
     if (!token) {
       this.jwtService.decode
       throw new UnauthorizedException();
@@ -21,7 +21,7 @@ export class AdminGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(
         token,
         {
-          secret: jwtConstants.secret
+          secret: jwtConstants.secretRefresh
         }
       );
       if (!payload.infoU.role || !['Admin','SuperAdmin'].includes(payload.infoU.role)) {
@@ -36,10 +36,5 @@ export class AdminGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
-  }
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined; 
   }
 }
