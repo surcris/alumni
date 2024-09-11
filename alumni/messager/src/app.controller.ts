@@ -19,7 +19,7 @@ export class AppController {
     }
 
   @Get("/socket/getAll")
-  getAllConnected(){
+  getAllConnected():string[]{
     
     Logger.log("All")
     const connectedUsers = this._chatService.usersToSocket();

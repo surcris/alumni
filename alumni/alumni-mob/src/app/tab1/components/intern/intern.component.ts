@@ -35,16 +35,15 @@ export class InternComponent  implements OnInit {
       this.interns = data; });
    }
    viewDetails(index: number): void {
+    console.log("Connected users:");
     this.detailsVisibility[index] = !this.detailsVisibility[index];
     this._mesService.getAllConnected().subscribe({
-      next: (value: any) => {
-        console.log("Connected users:", value);
+      next: (users: string[]) => {
+        // this.connectedUsers = users;
+        console.log('Utilisateurs connectés:', users);
       },
-      error: (err: any) => {
-        console.error("Error fetching connected users:", err);
-      },
-      complete: () => {
-        console.log("Fetch complete");
+      error: (error) => {
+        console.error('Erreur lors de la récupération des utilisateurs connectés:', error);
       }
     });
   }

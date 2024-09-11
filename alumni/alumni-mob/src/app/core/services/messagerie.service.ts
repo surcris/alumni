@@ -62,7 +62,7 @@ export class MessagerieService {
   }
   
   getAllConnected(){
-    return this._httpClient.get<any>(this.URI + `/socket/geAll`)
+    return this._httpClient.get<any>(this.URI + `/socket/getAll`)
   }
 
   send(message: string, destId: string) {

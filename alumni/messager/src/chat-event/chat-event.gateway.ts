@@ -59,10 +59,12 @@ export class ChatEventGateway implements OnGatewayConnection, OnGatewayDisconnec
 
     usersToSocket() {
         console.log(this._clients.size)
+        let tabUserId:Array<string>=[]
         this._clients.forEach((value, key) => {
             console.log(`Clé: ${key}, Valeur: ${value}`);
+            tabUserId.push(key)
           });
-        return this._clients
+        return tabUserId
 
     }
 
