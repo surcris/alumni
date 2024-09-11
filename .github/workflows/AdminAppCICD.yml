@@ -13,7 +13,8 @@ jobs:
     - name: checkout
       uses: actions/checkout@v4.1.7
       with:
-        repository: 'surcris/alumni/alumni/pwa-admin'
+        submodules: true
+        path: './alumni/pwa-admin/'
     # install nodejs
     - name: Setup Node.js
       uses: actions/setup-node@v4.0.3
