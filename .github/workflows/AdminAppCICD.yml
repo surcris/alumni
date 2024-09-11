@@ -12,18 +12,13 @@ jobs:
     # get the code
     - name: checkout
       uses: actions/checkout@v4.1.7
-      with:
-        submodules: true
-        path: './alumni/pwa-admin/'
     # install nodejs
     - name: Setup Node.js
       uses: actions/setup-node@v4.0.3
       with:
         # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
         node-version: 20.x
-        # install du projet  
-    - name: go to pwa-admin folder
-      run: cd ./alumni/pwa-admin/
     # install du projet  
     - name: npm install
       run: npm install
+      working-directory: './pwa-admin'
