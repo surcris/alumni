@@ -1,0 +1,25 @@
+name: Admin App CI/CD
+
+on:
+  push:
+    branches: [ "test/rebaseMessagetoPwa" ]
+
+defaults:
+  run:
+    working-directory: ./alumni/alumni-mob/
+
+jobs:
+  build:
+    # runner for the job
+    runs-on: ubuntu-latest
+    container: node:20.15
+    steps:
+    # get the code
+    - name: checkout
+      uses: actions/checkout@v4.1.7
+    # install du projet
+    - name: npm install
+      run: npm install
+
+    - name: do test
+      run: npm run test:ci
