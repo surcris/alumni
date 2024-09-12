@@ -12,7 +12,7 @@ jobs:
   build:
     # runner for the job
     runs-on: ubuntu-latest
-    container: node:20
+    container: node:16
     steps:
     # get the code
     - name: checkout
