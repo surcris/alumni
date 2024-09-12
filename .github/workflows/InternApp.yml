@@ -24,8 +24,8 @@ jobs:
     - name: cache setup
       uses: actions/cache@v4.0.2
       with:
-        path: ./alumini/alumni-mob/node_modules
-        key: npmi-InternApp-${{ hashFiles('./alumini/alumni-mob/package-lock.json') }}
+        path: ./alumni/alumni-mob/node_modules
+        key: npmi-InternApp-${{ hashFiles('./alumni/alumni-mob/package-lock.json') }}
   tu:
     needs: build # start this after the build job
     # runner for the job
@@ -38,8 +38,8 @@ jobs:
     - name: cache setup
       uses: actions/cache@v4.0.2
       with:
-        path: ./alumini/alumni-mob/node_modules
-        key: npmi-InternApp-${{ hashFiles('./alumini/alumni-mob/package-lock.json') }}
+        path: ./alumni/alumni-mob/node_modules
+        key: npmi-InternApp-${{ hashFiles('./alumni/alumni-mob/package-lock.json') }}
         
     - name: Setup Node.js
       uses: actions/setup-node@v4.0.3
