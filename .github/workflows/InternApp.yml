@@ -20,8 +20,26 @@ jobs:
     # install du projet
     - name: npm install
       run: npm install
-
-    - run: apt install -y libnss3
-
+    # setup the cache
+    - name: cache setup
+      uses: actions/cache@v4.0.2
+      with:
+        path: node_modules
+        key: npmi-${{ hashFiles('package-lock.json') }}
+  tu:
+    # runner for the job
+    runs-on: ubuntu-latest
+    container: node:20.15
+    steps:
+    # get the code
+    - name: checkout
+      uses: actions/checkout@v4.1.7
+    # setup the cache
+    - name: cache setup
+      uses: actions/cache@v4.0.2
+      with:
+        path: node_modules
+        key: npmi-${{ hashFiles('package-lock.json') }}
+    # do some tests
     - name: do test
       run: npm run test:ci
