@@ -49,8 +49,7 @@ jobs:
     - name: npm install
       run: npm install
 
-    - run: apt-get update && apt-get install -y libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2
-    # do some tests
+   # do some tests
     - name: do test
       run: ng test --browsers=ChromeHeadless --watch=false --code-coverage
 
