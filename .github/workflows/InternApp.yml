@@ -45,6 +45,7 @@ jobs:
       with:
         path: ./alumni/alumni-mob/node_modules
         key: npmi-InternApp-1
+        restore-keys: npmi-InternApp-
 
    # do some tests
     - name: do test
