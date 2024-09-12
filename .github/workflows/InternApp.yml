@@ -1,4 +1,4 @@
-name: Admin App CI/CD
+name: Intern App CI/CD
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
   build:
     # runner for the job
     runs-on: ubuntu-latest
-    container: node:20.15
+    container: node:20
     steps:
     # get the code
     - name: checkout
