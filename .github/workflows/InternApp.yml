@@ -40,6 +40,9 @@ jobs:
       with:
         path: node_modules
         key: npmi-${{ hashFiles('package-lock.json') }}
+    
+    - name: npm install
+      run: npm install
     # do some tests
     - name: do test
       run: npm run test:ci
