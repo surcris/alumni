@@ -22,10 +22,10 @@ jobs:
       run: npm install
     # setup the cache
     - name: cache setup
-      uses: actions/cache/save@v4
+      uses: actions/cache@v4.0.2
       with:
-        path: node_modules
-        key: npmi-${{ hashFiles('package-lock.json') }}
+        path: ./alumini/alumni-mob/node_modules
+        key: npmi-InternApp-${{ hashFiles('./alumini/alumni-mob/package-lock.json') }}
   tu:
     needs: build # start this after the build job
     # runner for the job
@@ -36,10 +36,10 @@ jobs:
       uses: actions/checkout@v4.1.7
     # setup the cache
     - name: cache setup
-      uses: actions/cache/restore@v4
+      uses: actions/cache@v4.0.2
       with:
-        path: node_modules
-        key: npmi-${{ hashFiles('package-lock.json') }}
+        path: ./alumini/alumni-mob/node_modules
+        key: npmi-InternApp-${{ hashFiles('./alumini/alumni-mob/package-lock.json') }}
         
     - name: Setup Node.js
       uses: actions/setup-node@v4.0.3
