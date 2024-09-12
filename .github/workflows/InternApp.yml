@@ -51,7 +51,5 @@ jobs:
 
    # do some tests
     - name: do test
-      run: ng test --browsers=ChromeHeadless --watch=false --code-coverage
-
     - run: npm run test:ci
       
