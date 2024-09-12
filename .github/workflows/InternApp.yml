@@ -28,8 +28,12 @@ jobs:
     - name: cache setup
       uses: actions/cache@v4.0.2
       with:
-        path: ./alumni/alumni-mob/node_modules
-        key: npmi-InternApp-1
+        path: |
+          ./alumni/alumni-mob/node_modules
+          /home/runner/.cache/puppeteer
+        key: npmi-InternApp-2
+
+        
   tu:
     needs: build # start this after the build job
     # runner for the job
@@ -47,8 +51,10 @@ jobs:
     - name: cache setup
       uses: actions/cache@v4.0.2
       with:
-        path: ./alumni/alumni-mob/node_modules
-        key: npmi-InternApp-1
+        path: |
+          ./alumni/alumni-mob/node_modules
+          /home/runner/.cache/puppeteer
+        key: npmi-InternApp-2
         restore-keys: npmi-InternApp-
 
    # do some tests
