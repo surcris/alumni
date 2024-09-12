@@ -25,12 +25,17 @@ jobs:
       uses: actions/cache@v4.0.2
       with:
         path: ./alumni/alumni-mob/node_modules
-        key: npmi-InternApp-${{ hashFiles('./alumni/alumni-mob/package-lock.json') }}
+        key: npmi-InternApp-1
   tu:
     needs: build # start this after the build job
     # runner for the job
     runs-on: ubuntu-latest
     steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4.0.3
+      with:
+          # Spécifie la version de Node.js à utiliser
+          node-version: 20.x
     # get the code
     - name: checkout
       uses: actions/checkout@v4.1.7
@@ -39,16 +44,7 @@ jobs:
       uses: actions/cache@v4.0.2
       with:
         path: ./alumni/alumni-mob/node_modules
-        key: npmi-InternApp-${{ hashFiles('./alumni/alumni-mob/package-lock.json') }}
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v4.0.3
-      with:
-          # Spécifie la version de Node.js à utiliser
-          node-version: 20.x
-    
-    # - name: npm install
-    #   run: npm install
+        key: npmi-InternApp-1
 
    # do some tests
     - name: do test
