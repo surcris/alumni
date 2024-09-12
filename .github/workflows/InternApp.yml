@@ -12,7 +12,7 @@ jobs:
   build:
     # runner for the job
     runs-on: ubuntu-latest
-    container: node:19
+    container: node:20.15
     steps:
     # get the code
     - name: checkout
@@ -20,6 +20,8 @@ jobs:
     # install du projet
     - name: npm install
       run: npm install
+
+    - run: apt install -y libnss3
 
     - name: do test
       run: npm run test:ci
