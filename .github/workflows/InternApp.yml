@@ -27,6 +27,7 @@ jobs:
         path: node_modules
         key: npmi-${{ hashFiles('package-lock.json') }}
   tu:
+    needs: build # start this after the build job
     # runner for the job
     runs-on: ubuntu-latest
     container: node:20.15
