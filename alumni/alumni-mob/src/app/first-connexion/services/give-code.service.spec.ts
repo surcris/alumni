@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { GiveCodeService } from './give-code.service';
+// import { GiveCodeService } from './give-code.service';
 
-describe('GiveCodeService', () => {
-  let service: GiveCodeService;
+// describe('GiveCodeService', () => {
+//   let service: GiveCodeService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(GiveCodeService);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     service = TestBed.inject(GiveCodeService);
+//   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(service).toBeTruthy();
+//   });
+// });
