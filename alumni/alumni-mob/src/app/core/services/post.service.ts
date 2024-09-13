@@ -4,12 +4,13 @@ import { map, Observable } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { PostTransfo } from '../transformers/post-transfo';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private readonly URI: string = 'http://localhost:3000/post'
+  private readonly URI: string = `${environment.baseURL}:3000/post`
 
   
 

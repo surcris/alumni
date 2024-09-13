@@ -5,12 +5,13 @@ import { InternDTO } from '../internDto/internDto';
 import { UserService } from './user.service';
 import { catchError, EMPTY, Observable, of, switchMap, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessagerieService {
-  private readonly URI: string = 'http://localhost:4000';
+  private readonly URI: string = `${environment.baseURL}:4000`;
 
   constructor(
     private _socket: Socket,

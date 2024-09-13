@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { InternDTO } from '../internDto/internDto';
 import { InternTransformer } from '../transformers/intern.transformer';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { StorageService } from './storage.service';
 })
 export class InternService {
   private _interns: Array<InternType> = []
-  private readonly URI: string = 'http://localhost:3000/intern'
+  private readonly URI: string = `${environment.baseURL}:3000/intern`
   private _intern: InternType | null = null
 
   constructor(
