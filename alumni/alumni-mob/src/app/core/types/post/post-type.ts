@@ -3,12 +3,13 @@ import { InternType } from '../intern/inter-type';
 
 
 export type PostType = {
-  id?: number;
+  id: string;
   title?: string;
   content: string; // Description
   media?: string; //path
-  postedAt: Date;
-  type: TypePost;
-  authorId: string;
-  author: InternType;
+  postedAt?: Date;
+  type?: TypePost;
+  authorId?: string;
+  author?: InternType;
+  createdAt: Date;
 };

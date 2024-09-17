@@ -1,0 +1,16 @@
+
+<ion-content>
+  <ion-item>
+    <ion-label>Type de post</ion-label>
+    <ion-select [(ngModel)]="postType">
+      <ion-select-option value="text">Texte</ion-select-option>
+      <ion-select-option value="photo">Photo</ion-select-option>
+      <ion-select-option value="video">Vidéo</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Contenu</ion-label>
+    <!-- <ion-input [(ngModel)]="postContent"></ion-input> -->
+  </ion-item>
+  <ion-button (click)="addPost()">Ajouter</ion-button>
+</ion-content>

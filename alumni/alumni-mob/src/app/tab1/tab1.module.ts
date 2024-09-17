@@ -19,7 +19,9 @@ import { TypePostIconPipe } from '../core/pipes/post/type-post-icon-pipe';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    
+    
   ],
   declarations: [Tab1Page, PostComponent, PostContentComponent, HeaderPostComponent, ToolsBarComponent, TypePostIconPipe]
 })

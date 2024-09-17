@@ -10,10 +10,11 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { cookieInterceptor } from './core/interceptors/cookie.interceptor';
+import { AddPostComponent } from './tab5/add-post/add-post.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
