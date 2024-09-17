@@ -1,0 +1,37 @@
+ <!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profil de {{ intern?.firstname }} {{ intern?.lastname }}</ion-title>
+  </ion-toolbar>
+</ion-header>  -->
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="intern">
+    <ion-card-header>
+      <ion-avatar>
+        <!-- <img [src]="intern.profilePicture || 'assets/default-avatar.png'" />  -->
+      </ion-avatar>
+      <ion-card-title>{{ intern.firstname }} {{ intern.lastname }}</ion-card-title>
+      <ion-card-subtitle>{{ intern.occupation }} chez {{ intern.company }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Email :</strong> {{ intern.emails }}</p>
+      <p><strong>Téléphone :</strong> {{ intern.phoneNumber }}</p>
+      <p><strong>POE :</strong> {{ intern.poe }}</p>
+      <p><strong>Description :</strong> {{ intern.description }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 

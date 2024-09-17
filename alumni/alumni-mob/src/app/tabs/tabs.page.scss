@@ -1,1 +1,20 @@
 
+ion-tab-bar {
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+  
+  ion-tab-button {
+    --color-selected: #3880ff; /* Couleur de l'onglet sélectionné */
+    --color: #8c8c8c; /* Couleur des onglets non sélectionnés */
+    flex: 1; /* Assure que chaque bouton prend une largeur égale */
+  }
+  
+  ion-icon {
+    font-size: 24px; /* Ajustez la taille de l'icône selon vos besoins */
+  }
+  
+  ion-label {
+    font-size: 12px; /* Ajustez la taille du texte selon vos besoins */
+  }
+  

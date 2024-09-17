@@ -22,7 +22,16 @@ const routes: Routes = [
   },
   { path: 'messagerie', component: MessagerieComponent },
   { path: 'chat', component: ChatComponent },
-  { path: '', redirectTo: '/messagerie', pathMatch: 'full' }, // Redirect to messagerie by default
+  // { path: '', redirectTo: '/messagerie', pathMatch: 'full' },   {
+  //   path: 'tab4',
+  //   loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+  // },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  
+// Redirect to messagerie by default
 ];
 @NgModule({
   imports: [

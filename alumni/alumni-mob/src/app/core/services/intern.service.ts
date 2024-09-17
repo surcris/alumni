@@ -58,4 +58,15 @@ export class InternService {
   get intern(): any| null {
     return this._intern
   }
+
+
+
+  getProfileData(): Observable<InternType> {
+    return this._httpClient.get<InternType>(`${this.URI}/profile`, {
+      headers: {
+        authorization: `Bearer ${this._storage.retrieve('auth').accessToken}`,
+        authorizationRefresh: `Bearer ${this._storage.retrieve('auth').refreshToken}`,
+      }
+    });
+  }
 }
