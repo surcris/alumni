@@ -7,6 +7,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Req,
 	Res,
 	UseGuards
 } from '@nestjs/common';
@@ -105,6 +106,30 @@ export class InternController {
 	delete(@Param('id') id: string, @Res() res: Response) {
 		this._service
 			.delete(id)
+			.pipe(take(1))
+			.subscribe({
+				next: (response: any) => {
+					if (response) {
+						res.status(200).send(response);
+					} else {
+						res.status(404).send();
+					}
+				},
+				error: (error: any) => {
+					res.status(500).send(error);
+				}
+			});
+	}
+
+
+
+	@UseGuards(AuthGuard)
+	@Get('profile')
+	getProfileData(@Req() req:Request, @Res() res: Response) {
+		Logger.log("profile contolleur", req['user'])
+	
+		this._service
+			.getProfileData(req['user'].infoU.id)
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {

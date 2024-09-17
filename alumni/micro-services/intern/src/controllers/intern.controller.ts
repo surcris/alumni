@@ -41,4 +41,12 @@ export class InternController {
       return await this._service.delete(payload.id);
     } catch (err) {}
   }
+
+  @MessagePattern({ cmd: 'profile' })
+  async getProfileData(@Payload() payload: any) {
+    console.log('profile micro intern');
+    try {
+      return await this._service.getProfileData(payload.id);
+    } catch (err) {}
+  }
 }

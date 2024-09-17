@@ -31,4 +31,8 @@ export class InternService {
 		const pattern = { cmd: 'delete' };
 		return this._client.send<string>(pattern, { id });
 	}
+	getProfileData(id: string): Observable<InternType> {
+		const pattern = { cmd: 'profile' };  // pour récupérer euuuh les infos du profil findone
+		return this._client.send<InternType>(pattern, { id});
+	  }
 }
