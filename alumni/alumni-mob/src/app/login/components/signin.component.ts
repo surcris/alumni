@@ -7,6 +7,8 @@ import { HttpResponse } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { InternService } from 'src/app/core/services/intern.service';
+import { MessagerieService } from 'src/app/core/services/messagerie.service';
 
 @Component({
   selector: 'app-signin',
@@ -23,7 +25,9 @@ export class SigninComponent implements OnInit {
     private _toastController: ToastController,
     private _router: Router,
     private _storage: StorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _internService:InternService,
+    private _messageService:MessagerieService
   ) {}
 
   ngOnInit(): void {
@@ -38,71 +42,61 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form.value)
-    this._service.doAuth(this.form.value)
-      .subscribe({
-        next: async (isValid) => {
-          console.log(isValid.body)
-          if (isValid.body.status === 204) {
-            this._storage.store('auth', isValid.body.token);
-            this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
-            
-            if (this.desiredUrl){
-              this._router.navigateByUrl(this.desiredUrl);
-            } else
-            this._router.navigateByUrl('tabs/tab1');
+    // Affiche les valeurs du formulaire pour vérification
+    console.log(this.form.value);
+  
+    // Appel au service d'authentification
+    this._service.doAuth(this.form.value).subscribe({
+      next: async (isValid) => {
+        const responseBody = isValid.body;
+        console.log(responseBody);
+  
+        // Si le statut est 204 (succès)
+        if (responseBody.status === 204) {
+          // Stocker le token d'authentification
+          this._storage.store('auth', responseBody.token);
+          this._storage.store('Email', this.form.value.login);
+          // Récupérer l'URL désirée ou rediriger par défaut
+          this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
+  
+          // Connection socket
+          this._messageService.connexion()
+  
+          // Redirection après authentification réussie
+          if (this.desiredUrl) {
+            this._router.navigateByUrl(this.desiredUrl);
           } else {
-            
-            
+            this._router.navigateByUrl('tabs/tab1');
           }
-        },
-        error: async (error: any) => {
-          // console.log(error);
-          const toast = await this._toastController.create({
-            message: `TESTSTETST ${error.message}`,
-            duration: 2000,
-            position: 'middle',
-            buttons: [
-              {
-                text: 'Réessayer',
-              },
-            ],
-          });
-          toast.present().then(() => null);
-          toast.onWillDismiss().then(() => this.form.reset());
-        },
-      });
+  
+        } else {
+          // Gestion d'une réponse non valide (pas 204)
+          await this.displayErrorToast('Échec de l\'authentification. Veuillez réessayer.');
+          this.form.reset();
+        }
+      },
+      error: async (error) => {
+        // Gestion d'une erreur survenue pendant l'appel au service
+        await this.displayErrorToast(`Erreur: ${error.message}`);
+        this.form.reset();
+      }
+    });
+  }
+  
 
-    // this._service.doLogin(this.form.value)
-    //   .pipe(
-    //     take(1)
-    //   )
-    //   .subscribe({
-    //     next: async(response: HttpResponse<any>) => {
-    //       if (response.status === 200) {
-    //         this._storage.store('auth', response.body.token)
-    //         this._router.navigate(['tabs', 'tab1'])
-    //           .then(() => console.log('Routing complete'))
-    //       } else {
-    //         const toast = await this._toastController.create({
-    //           message: response.body.message,
-    //           duration: 2000,
-    //           position: 'middle',
-    //           buttons: [
-    //             {
-    //               text: 'Réessayer',
-    //             }
-    //           ]
-    //         })
-    //         toast.present().then(() => null)
-    //         toast.onWillDismiss()
-    //           .then(() => this.form.reset())
-    //       }
-    //     },
-    //     error: (error: any) => {
-    //       console.log(`ko, je dois afficher un toast ${JSON.stringify(error)}`)
-    //     }
-    //   })
+  private async displayErrorToast(message: string): Promise<void> {
+    const toast = await this._toastController.create({
+      message,
+      duration: 2000,
+      position: 'middle',
+      buttons: [
+        {
+          text: 'Réessayer',
+        },
+      ],
+    });
+    
+    await toast.present();
   }
 
   onClickActiveAccount() {

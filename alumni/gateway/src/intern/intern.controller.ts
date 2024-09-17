@@ -21,7 +21,7 @@ import { AdminGuard } from 'src/guards/admin.guard';
 export class InternController {
 	constructor(private _service: InternService) {}
 
-	@UseGuards(AuthGuard)
+	// @UseGuards(AuthGuard)
 	@Get()
 	findAll(@Res() res: Response) {
 		this._service
@@ -46,6 +46,26 @@ export class InternController {
 	findOne(@Param('id') id: string, @Res() res: Response) {
 		this._service
 			.findOne(id)
+			.pipe(take(1))
+			.subscribe({
+				next: (response: any) => {
+					if (response) {
+						res.status(200).send(response);
+					} else {
+						res.status(404).send();
+					}
+				},
+				error: (error: any) => {
+					res.status(500).send(error);
+				}
+			});
+	}
+
+	@Get('findOneByEmail/:email')
+	findOneByEmail(@Param('email') email: string, @Res() res: Response) {
+		Logger.log("findOneByEmail",email)
+		this._service
+			.findOneByEmail(email)
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {
@@ -99,7 +119,7 @@ export class InternController {
 				}
 			});
 	}
-	@UseGuards(AdminGuard)
+	// @UseGuards(AdminGuard)
 	@Delete(':id')
 	delete(@Param('id') id: string, @Res() res: Response) {
 		this._service

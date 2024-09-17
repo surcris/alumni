@@ -44,6 +44,16 @@ export class InternService {
         })
       }))
   }
+
+  public findByIdByEmail(email: string): Observable<InternDTO> {
+    return this._httpClient.get<InternDTO>(`${this.URI}/findOneByEmail/${email}`)
+    .pipe(
+      map((intern:any) => {
+        // this._intern = intern
+        return InternTransformer.transform(intern)
+      })
+    )
+  }
   // public findById(id: string): Observable<InternType> {
   //   return this._httpClient.get<InternType>(`${this.URI}/${id}`);
   // }

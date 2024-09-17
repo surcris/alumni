@@ -22,30 +22,41 @@ export class InternComponent  implements OnInit {
   @Input() 
   interns: InternDTO[] | undefined; 
   detailsVisibility: boolean[] = [];
+  whosConnected: string[] = [];
   constructor(private internService: InternService,
     private router: Router,
     private _mesService: MessagerieService,
+    
     // private _userService: UserService
   ) {
     this.detailsVisibility = new Array(this.interns?.length).fill(false);
   } 
   
   ngOnInit(): void { 
+    this._mesService.connexion()
+
+
     this.internService.findAll().subscribe((data: InternDTO[]) => { 
-      this.interns = data; });
+      // 
+      // Stocker les internes dans la variable locale
+      this.interns = data;
+      console.log("init :",this.interns);
+      // Initialiser la visibilité des détails pour chaque interne avec `false`
+      this.detailsVisibility = new Array(this.interns.length).fill(false);
+      
+      this._mesService.connectedUsers$.subscribe((connectedUsers: string[]) => {
+        this.whosConnected = connectedUsers;
+        this.updateDetailsVisibility();
+      });
+      // Afficher les internes dans la console pour déboguer
+      // console.log("SS",this.interns,this._mesService.whosConnected);
+    });
    }
    viewDetails(index: number): void {
-    console.log("Connected users:");
-    this.detailsVisibility[index] = !this.detailsVisibility[index];
-    this._mesService.getAllConnected().subscribe({
-      next: (users: string[]) => {
-        // this.connectedUsers = users;
-        console.log('Utilisateurs connectés:', users);
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des utilisateurs connectés:', error);
-      }
-    });
+    
+    // this.detailsVisibility[index] = !this.detailsVisibility[index];
+    // console.log("Who : ",this._mesService.whosConnected)
+    
   }
 
   openChat(intern: InternDTO): void {
@@ -56,5 +67,17 @@ export class InternComponent  implements OnInit {
       .then(() => console.log('Routing complete'));  // Log dans la console après la navigation
   }
 
+  updateDetailsVisibility(): void {
+    if (this.interns && this.whosConnected) {
+      this.interns.forEach((intern: InternDTO, index: number) => {
+        if (intern.id && this.whosConnected.includes(intern.id)) {
+          this.detailsVisibility[index] = true; // Rendre visible les détails si l'utilisateur est connecté
+        } else {
+          this.detailsVisibility[index] = false; // Masquer sinon
+        }
+      });
+      console.log("Updated details visibility:", this.detailsVisibility);
+    }
+  }
  } 
 

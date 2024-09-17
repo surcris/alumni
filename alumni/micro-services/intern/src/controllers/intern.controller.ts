@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { InternDto } from 'src/dtos/intern.dto';
 import { InternService } from 'src/services/intern.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -13,11 +13,19 @@ export class InternController {
       return await this._service.findAll();
     } catch (err) {}
   }
-
+  
   @MessagePattern({ cmd: 'findOne' })
   async findOne(@Payload() payload: any) {
     try {
       return await this._service.findOne(payload.id);
+    } catch (err) {}
+  }
+
+  @MessagePattern({ cmd: 'findOneByEmail' })
+  async findOneByEmail(@Payload() payload: any) {
+    Logger.log("test")
+    try {
+      return await this._service.findOneByEmail(payload.email);
     } catch (err) {}
   }
 

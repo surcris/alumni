@@ -137,10 +137,11 @@ export class UserController {
 
 	private mapAuthUser(response: Response): OperatorFunction<object, unknown>{
 		return map(async (value: any) => {
+			console.log("auth : ",value)
 			if (value.status === 204) {
 				const generatetoken = await this.userService.generateToken(value.payload);
 				response.cookie('mySecureCookie', generatetoken, {
-					httpOnly: true
+					httpOnly: true,
 				  }).send({
 					status: 204,
 					message: 'OK',

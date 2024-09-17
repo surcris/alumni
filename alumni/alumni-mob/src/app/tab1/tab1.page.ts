@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { MessagerieService } from '../core/services/messagerie.service';
 
 @Component({
   selector: 'app-tab1',
@@ -27,7 +28,8 @@ export class Tab1Page {
   ]
   constructor(
     private _alertController: AlertController,
-    private _route: Router
+    private _route: Router,
+    private _mesService: MessagerieService
   ) {}
 
   async logout(){
@@ -41,6 +43,7 @@ export class Tab1Page {
         handler: () => {
           localStorage.removeItem('auth')
           this._route.navigate(['login'])
+          this._mesService.disconnect()
           // this._menuController.close()
         },
       }],

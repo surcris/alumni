@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
       request['user'] = payload;
       
     } catch {
+      Logger.log("toknt : ",token)
       throw new UnauthorizedException();
     }
     return true;
