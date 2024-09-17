@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ToastController } from '@ionic/angular';
 import { IonInfiniteScrollCustomEvent } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/core/services/post.service';
@@ -25,7 +25,8 @@ export class PostComponent implements OnInit, OnDestroy{
 
   constructor(
     // private _serviceIntern: InternService, // Dependency Injection
-    private _service: PostService
+    private _service: PostService,
+    private toastController: ToastController
   ){
   }
 

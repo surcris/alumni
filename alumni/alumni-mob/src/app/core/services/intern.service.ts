@@ -19,7 +19,7 @@ export class InternService {
   constructor(
     private _httpClient: HttpClient,
     private _storage: StorageService
-  ) { }
+  ) {}
 
   public companyFilter(company: string): Array<InternType> {
     throw new Error('Not implemented yet')
@@ -30,7 +30,6 @@ export class InternService {
    * @returns Observable<InternType[]>
    */
   public findAll(): Observable<Array<InternDTO>> {
-    
     return this._httpClient.get<Array<any>>(this.URI,{
       headers:{
         authorization: 'Bearer '+this._storage.retrieve('auth').accessToken,

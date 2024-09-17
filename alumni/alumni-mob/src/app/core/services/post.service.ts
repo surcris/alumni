@@ -12,8 +12,6 @@ import { environment } from 'src/environments/environment';
 export class PostService {
   private readonly URI: string = `${environment.baseURL}:3000/post`
 
-  
-
   constructor(
     private _httpClient: HttpClient,
     private _storage: StorageService

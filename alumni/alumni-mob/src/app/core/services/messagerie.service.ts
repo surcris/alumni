@@ -24,9 +24,7 @@ export class MessagerieService {
     this._userService.getMyId().pipe(
       take(1),
       switchMap((data: string) => {
-        if (data) {
-          console.log('ID reçu du gateway :', data);
-          
+        if (data) {          
           // Vérification de l'existence d'un socket pour cet utilisateur
           return this._httpClient.post<boolean>(this.URI + `/socket/getMy`, { id: data }).pipe(
             tap((response: boolean) => {
