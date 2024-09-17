@@ -2,23 +2,43 @@ import {
 	Body,
 	Controller,
 	Delete,
+	FileTypeValidator,
 	Get,
 	Logger,
+	MaxFileSizeValidator,
 	Param,
+	ParseFilePipe,
 	Patch,
 	Post,
 	Res,
-	UseGuards
+	UploadedFiles,
+	UseGuards,
+	UseInterceptors
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { take } from 'rxjs';
 import { Response } from 'express';
 import { PostType } from './models/post.type';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import * as path from 'path';
+import * as multer from 'multer';
+
 
 @Controller(`post`)
 export class PostController {
-	constructor(private _service: PostService) {}
+
+	private static readonly storage = multer.diskStorage({
+		destination: function (req, file, cb) {
+		  cb(null, path.join(process.cwd(),'uploads'))
+		},
+		filename: function (req, file, cb) {
+		  const uniquePrefix = Date.now() + '-' + process.pid + '-' + Math.round(Math.random() * 1E9)
+		  cb(null, uniquePrefix + path.extname(file.originalname)) //Appending extension
+		}
+	  })
+	
+	constructor(private _service: PostService) { }
 
 	@UseGuards(AuthGuard)
 	@Get(':page')
@@ -62,7 +82,26 @@ export class PostController {
 
 	@UseGuards(AuthGuard)
 	@Post()
-	add(@Body() post: PostType, @Res() res: Response) {
+	@UseInterceptors(
+		AnyFilesInterceptor({
+			storage: PostController.storage
+		}),
+	)
+	add(
+		@UploadedFiles(
+			new ParseFilePipe({
+				validators: [
+					new FileTypeValidator({ fileType: '.(png|jpeg|jpg|mp4)' }),
+					
+				],
+				fileIsRequired: false,
+			}
+			)
+		) 
+			files: Array<Express.Multer.File>, @Body() post: PostType, @Res() res: Response
+		) {
+		if (files)
+			post.media = files[0].filename;
 		this._service
 			.add(post)
 			.pipe(take(1))
