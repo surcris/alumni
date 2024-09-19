@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
   ArrayNotEmpty,
+  IsArray,
   // IsArray,
   IsNotEmpty,
   // IsNumber,
@@ -9,6 +10,7 @@ import {
 } from 'class-validator';
 import { CompanyType } from 'src/models/company.type';
 import { PoeType } from 'src/models/poe.type';
+import { Skills } from 'src/schemas/skills.schema';
 
 export class InternDto {
   // @IsNumber()
@@ -48,4 +50,7 @@ export class InternDto {
 
   @IsNotEmpty()
   readonly userId: number;
+
+  @IsArray()
+  skills: Skills[];
 }

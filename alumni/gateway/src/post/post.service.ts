@@ -31,4 +31,8 @@ export class PostService {
 		const pattern = { cmd: 'delete' };
 		return this._client.send<string>(pattern, { id });
 	}
+	findPostsByAuthor(author: string): Observable<Array<PostType>> {
+		const pattern = { cmd: 'findPostsByAuthor' };
+		return this._client.send<PostType[]>(pattern, { author });
+	  }
 }

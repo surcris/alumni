@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Company, CompanySchema } from './company.schema';
 import { Poe, PoeSchema } from './poe.schema';
 import { Type } from 'class-transformer';
+import { Skills, SkillsSchema } from './skills.schema';
 
 @Schema()
 export class Intern {
@@ -24,5 +25,7 @@ export class Intern {
   @Prop()
   @Type(() => Number)
   userId: number;
+  @Prop({ type: [SkillsSchema] })
+  skills: Skills[];
 }
 export const InternSchema = SchemaFactory.createForClass(Intern);

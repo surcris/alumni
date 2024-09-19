@@ -43,7 +43,7 @@ export class UserService {
 
   async authUser(login: any){
     const userEntry = await this._repository.validateUser(login.email,login.mdp);
-    Logger.log(JSON.stringify(userEntry))
+
     if(userEntry){
       
       return {status: 204, message: 'OK', payload:{id: userEntry.id,role:userEntry.role, email:userEntry.email}}  
@@ -52,17 +52,16 @@ export class UserService {
 
   async authUserAdmin(login: any){
     const userEntry = await this._repository.validateUser(login.email,login.mdp);
-    Logger.log(JSON.stringify(userEntry))
+  
     if(userEntry && userEntry.role != Roles.Intern){
       return {status: 204, message: 'OK', payload:{id: userEntry.id,role:userEntry.role, email:userEntry.email}}  
     }else return {status: 400, message: `Echec lors de l\'identification ou Vous n'avez pas les droits`}  
   }
 
   async createUserPassword(login: string, password: string){
-    Logger.log(JSON.stringify(login))
-    Logger.log(JSON.stringify(password))
+   
     const updateObject = await this._repository.createUserPassword(login, password)
-    Logger.log(JSON.stringify(updateObject))
+   
     if(updateObject.affected >0)
       return {status: 204, message: 'OK'}   
     return {status: 400, message: 'KO'}  
@@ -70,7 +69,7 @@ export class UserService {
 
   async getUserIdByEmail(email: any) {
     const userEntry = await this._repository.findOne(email);
-    console.log("service Id" + JSON.stringify(userEntry.id))
+
     return userEntry.id
   }
 }

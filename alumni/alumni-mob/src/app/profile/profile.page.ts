@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { InternType } from '../core/types/intern/inter-type';
 import { ActivatedRoute } from '@angular/router';
 import { InternService } from '../core/services/intern.service';
+import { PostType } from '../core/types/post/post-type';
+import { PostService } from '../core/services/post.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,9 +12,11 @@ import { InternService } from '../core/services/intern.service';
 })
 export class ProfilePage implements OnInit {
   intern: InternType | null = null;
+  posts: PostType[] = [];
 
   constructor(private route: ActivatedRoute,
-    private internService: InternService) { 
+    private internService: InternService,
+    private postService: PostService) { 
       console.log("un truc")
     }
 
@@ -28,6 +32,21 @@ export class ProfilePage implements OnInit {
           console.error('Error fetching intern profile', error);
         }
       );
+      this.route.params.subscribe(params => {
+        const id = params['id'];
+        if (id) { 
+          this.postService.findPostsByAuthor(id).subscribe({
+            next: (posts: PostType[]) => {
+              console.log('User posts:', posts);
+              this.posts = posts;
+            },
+            error: (err) => {
+              console.error('Failed to load posts:', err);
+            }
+          })
+        } else {
+          console.error('Author ID is not defined in the route.');}
+     });
     }
 
 

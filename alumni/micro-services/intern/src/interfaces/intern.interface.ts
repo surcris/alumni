@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 import { CompanyType } from 'src/models/company.type';
 import { PoeType } from 'src/models/poe.type';
+import { SkillsType } from 'src/models/skills.type';
 
 export interface InterfaceIntern extends Document {
   readonly _id?: number;
@@ -13,4 +14,5 @@ export interface InterfaceIntern extends Document {
   readonly company: CompanyType;
   readonly poe: PoeType;
   readonly userId: number;
+  readonly skills: SkillsType[];
 }

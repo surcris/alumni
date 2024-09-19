@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer'; 
 import { CompanyType } from '../types/company/company-type';
 import { PoeType } from '../types/poe/poe-type';
+import { SkillsType } from '../types/skills/skillType';
 export class InternDTO { 
     @Expose({name: '_id'})
     id?: string;
@@ -22,5 +23,7 @@ export class InternDTO {
     poe?: PoeType;
     @Expose()
     userId?: number;
+    @Expose()
+    skills?: SkillsType[];
 
 }

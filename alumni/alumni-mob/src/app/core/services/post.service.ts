@@ -5,6 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import { PostTransfo } from '../transformers/post-transfo';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
+import { PostType } from '../types/post/post-type';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,7 @@ export class PostService {
         return 0;
       });
     }
-
+    findPostsByAuthor(authorId: string): Observable<PostType[]> {
+      return this._httpClient.get<PostType[]>(`${this.URI}?authorId=${authorId}`);
+    }
 }

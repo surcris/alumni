@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InternDto } from 'src/dtos/intern.dto';
 import { Model } from 'mongoose';
@@ -57,11 +57,9 @@ export class InternService implements Crud {
 
   async getProfileData(userId: string): Promise<InterfaceIntern> {
     const userIdNumber = Number(userId);
-    Logger.log('userid', userIdNumber);
     const existingIntern = await this.internModel
       .findOne({ userId: userIdNumber })
       .exec();
-    Logger.log('intern', existingIntern);
     if (!existingIntern) {
       throw new NotFoundException(`Intern #${userId} not found`);
     }

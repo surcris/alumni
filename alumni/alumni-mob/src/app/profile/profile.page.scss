@@ -1,0 +1,60 @@
+.stars {
+    display: inline-block;
+  }
+  
+  .star {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #ffcc00;
+    stroke-width: 2;
+  }
+  
+  .star .full {
+    fill: #ffcc00;
+  }
+  
+  .star.filled .full {
+    fill: #ffcc00; /* Pleine étoile */
+  }
+  
+  .star.empty .full {
+    fill: none; /* Vide étoile */
+  }
+  
+  .star.half-filled .full {
+    fill: url(#half); /* Remplissage partiel avec un gradient */
+  }
+  
+  /* Ajoutez ce style pour gérer les étoiles partiellement remplies */
+  .star.half-filled {
+    position: relative;
+  }
+  
+  .star.half-filled .full {
+    fill: none; /* Cache l'étoile entière */
+  }
+  
+  .star.half-filled:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #ffcc00; /* Remplissage de 50% */
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    z-index: 1;
+  }
+  .profile {
+    margin-bottom: 20px;
+  }
+  
+  .posts {
+    margin-top: 20px;
+  }
+  
+  .post {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }  

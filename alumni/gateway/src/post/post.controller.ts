@@ -39,7 +39,9 @@ export class PostController {
 		}
 	  })
 	
-	constructor(private _service: PostService) { }
+	constructor(private _service: PostService,
+		private readonly postService: PostService
+	) { }
 
 	@UseGuards(AuthGuard)
 	@Get(':page')
@@ -160,4 +162,22 @@ export class PostController {
 				}
 			});
 	}
+
+
+	@UseGuards(AuthGuard)
+  @Get('author')
+  findPostsByAuthor(@Req() req:Request,  @Res() res: Response) {
+    this.postService.findPostsByAuthor(req['author'].id).subscribe({
+      next: (posts: PostType[]) => {
+        if (posts.length > 0) {
+          res.status(200).json(posts);
+        } else {
+          res.status(404).json({ message: 'No posts found for this author.' });
+        }
+      },
+      error: (error) => {
+        res.status(500).json({ message: 'Error fetching posts.' });
+      }
+    });
+  }
 }

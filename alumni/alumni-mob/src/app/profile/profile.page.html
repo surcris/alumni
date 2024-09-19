@@ -3,19 +3,7 @@
     <ion-title>profile</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Profil de {{ intern?.firstname }} {{ intern?.lastname }}</ion-title>
-  </ion-toolbar>
-</ion-header>  -->
+ -->
 
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="intern">
@@ -32,6 +20,50 @@
       <p><strong>Téléphone :</strong> {{ intern.phoneNumber }}</p>
       <p><strong>POE :</strong> {{ intern.poe }}</p>
       <p><strong>Description :</strong> {{ intern.description }}</p>
-    </ion-card-content>
+    </ion-card-content>*
   </ion-card>
+   <div class="skills">
+    <h3>Compétences</h3>
+<div *ngFor="let skill of intern?.skills">
+  <div>
+    <span>{{ skill.name }}</span>
+    <span class="stars">
+      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="star"
+          [ngClass]="{
+            'filled': i <= skill.level,
+            'half-filled': i - 0.5 === skill.level,
+            'empty': i > skill.level
+          }"
+        >
+          <path
+            class="full"
+            d="M12 2.47l2.53 5.13 5.64.82-4.08 3.98.96 5.61-5.05-2.66-5.05 2.66.96-5.61-4.08-3.98 5.64-.82L12 2.47z"
+          />
+        </svg>
+      </ng-container>
+    </span>
+    <span class="endorsements">+{{ skill.endorsements }}</span>
+  </div>
+</div>
+
+  </div> 
+  <div class="posts">
+    <h3>Posts</h3>
+    <div *ngIf="posts ; else noPosts">
+      <div *ngFor="let post of posts" class="post">
+        <p>{{ post.content }}</p>
+        <p>{{ post.media}}</p>
+        <p>{{ post.title }}</p>
+        <p>{{ post.postedAt }}</p>
+        <p>{{ post.type }}</p>
+      </div>
+    </div>
+    <ng-template #noPosts>
+      <p>No posts available.</p>
+    </ng-template>
+  </div>
 </ion-content> 
