@@ -19,10 +19,14 @@ export class InternService implements Crud {
     }
     return internData;
   }
-  async findOne(internId: string): Promise<InterfaceIntern> {
-    const existingIntern = await this.internModel.findById(internId).exec();
+  async findOne(id: string): Promise<InterfaceIntern> {
+    const existingIntern = await this.internModel
+      .findOne({
+        $or: [{ _id: id }, { userId: id }],
+      })
+      .exec();
     if (!existingIntern) {
-      throw new NotFoundException(`Intern #${internId} not found`);
+      throw new NotFoundException(`Intern #${id} not found`);
     }
     return existingIntern;
   }

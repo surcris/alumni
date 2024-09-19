@@ -10,6 +10,7 @@ import {
 	ParseFilePipe,
 	Patch,
 	Post,
+	Req,
 	Res,
 	UploadedFiles,
 	UseGuards,
@@ -98,10 +99,11 @@ export class PostController {
 			}
 			)
 		) 
-			files: Array<Express.Multer.File>, @Body() post: PostType, @Res() res: Response
+			files: Array<Express.Multer.File>, @Body() post: PostType, @Req() req: Request, @Res() res: Response
 		) {
 		if (files)
 			post.media = files[0].filename;
+		post.author = req['user'].infoU.id
 		this._service
 			.add(post)
 			.pipe(take(1))
