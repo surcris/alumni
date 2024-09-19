@@ -41,4 +41,9 @@ export class PostController {
       return await this._service.delete(payload.id);
     } catch (err) {}
   }
+
+  @MessagePattern({ cmd: 'findPostsByAuthor' })
+  async findPostsByAuthor(@Payload() payload: { authorId: string }) {
+    return this._service.findPostsByAuthor(payload.authorId);
+  }
 }
