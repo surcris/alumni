@@ -6,7 +6,7 @@ import { InternDTO } from '../internDto/internDto';
 
 export class PostTransfo {
     @Expose()
-    id?: number;
+    id?: string;
   
     @Expose()
     title?: string;
@@ -19,10 +19,10 @@ export class PostTransfo {
   
     @Expose()
     @Transform(({ value }) => new Date(value), { toClassOnly: true })
-    postedAt!: Date;
+    postedAt: any;
   
     @Expose()
-    type!: TypePost;
+    type?: TypePost;
   
     @Expose()
     authorId!: string;

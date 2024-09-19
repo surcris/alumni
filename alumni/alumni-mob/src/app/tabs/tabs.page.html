@@ -12,7 +12,7 @@
     </ion-tab-button>
 
 <!-- création de post -->
-    <ion-tab-button tab="tab5" href="/tabs/tab5" id="open-modal" expand="block">
+    <ion-tab-button tab="tab5" (click)="openModal()" expand="block">
       <ion-icon aria-hidden="true" name="add-circle-outline"></ion-icon>
       <ion-label>Post</ion-label>
       
@@ -34,37 +34,3 @@
 </ion-tabs>
 
 
-    <ion-modal #modal trigger="open-modal" [canDismiss]="canDismiss" [presentingElement]="presentingElement">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Post</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="modal.dismiss()">Close</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-<ion-content>
-  <ion-item>
-    <ion-textarea [(ngModel)]="postContent" rows="3" placeholder="Quoi de neuf ?"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label>Fichier</ion-label>
-    <input type="file" class="file-upload" onchange="console.log(event.target.files)">
-  </ion-item>
-  <ion-button expand="full" (click)="addPost()">Publier</ion-button>
-</ion-content>
-<!-- <ion-content>
-  <ion-item>
-    <ion-textarea [(ngModel)]="postContent" rows="3" placeholder="Quoi de neuf ?"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label>Photo</ion-label>
-    <ion-input type="file" (change)="onPhotoChange($event)" accept="image/*"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Vidéo</ion-label>
-    <ion-input type="file" (change)="onVideoChange($event)" accept="video/*"></ion-input>
-  </ion-item>
-  <ion-button expand="full" (click)="addPost()">Publier</ion-button>
-</ion-content> -->

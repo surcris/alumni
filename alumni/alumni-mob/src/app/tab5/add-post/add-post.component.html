@@ -1,16 +1,30 @@
-
-<ion-content>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Titre</ion-label>
+    <ion-input [(ngModel)]="title" placeholder="Ajoutez un titre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-textarea [(ngModel)]="postContent" rows="3" placeholder="Quoi de neuf ?"></ion-textarea>
+  </ion-item>
+  <input type="file" class="file-upload" onchange="console.log(event.target.files)">
   <ion-item>
     <ion-label>Type de post</ion-label>
-    <ion-select [(ngModel)]="postType">
-      <ion-select-option value="text">Texte</ion-select-option>
-      <ion-select-option value="photo">Photo</ion-select-option>
-      <ion-select-option value="video">Vidéo</ion-select-option>
+    <ion-select [(ngModel)]="typepost">
+      <ion-select-option *ngFor="let type of listPostType" [value]="type">
+        {{ type }}
+      </ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-item>
-    <ion-label>Contenu</ion-label>
-    <!-- <ion-input [(ngModel)]="postContent"></ion-input> -->
-  </ion-item>
-  <ion-button (click)="addPost()">Ajouter</ion-button>
-</ion-content>
+  <ion-button expand="full" (click)="onSubmit()">Publier</ion-button> 
+</ion-content> 
+

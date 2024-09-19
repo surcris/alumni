@@ -5,7 +5,8 @@ import { plainToInstance } from 'class-transformer';
 import { PostTransfo } from '../transformers/post-transfo';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
-import { PostType } from '../types/post/post-type';
+import { CreatePostType } from '../types/post/post-type';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,15 @@ export class PostService {
   constructor(
     private _httpClient: HttpClient,
     private _storage: StorageService
-  ) { 
+  ) {}
+
+
+  public addPost(formData: FormData): Observable<any> {
     
+    return this._httpClient.post<any>(this.URI, formData)
   }
-  /**
-   * Get the list of post
-   * @returns Observable<PostType[]>
-   */
+  
+  
   public findAll(page: number): Observable<Array<PostTransfo>> {  // Create params object
     return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`).pipe(
       map(data => plainToInstance(PostTransfo, data))
