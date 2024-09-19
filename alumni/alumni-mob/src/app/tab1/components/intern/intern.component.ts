@@ -12,6 +12,15 @@ import { Router } from '@angular/router';
 import { MessagerieService } from 'src/app/core/services/messagerie.service';
 import { UserService } from 'src/app/core/services/user.service';
 
+
+// short resume at the begining of the component and more description before the method
+
+// This class is an angular component that allows !Main purpose![the display of list of interns], 
+// with a button you can see more details of the intern.
+// The class uses the messagerie controller who allows the connection of the intern 
+// to the websocket in order to communicate with other intern.
+// The opening of screen chat with the navigation.
+
 @Component({
   selector: 'app-intern', 
   templateUrl: './intern.component.html',
@@ -32,6 +41,7 @@ export class InternComponent  implements OnInit {
     this.detailsVisibility = new Array(this.interns?.length).fill(false);
   } 
   
+  // des
   ngOnInit(): void { 
     this._mesService.connexion()
 
@@ -53,7 +63,7 @@ export class InternComponent  implements OnInit {
     });
    }
    viewDetails(index: number): void {
-    
+    this._mesService.send("hello","Test1","Test2")
     // this.detailsVisibility[index] = !this.detailsVisibility[index];
     // console.log("Who : ",this._mesService.whosConnected)
     

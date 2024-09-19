@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ChatEventModule } from './chat-event/chat-event.module';
-import { ChatEventGateway } from './chat-event/chat-event.gateway';
+
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import configuration from './configuration/configuration';
-import { UserConversationSchema } from './schemas/user-conversation';
+
+
+
+
+import { ConversationController } from './conversation/conversation.controller';
+import { ConversationService } from './conversation/conversation.service';
+import { ConversationSchema } from './schemas/conversation.schema';
+import { ChatEventGateway } from './chat-event/chat-event.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,9 +31,10 @@ import { UserConversationSchema } from './schemas/user-conversation';
         dbName: configService.get<string>('MONGODB_DATABASE'),
       }),
     }),
-    MongooseModule.forFeature([{ name: 'Message', schema: UserConversationSchema }]),
+    MongooseModule.forFeature([{ name: 'Conversation', schema: ConversationSchema }]),
+    
   ],
-  controllers: [AppController],
-  providers: [AppService,ChatEventGateway],
+  controllers: [AppController,ConversationController],
+  providers: [AppService,ChatEventGateway,ConversationService],
 })
 export class AppModule {}

@@ -5,6 +5,8 @@ import { RequestMessageType } from "./dto/request-message.type";
 import { ResponseConnectionType } from "./dto/response-connection.type";
 import { SocketUserType } from "./types/socket-user.type";
 import { Socket } from "ngx-socket-io";
+import { AppService } from "src/app.service";
+import { ConversationService } from "src/conversation/conversation.service";
 
 @WebSocketGateway({
   cors: {
@@ -18,21 +20,28 @@ export class ChatEventGateway
   @WebSocketServer()
   wsServer: Server;
 
+  
   private _clients: Map<string, any> = new Map<string, any>();
 
+  constructor(private conversationService:ConversationService){
+
+  }
+
   @SubscribeMessage('message')
-  async chat(@MessageBody() data: RequestMessageType): Promise<any> {
+  async chat(@MessageBody() data: any): Promise<any> {
     Logger.log(`Received ${JSON.stringify(data)}`);
     // Find the recipient
-    const recipientSocket: any = this.userToSocket(data.recipient);
+    // const recipientSocket: any = this.userToSocket(data.recipient);
+
+    this.conversationService.create(data)
 
     const payload: any = {
       datetime: new Date(),
       content: data.content,
     };
-    Logger.log(`Emit : ${JSON.stringify(payload)} to ${recipientSocket.id}`);
+    // Logger.log(`Emit : ${JSON.stringify(payload)} to ${recipientSocket.id}`);
 
-    recipientSocket.emit('message', payload);
+    // recipientSocket.emit('message', payload);
   }
 
   handleConnection(client: any, ...args: any[]): void {

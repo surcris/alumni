@@ -7,5 +7,5 @@ services:
                 - 27018:27017
             env_file: .env
             volumes:
-                  - ./data:/data/db:rw
-                  - ./entrypoint/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+                  - ./data/user_conversation:/data/db:rw  # Volume pour stocker les données spécifiques à cette DB
+                  - ./entrypoint/user_conversation/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro  # Script d'initialisation

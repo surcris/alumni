@@ -7,15 +7,17 @@ import { BehaviorSubject, catchError, EMPTY, Observable, of, switchMap, take, ta
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
+import { MessageType } from '../types/messagerie/message.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessagerieService {
-  private readonly URI: string = `${environment.baseURL}:4000`;
+  private readonly URI: string = `${environment.baseURL}:4000/conversation`;
   private connectedUsersSubject = new BehaviorSubject<any[]>([]);
   connectedUsers$ = this.connectedUsersSubject.asObservable();
   whosConnected:Array<string>= []
+  
   constructor(
     private _socket: Socket,
     private _internService: InternService,
@@ -81,11 +83,15 @@ export class MessagerieService {
     return this._httpClient.get<any>(this.URI + `/socket/getAll`);
   }
 
-  send(message: string, destId: string) {
-    let senderId;
+  send(message: string, destId: string,expeId:string) {
+    const messageSend:MessageType = {
+      userExp: expeId,
+      userDest: destId,
+      message: message
+    }
 
     //envoie du message
-    // this._socket.emit()
+    this._socket.emit("message",messageSend)
   }
 
   disconnect(): void {
