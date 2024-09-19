@@ -44,6 +44,17 @@ export class ChatEventGateway
     // recipientSocket.emit('message', payload);
   }
 
+  @SubscribeMessage('changeStatut')
+  async changeStatut(@MessageBody() data: any): Promise<any> {
+    Logger.log(`Received ${JSON.stringify(data)}`);
+    // Find the recipient
+    // const recipientSocket: any = this.userToSocket(data.recipient);
+
+    this.conversationService.updateStatut(data)
+
+    
+  }
+
   handleConnection(client: any, ...args: any[]): void {
     const { sockets } = this.wsServer.sockets;
     const userId = client.handshake.query.userId;

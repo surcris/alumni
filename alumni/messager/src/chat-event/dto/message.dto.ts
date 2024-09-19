@@ -11,4 +11,7 @@ export class MessageDto {
     readonly userId: string;
   
     readonly datetime?: Date;
+
+    @IsString()
+    statut: string;
 }

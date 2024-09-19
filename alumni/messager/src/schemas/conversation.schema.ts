@@ -13,6 +13,9 @@ export class Conversation extends Document {
 
   @Prop({ type: Array, default: [] })
   messages: [];
+
+  @Prop({ required: true })
+  statut: string;
 }
 
 export const ConversationSchema = SchemaFactory.createForClass(Conversation);

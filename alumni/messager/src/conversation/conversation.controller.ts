@@ -20,14 +20,20 @@ export class ConversationController {
     return this.conversationService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.conversationService.findOne(+id);
+  @Post('findOneConv')
+  findOne(@Body() data: any) {
+    return this.conversationService.findOne(data);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateConversationDto: UpdateConversationDto) {
-    return this.conversationService.update(+id, updateConversationDto);
+  @Patch('addMessage')
+  update(@Body() data: any) {
+    return this.conversationService.update( data);
+  }
+
+  @Patch('changeStatut')
+  updateStatut(@Body() data: any) {
+    //Doit recevoir idDest , idExpe et index du message
+    return this.conversationService.updateStatut(data);
   }
 
   @Delete(':id')
