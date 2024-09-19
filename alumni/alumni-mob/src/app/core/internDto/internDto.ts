@@ -25,5 +25,7 @@ export class InternDTO {
     userId?: number;
     @Expose()
     skills?: SkillsType[];
+    @Expose()
+    description?: string;
 
 }

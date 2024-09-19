@@ -24,12 +24,7 @@ export class PostService {
    * @returns Observable<PostType[]>
    */
   public findAll(page: number): Observable<Array<PostTransfo>> {  // Create params object
-    return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`,{
-      headers:{
-        authorization: 'Bearer '+this._storage.retrieve('auth').accessToken,
-        authorizationRefresh: 'Bearer '+this._storage.retrieve('auth').refreshToken,
-      }
-    }).pipe(
+    return this._httpClient.get<Array<PostTransfo>>(this.URI +`/${page}`).pipe(
       map(data => plainToInstance(PostTransfo, data))
     );
   }
@@ -47,7 +42,9 @@ export class PostService {
         return 0;
       });
     }
-    findPostsByAuthor(authorId: string): Observable<PostType[]> {
-      return this._httpClient.get<PostType[]>(`${this.URI}?authorId=${authorId}`);
+    findPostsByAuthor(): Observable<Array<PostTransfo>> {
+      return this._httpClient.get<Array<PostTransfo>>(this.URI +`/user/allPosts`).pipe(
+        map(data => plainToInstance(PostTransfo, data))
+      );
     }
 }

@@ -3,7 +3,6 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -19,13 +18,11 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    Logger.log("Cookies: ", request);
     const token = request.cookies["mySecureCookie"].refreshToken;
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      // Logger.log("Try catch")
       const payload = await this.jwtService.verifyAsync(
         token,
         {
@@ -35,7 +32,6 @@ export class AuthGuard implements CanActivate {
       // Vérification du rôle dans le token
       if (!payload.infoU.role || !['Admin', 'Intern','SuperAdmin'].includes(payload.infoU.role)) {
         // Par exemple, ici on vérifie si le rôle est 'admin'
-        // Logger.log(payload.infoU.role)
         throw new ForbiddenException('Access denied: insufficient permissions');
       }
       // 💡 We're assigning the payload to the request object here
@@ -46,11 +42,5 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
-  }
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    // Logger.log(token)
-    return type === 'Bearer' ? token : undefined; 
   }
 }

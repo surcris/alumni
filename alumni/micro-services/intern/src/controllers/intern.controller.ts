@@ -44,7 +44,6 @@ export class InternController {
 
   @MessagePattern({ cmd: 'profile' })
   async getProfileData(@Payload() payload: any) {
-    console.log('profile micro intern');
     try {
       return await this._service.getProfileData(payload.id);
     } catch (err) {}

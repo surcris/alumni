@@ -4,8 +4,6 @@ import {
 	Delete,
 	FileTypeValidator,
 	Get,
-	Logger,
-	MaxFileSizeValidator,
 	Param,
 	ParseFilePipe,
 	Patch,
@@ -164,10 +162,10 @@ export class PostController {
 	}
 
 
-	@UseGuards(AuthGuard)
-  @Get('author')
+  @UseGuards(AuthGuard)
+  @Get('user/allPosts')
   findPostsByAuthor(@Req() req:Request,  @Res() res: Response) {
-    this.postService.findPostsByAuthor(req['author'].id).subscribe({
+    this.postService.findPostsByAuthor(req['user'].infoU.id).subscribe({
       next: (posts: PostType[]) => {
         if (posts.length > 0) {
           res.status(200).json(posts);

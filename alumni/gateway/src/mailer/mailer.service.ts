@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateMailerDto } from './dto/create-mailer.dto';
 import { UpdateMailerDto } from './dto/update-mailer.dto';
 import * as nodemailer from 'nodemailer';

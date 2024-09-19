@@ -20,14 +20,14 @@ import { UserService } from 'src/app/core/services/user.service';
 export class InternComponent  implements OnInit {
 
   @Input() 
-  interns: InternDTO[] = []; 
+  interns: InternDTO[] | undefined; 
   detailsVisibility: boolean[] = [];
   constructor(private internService: InternService,
     private router: Router,
     private _mesService: MessagerieService,
     // private _userService: UserService
   ) {
-    this.detailsVisibility = new Array(this.interns.length).fill(false);
+    this.detailsVisibility = new Array(this.interns?.length).fill(false);
   } 
   
   ngOnInit(): void { 

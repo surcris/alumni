@@ -5,11 +5,11 @@
   </ion-avatar>
 
   <div class="header-infos">
-    <ion-card-title>{{intern.firstname}} {{intern.lastname}}</ion-card-title>
+    <ion-card-title>{{intern?.firstname}} {{intern?.lastname}}</ion-card-title>
     <div class="filterCompany">
-      <ion-card-subtitle>{{intern.company?.name}}</ion-card-subtitle>
+      <ion-card-subtitle>{{intern?.company?.name}}</ion-card-subtitle>
       <!-- <ion-icon class="backArrow" *ngIf="isFilter" name="backspace-outline" (click)="onBackArrow()" ></ion-icon> -->
     </div>
-    <ion-card-subtitle>{{intern.poe?.name}}</ion-card-subtitle>
+    <ion-card-subtitle>{{intern?.poe?.name}}</ion-card-subtitle>
   </div>
 </div>

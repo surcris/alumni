@@ -9,7 +9,7 @@ import { InternDTO } from 'src/app/core/internDto/internDto';
 export class HeaderPostComponent  implements OnInit {
 
   @Input()
-  intern!: InternDTO
+  intern!: InternDTO | undefined
 
   constructor() { }
 

@@ -28,5 +28,5 @@ export class PostTransfo {
     authorId!: string;
   
     @Expose()
-    author!: InternDTO;
+    author?: InternDTO;
   }

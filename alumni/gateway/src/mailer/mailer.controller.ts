@@ -1,12 +1,9 @@
 import {
 	Controller,
-	Get,
 	Post,
 	Body,
 	Patch,
 	Param,
-	Delete,
-	Logger,
 	UnauthorizedException,
 	Res,
 	HttpStatus
@@ -39,9 +36,6 @@ export class MailerController {
 		@Body() body: any,
 		@Res() resp: Response
 	) {
-		Logger.log(JSON.stringify(body));
-		// Logger.log(tokenParam);
-
 		try {
 			const verif = await this._jwtService.verifyAsync(tokenParam, {
 				secret: jwtConstants.secret

@@ -43,7 +43,7 @@ export class PostController {
   }
 
   @MessagePattern({ cmd: 'findPostsByAuthor' })
-  async findPostsByAuthor(@Payload() payload: { authorId: string }) {
+  async findPostsByAuthor(@Payload() payload: any) {
     return this._service.findPostsByAuthor(payload.authorId);
   }
 }

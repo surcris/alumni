@@ -1,5 +1,5 @@
 
-import { Body, Controller, Delete, Get, HttpStatus, Logger, Options, Param, Patch, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { map, Observable, OperatorFunction } from 'rxjs';
 import { UserType } from './user.type';
@@ -39,17 +39,11 @@ export class UserController {
 	@Post('/auth')
 	async isValidEmailAndMdp(@Body() login: any, @Res() response: Response) {
 		try {
-			// Générez le token JWT avant de vérifier les identifiants
-
-			// Utilisez une promesse pour attendre la réponse de l'observable
-			Logger.log(JSON.stringify(login))
-			//la valeur observable sert juste a conprendre le 
-			  return this.userService.isValidEmailAndMdp(login.email, login.password)
-			  .pipe( 
-				this.mapAuthUser(response)
-			  )
+			return this.userService.isValidEmailAndMdp(login.email, login.password)
+			.pipe( 
+			this.mapAuthUser(response)
+			)
 		  } catch (err) {
-			// Gérer les erreurs potentielles ici
 			return {
 			  status: 500,
 			  message: 'Une erreur est survenue lors de l\'authentification',
@@ -87,7 +81,6 @@ export class UserController {
 		const verif = await this._jwtService.verifyAsync(token, {
 			secret: jwtConstants.secretRefresh
 		});
-		Logger.log("Get Id",verif)
 		return verif.infoU.id
 	}
 	

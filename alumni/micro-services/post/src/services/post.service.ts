@@ -219,12 +219,9 @@ export class PostService implements Crud {
       where: { authorId: authorId },
       order: { postedAt: 'DESC' },
     });
-    if (!postData || postData.length === 0) {
+    if (!postData || postData.length === 0)
       throw new NotFoundException('Posts for this author not found!');
-    }
-    return Promise.all(
-      postData.map(async (post) => await this.mergedPostAndIntern(post)),
-    );
+    return postData
   }
 
 }

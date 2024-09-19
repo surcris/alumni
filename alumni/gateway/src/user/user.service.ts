@@ -1,5 +1,5 @@
 
-import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable,UnauthorizedException } from '@nestjs/common';
 
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, of } from 'rxjs';

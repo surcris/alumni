@@ -1,7 +1,7 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InternDto } from 'src/dtos/intern.dto';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { UpdateInternDto } from 'src/dtos/update-intern.dto';
 import { InterfaceIntern } from 'src/interfaces/intern.interface';
 import { Crud } from 'src/interfaces/crud.interface';
@@ -20,13 +20,14 @@ export class InternService implements Crud {
     return internData;
   }
   async findOne(id: string): Promise<InterfaceIntern> {
-    Logger.log(' ID user ' + id);
-    const existingIntern = await this.internModel
-      .findOne({
-        $or: [{ _id: id }, { userId: Number(id) }],
-      })
-      .exec();
-    Logger.log(JSON.stringify(existingIntern));
+    let existingIntern;
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      existingIntern = await this.internModel.findById(id).exec();
+    } else {
+      existingIntern = await this.internModel
+        .findOne({ userId: Number(id) })
+        .exec();
+    }
     if (!existingIntern) {
       throw new NotFoundException(`Intern #${id} not found`);
     }

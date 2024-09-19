@@ -6,6 +6,7 @@ import { InternDTO } from '../internDto/internDto';
 import { InternTransformer } from '../transformers/intern.transformer';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
+import { InternTransfo } from '../transformers/intern-transfo';
 
 
 @Injectable({
@@ -61,12 +62,7 @@ export class InternService {
 
 
 
-  getProfileData(): Observable<InternType> {
-    return this._httpClient.get<InternType>(`${this.URI}/profile`, {
-      headers: {
-        authorization: `Bearer ${this._storage.retrieve('auth').accessToken}`,
-        authorizationRefresh: `Bearer ${this._storage.retrieve('auth').refreshToken}`,
-      }
-    });
+  getProfileData(): Observable<InternDTO> {
+    return this._httpClient.get<InternDTO>(`${this.URI}/profile`);
   }
 }

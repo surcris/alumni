@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { InternType } from '../core/types/intern/inter-type';
-import { ActivatedRoute } from '@angular/router';
 import { InternService } from '../core/services/intern.service';
-import { PostType } from '../core/types/post/post-type';
 import { PostService } from '../core/services/post.service';
+import { take } from 'rxjs';
+import { PostTransfo } from '../core/transformers/post-transfo';
+import { InternTransfo } from '../core/transformers/intern-transfo';
+import { InternDTO } from '../core/internDto/internDto';
 
 @Component({
   selector: 'app-profile',
@@ -11,45 +12,41 @@ import { PostService } from '../core/services/post.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  intern: InternType | null = null;
-  posts: PostType[] = [];
+  intern: InternDTO | undefined;
+  posts: PostTransfo[] = [];
 
-  constructor(private route: ActivatedRoute,
+  constructor(
     private internService: InternService,
-    private postService: PostService) { 
-      console.log("un truc")
-    }
+    private postService: PostService
+  ) { }
 
-  ngOnInit() { 
-    console.log('ngOnInit executed in ProfilePage')
-   
-      this.internService.getProfileData().subscribe(
-        (data: InternType) => {
-          console.log('Profile data:', data); 
-          this.intern = data;
+  ngOnInit() {
+    this.retriveUserInfos()
+    this.retriveAllUserPost()
+  }
+
+
+  private retriveUserInfos() {
+    this.internService.getProfileData().pipe(take(1))
+      .subscribe({
+        next: (intern: InternDTO) => {
+          this.intern = intern
         },
-        (error) => {
-          console.error('Error fetching intern profile', error);
-        }
-      );
-      this.route.params.subscribe(params => {
-        const id = params['id'];
-        if (id) { 
-          this.postService.findPostsByAuthor(id).subscribe({
-            next: (posts: PostType[]) => {
-              console.log('User posts:', posts);
-              this.posts = posts;
-            },
-            error: (err) => {
-              console.error('Failed to load posts:', err);
-            }
-          })
-        } else {
-          console.error('Author ID is not defined in the route.');}
-     });
-    }
+        error: (error: any) => { },
+        complete: () => { }
+      })
+  }
 
-
+  private retriveAllUserPost() {
+    this.postService.findPostsByAuthor().pipe(take(1))
+      .subscribe({
+        next: (posts: Array<PostTransfo>) => {
+          this.posts.push(...posts)
+          console.log("POSTS: "+this.posts.toString())
+        },
+        error: (error: any) => { },
+        complete: () => { }
+      })
+  }
 }
-
 
