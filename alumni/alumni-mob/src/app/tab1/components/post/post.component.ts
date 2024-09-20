@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InfiniteScrollCustomEvent, ToastController } from '@ionic/angular';
 import { IonInfiniteScrollCustomEvent } from '@ionic/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { PostService } from 'src/app/core/services/post.service';
 import { PostTransfo } from 'src/app/core/transformers/post-transfo';
 
@@ -10,7 +10,7 @@ import { PostTransfo } from 'src/app/core/transformers/post-transfo';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent implements OnInit, OnDestroy{
+export class PostComponent implements OnInit{
 
   /**
    * List of interns to be displayed in the view
@@ -18,10 +18,10 @@ export class PostComponent implements OnInit, OnDestroy{
    */
   public posts: Array<PostTransfo> = []
   public isFilter: boolean = false
-  // private _subscriptionIntern!: Subscription
-  private _subscription!: Subscription
 
   private page: number = 0;
+
+  private _post$: BehaviorSubject<any> = this._service.posts$
 
   constructor(
     // private _serviceIntern: InternService, // Dependency Injection
@@ -31,13 +31,15 @@ export class PostComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.page = 0;
+    this.page = 0
     this.retriveAllPost()
+    this._post$.subscribe((newPost: any) => {
+      if (newPost) {
+        this.posts.unshift(newPost)
+      }
+    })
   }
 
-  ngOnDestroy(): void {
-    this._subscription.unsubscribe()
-  }
 
   onIonInfinite(ev: IonInfiniteScrollCustomEvent<void>) {
     this.retriveAllPost();
@@ -47,7 +49,7 @@ export class PostComponent implements OnInit, OnDestroy{
   }
 
   private retriveAllPost(){
-    this._subscription = this._service.findAll(this.page)
+    this._service.findAll(this.page).pipe(take(1))
     .subscribe({
       next: (posts: Array<PostTransfo>) => {
         this.posts.push(...posts)
@@ -57,5 +59,19 @@ export class PostComponent implements OnInit, OnDestroy{
       complete: () => {}
     })
   }
+
+    // Function to check if the media is an image
+    isImage(media: string|undefined): boolean {
+      if(media)
+        return /\.(jpg|jpeg|png|gif)$/i.test(media);
+      return false
+    }
+  
+    // Function to check if the media is a video
+    isVideo(media: string|undefined): boolean {
+      if(media)
+        return /\.(mp4|webm|ogg)$/i.test(media);
+      return false
+    }
 
 }

@@ -16,7 +16,7 @@
   <ion-item>
     <ion-textarea [(ngModel)]="postContent" rows="3" placeholder="Quoi de neuf ?"></ion-textarea>
   </ion-item>
-  <input type="file" class="file-upload" onchange="console.log(event.target.files)">
+  <input type="file" class="file-upload" (change)="onFileSelected($event)">
   <ion-item>
     <ion-label>Type de post</ion-label>
     <ion-select [(ngModel)]="typepost">
@@ -25,6 +25,6 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button expand="full" (click)="onSubmit()">Publier</ion-button> 
+  <ion-button [disabled]="!isFormValid()" expand="full" (click)="addPost()">Publier</ion-button> 
 </ion-content> 
 

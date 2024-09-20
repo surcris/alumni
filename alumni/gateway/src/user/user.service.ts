@@ -104,7 +104,7 @@ export class UserService {
 	}
 
 	changePassword(payload: object) {
-		console.log('SERVICE: ' + JSON.stringify(payload));
+	
 		const pattern: any = { user: 'password' };
 		return this._client.send<object>(pattern, payload);
 	}

@@ -37,9 +37,8 @@ const envfile = 'environments/' + process.env.NEST_ENV + '/.config.yml';
 })
 export class AppModule {
   constructor() {
-    Logger.log(process.env.NEST_ENV);
     const n: ConfigService  = new ConfigService();
      
-     Logger.log(n.get<any>('database.db_name') );
+
   }
 }

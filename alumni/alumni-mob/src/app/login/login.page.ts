@@ -24,8 +24,8 @@ export class LoginPage {
       if (response.status === 200) {
         localStorage.setItem('token', response.body.token);
         this.desiredUrl = this.route.snapshot.queryParams['desiredUrl'];
-        console.log(' login '+ this.desiredUrl)
-        console.log('salut tout le monde' )
+     
+     
           if (this.desiredUrl){
             this.router.navigateByUrl(this.desiredUrl);
           }

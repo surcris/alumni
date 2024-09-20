@@ -86,7 +86,7 @@ export class UserController {
 	
 	@Patch('/password')
 	changePassword(@Body() payload: any, @Res() resp: Response) {
-		console.log(JSON.stringify(payload))
+
 		const objectResponse = this.userService.changePassword(payload)
 		objectResponse.
 		pipe(

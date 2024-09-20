@@ -42,7 +42,6 @@ export class ProfilePage implements OnInit {
       .subscribe({
         next: (posts: Array<PostTransfo>) => {
           this.posts.push(...posts)
-          console.log("POSTS: "+this.posts.toString())
         },
         error: (error: any) => { },
         complete: () => { }

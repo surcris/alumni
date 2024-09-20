@@ -37,12 +37,10 @@ export class WsChatService {
     const messages =  this._messages
       .filter(
           (message: any) => {
-            console.log(`Analyzed message : ${JSON.stringify(message)}`)
             return message.emitter === this._internService.intern?.id || message.recipient === this._internService.intern?.id
           }
       )
       .sort((m1: any, m2: any) => m1.datetime - m2.datetime)
-    console.log(`Messages was updated : ${JSON.stringify(messages)}`)
     this._messages$.next(messages)
     return messages
   }
@@ -78,7 +76,6 @@ export class WsChatService {
     return this._socket.fromEvent('message')
       .pipe(
         map((payload: any) => {
-          console.log(`Message was received : ${JSON.stringify(payload)}`)
           this._messages.push({...payload, direction: 'in'})
           return this._updateMessages()
         })

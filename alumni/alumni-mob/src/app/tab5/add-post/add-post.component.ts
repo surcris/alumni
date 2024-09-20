@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
+import { BehaviorSubject, take } from 'rxjs';
 import { TypePost } from 'src/app/core/enums/post/type-post-enum';
 import { PostService } from 'src/app/core/services/post.service';
 import { CreatePostType } from 'src/app/core/types/post/post-type';
@@ -7,7 +8,7 @@ import { CreatePostType } from 'src/app/core/types/post/post-type';
   selector: 'app-add-post',
   templateUrl: './add-post.component.html',
   styleUrls: ['./add-post.component.scss'],
- 
+
 })
 export class AddPostComponent implements OnInit {
   postContent: string = '';
@@ -16,97 +17,84 @@ export class AddPostComponent implements OnInit {
   videoFile: any;
   title: string = "";
   listPostType: Array<string> = [];
-  formData!: FormData;
+  private selectedFile!: File;
+  private _post$: BehaviorSubject<boolean> = this.postService.posts$
 
+  constructor(private actionSheetCtrl: ActionSheetController, private postService: PostService, private modalCtrl: ModalController) { }
 
   ngOnInit(): void {
-    this.listPostType= Object.values(TypePost)
-    this.formData = new FormData();
-    throw new Error('Method not implemented.');
+    this.listPostType = Object.values(TypePost)
+
   }
   closeModal() {
     throw new Error('Method not implemented.');
+  }
+  presentingElement = null;
+
+  canDismiss = async () => {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Yes',
+          role: 'confirm',
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    actionSheet.present();
+
+    const { role } = await actionSheet.onWillDismiss();
+
+    return role === 'confirm';
+  };
+
+  addPost(): void {
+    const newPost: CreatePostType = {
+      title: this.title,
+      type: this.typepost,
+      content: this.postContent,
+      postedAt: new Date()
+    };
+    this.postService.addPost(newPost, this.selectedFile).pipe(take(1)).subscribe({
+      next: (data) => {
+        this._post$.next(data)
+        this.confirm()
+      }
+    });
+
+  }
+
+  onPhotoChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.photoFile = file;
     }
-      presentingElement = null;
-    
-      
-      constructor(private actionSheetCtrl: ActionSheetController, private postService: PostService, private modalCtrl: ModalController ) {}
-    
-      //  ngOnInit() {
-      //    this.presentingElement = document.querySelector('tab5');
-      //  }
-      canDismiss = async () => {
-        const actionSheet = await this.actionSheetCtrl.create({
-          header: 'Are you sure?',
-          buttons: [
-            {
-              text: 'Yes',
-              role: 'confirm',
-            },
-            {
-              text: 'No',
-              role: 'cancel',
-            },
-          ],
-        });
-    
-        actionSheet.present();
-    
-        const { role } = await actionSheet.onWillDismiss();
-    
-        return role === 'confirm';
-      };
-      addPost(): void {
-        const newPost: CreatePostType = {
-          title: this.title,
-          type: this.typepost,
-          content: this.postContent,
-          postedAt: new Date(),
-        };
-          this.formData.append("postinfo", JSON.stringify(newPost))
-          this.postService.addPost(this.formData);
-      
-      }
+  }
 
-     
+  onVideoChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.videoFile = file;
+    }
+  }
 
-      onPhotoChange(event: any): void {
-        const file = event.target.files[0];
-        if (file) {
-          this.photoFile = file;
-        }
-      }
-    
-      // form: FormGroup = new FormGroup({
-      //   tittle: new FormControl(''),
-      //   content: new FormControl('')
-      // });
-    
-      onSubmit() {
-        console.log(`Titre: ${this.title}`);
-        console.log(`Post: ${this.postContent}`);
-        console.log(`Type de post: ${this.typepost}`);
-      }
-      onVideoChange(event: any): void {
-        const file = event.target.files[0];
-        if (file) {
-          this.videoFile = file;
-        }
-      }
-     
-      cancel() {
-        return this.modalCtrl.dismiss(null, 'cancel');
-      }
-    
-      confirm() {
-        return this.modalCtrl.dismiss(null, 'confirm');
-      }
-      onFileSelected(event: { target: { files: File[]; }; }) {
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
 
-        const file:File = event.target.files[0];
+  confirm() {
+    return this.modalCtrl.dismiss(null, 'confirm');
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0]; // Récupérer le fichier sélectionné
+  }
 
-        if (file) {
-            this.formData.append("media", file);
-        }
-      
-}}
+  isFormValid(): boolean {
+    return this.postContent.trim() !== '' && this.typepost != undefined;
+  }
+}

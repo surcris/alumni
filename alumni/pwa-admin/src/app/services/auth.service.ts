@@ -13,7 +13,6 @@ export class AuthService {
   loggedIn = false;
 
   constructor(private http: HttpClient, private router: Router) {
-    console.log('Creating AuthService');
     if(this.getToken()) {
       // check validity on backend or inside getToken
       this.loggedIn = true;

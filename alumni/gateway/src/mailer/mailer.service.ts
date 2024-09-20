@@ -48,7 +48,6 @@ export class MailerService {
 
     try {
       const info = await this.transporter.sendMail(mailOptions);
-      // console.log('E-mail envoyé : %s', info.messageId);
       return info;
     } catch (error) {
       console.error('Erreur lors de l\'envoi de l\'e-mail:', error);

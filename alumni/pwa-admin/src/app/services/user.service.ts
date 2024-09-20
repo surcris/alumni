@@ -40,7 +40,6 @@ export class UserService {
 
     // ou une fonction comme le next
     observable.subscribe((data) => {
-      console.log('data', data)
     });
 
     // demonstration des pipes (operations sur les observables)

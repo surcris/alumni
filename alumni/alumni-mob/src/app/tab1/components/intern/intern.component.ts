@@ -35,8 +35,6 @@ export class InternComponent  implements OnInit {
   constructor(private internService: InternService,
     private router: Router,
     private _mesService: MessagerieService,
-    
-    // private _userService: UserService
   ) {
     this.detailsVisibility = new Array(this.interns?.length).fill(false);
   } 

@@ -117,7 +117,7 @@ export class PostService implements Crud {
     const newPost = this._repository.create(post);
     try {
       const savedPost = await this._repository.save(newPost);
-      return savedPost;
+      return this.mergedPostAndIntern(savedPost);
     } catch (error) {
       console.error('Error saving post:', error);
       throw error;

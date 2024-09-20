@@ -22,8 +22,6 @@ export class UserService {
 
   async findOne(login: string){
     const userEntry = await this._repository.findOne(login);
-    console.log("service" + JSON.stringify(userEntry))
-    console.log(login)
     return userEntry ? true : false
   }
 

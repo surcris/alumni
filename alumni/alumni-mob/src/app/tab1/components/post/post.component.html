@@ -9,7 +9,19 @@
       </div>
       
     </div>
-    <img src="https://media.licdn.com/dms/image/v2/D4D22AQFkXWPsO8RCZg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719410226074?e=1727913600&v=beta&t=OyxIV4GTkAUYDMAlCoXtNi0hMadArx9leiHicDNgH-0">
+    <!-- Check if the post.media is an image (jpg, jpeg, png, gif) -->
+    <div *ngIf="isImage(post.media)">
+      <img [src]="'http://localhost:3000/uploads/' + post.media" alt="Media" />
+    </div>
+
+    <!-- Check if the post.media is a video (mp4, webm, ogg) -->
+    <div *ngIf="isVideo(post.media)">
+      <video controls width="400" height="300" autoplay>
+        <source [src]="'http://localhost:3000/uploads/' + post.media" type="video/mp4">
+        Your browser or mobile does not support the video tag.
+      </video>
+    </div>
+
     <app-post-content [post]="post"></app-post-content>
     <app-tools-bar></app-tools-bar>
   </ion-card>

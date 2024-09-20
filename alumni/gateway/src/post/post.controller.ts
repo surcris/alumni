@@ -4,6 +4,7 @@ import {
 	Delete,
 	FileTypeValidator,
 	Get,
+	Logger,
 	Param,
 	ParseFilePipe,
 	Patch,
@@ -92,20 +93,21 @@ export class PostController {
 		@UploadedFiles(
 			new ParseFilePipe({
 				validators: [
-					new FileTypeValidator({ fileType: '.(png|jpeg|jpg|mp4)' }),
+					new FileTypeValidator({ fileType: '.(png|jpeg|jpg|mp4|.gif)' }),
 					
 				],
 				fileIsRequired: false,
 			}
 			)
 		) 
-			files: Array<Express.Multer.File>, @Body() post: PostType, @Req() req: Request, @Res() res: Response
+			files: Array<Express.Multer.File>, @Body() post: any, @Req() req: Request, @Res() res: Response
 		) {
-		if (files)
-			post.media = files[0].filename;
-		post.author = req['user'].infoU.id
+			const newPost= JSON.parse(post.postInfo)
+		if (files.length !=0)
+			newPost.media = files[0].filename;
+		newPost.authorId = req['user'].infoU.id
 		this._service
-			.add(post)
+			.add(newPost)
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {

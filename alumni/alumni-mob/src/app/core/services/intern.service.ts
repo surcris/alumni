@@ -60,8 +60,6 @@ export class InternService {
   // public getInternId(): void {
   //   const getId = this.findAll()
 
-  //   console.log(getId)
-  // }
   set intern(intern: any) {
     this._intern = intern
   }

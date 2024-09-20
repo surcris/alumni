@@ -50,14 +50,11 @@ export class UserController {
 
   @MessagePattern({ user: 'authAdmin' })
   authUserAdmin(@Payload() payload: any) {
-    Logger.log(JSON.stringify(payload))
     return this._userService.authUserAdmin(payload.payload);
   }
 
   @MessagePattern({ user: 'password' })
   createUserPassword(@Payload() receivedpayload: any) {
-    console.log('payloadms: ' + JSON.stringify(receivedpayload));
-    // Logger.log(JSON.stringify(receivedpayload))
     return this._userService.createUserPassword(
       receivedpayload.email,
       receivedpayload.password,
@@ -66,7 +63,6 @@ export class UserController {
 
   @MessagePattern({ cmd: 'getId' })
   getUserIdByEmail(@Payload() receivedpayload: any) {
-    console.log('payload Id : ' + JSON.stringify(receivedpayload));
     return this._userService.getUserIdByEmail(
       receivedpayload.email
     );
