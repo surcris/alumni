@@ -32,14 +32,12 @@ export class InternComponent  implements OnInit {
   interns: InternDTO[] | undefined; 
   detailsVisibility: boolean[] = [];
   whosConnected: string[] = [];
+  userConnected: boolean[] = []
   constructor(private internService: InternService,
     private router: Router,
     private _mesService: MessagerieService,
-  ) {
-    this.detailsVisibility = new Array(this.interns?.length).fill(false);
-  } 
+  ) {} 
   
-  // des
   ngOnInit(): void { 
     this._mesService.connexion()
 
@@ -51,6 +49,9 @@ export class InternComponent  implements OnInit {
       console.log("init :",this.interns);
       // Initialiser la visibilité des détails pour chaque interne avec `false`
       this.detailsVisibility = new Array(this.interns.length).fill(false);
+      this.userConnected = new Array(this.interns.length).fill(false);
+
+
       
       this._mesService.connectedUsers$.subscribe((connectedUsers: string[]) => {
         this.whosConnected = connectedUsers;
@@ -62,7 +63,7 @@ export class InternComponent  implements OnInit {
    }
    viewDetails(index: number): void {
     this._mesService.send("hello","Test1","Test2")
-    // this.detailsVisibility[index] = !this.detailsVisibility[index];
+     this.detailsVisibility[index] = !this.detailsVisibility[index];
     // console.log("Who : ",this._mesService.whosConnected)
     
   }
@@ -79,12 +80,11 @@ export class InternComponent  implements OnInit {
     if (this.interns && this.whosConnected) {
       this.interns.forEach((intern: InternDTO, index: number) => {
         if (intern.id && this.whosConnected.includes(intern.id)) {
-          this.detailsVisibility[index] = true; // Rendre visible les détails si l'utilisateur est connecté
+          this.userConnected[index] = true; // Rendre visible les détails si l'utilisateur est connecté
         } else {
-          this.detailsVisibility[index] = false; // Masquer sinon
+          this.userConnected[index] = false; // Masquer sinon
         }
       });
-      console.log("Updated details visibility:", this.detailsVisibility);
     }
   }
  } 

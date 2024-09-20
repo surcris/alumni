@@ -12,8 +12,8 @@
             <div class="intern-details"></div>
             {{ intern.lastname }} {{ intern.firstname }}
           </h3>
-          <div disabled class="square-button" [class.online]="detailsVisibility[i]" [class.offline]="!detailsVisibility[i]">
-            {{ detailsVisibility ? '' : '' }}
+          <div disabled class="square-button" [class.online]="userConnected[i]" [class.offline]="!userConnected[i]">
+            {{ userConnected ? '' : '' }}
           </div>
           <!-- <h2>Liste des Stagiaires</h2>  -->
         </ion-label>
