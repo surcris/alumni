@@ -23,8 +23,11 @@ export class MessagerieComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
-    
+    this._messagerieService.connexion()
+    // Load all interns when the component initializes
+    this._internService.findAll().subscribe((interns: Array<InternDTO>) => {
+      this.interns = interns;
+    });
   }
 
   // Method to select an intern and set it in the service
