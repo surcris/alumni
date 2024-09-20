@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	Logger,
 	Param,
 	Patch,
 	Post,
@@ -144,6 +145,7 @@ export class InternController {
 	@UseGuards(AuthGuard)
 	@Get('profile')
 	getProfileData(@Req() req:Request, @Res() res: Response) {
+		Logger.log("id:", req['user'].infoU.id )
 		this._service
 			.getProfileData(req['user'].infoU.id)
 			.pipe(take(1))

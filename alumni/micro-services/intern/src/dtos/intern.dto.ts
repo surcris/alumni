@@ -52,5 +52,5 @@ export class InternDto {
   readonly userId: number;
 
   @IsArray()
-  skills: Skills[];
+  readonly skills: Skills[];
 }

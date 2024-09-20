@@ -4,6 +4,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/no-auth.guard';
 import { MessagerieComponent } from './messagerie/messagerie.component';
 import { ChatComponent } from './tab3/chat/chat.component';
+import { ProfilePage } from './profile/profile.page';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
+  { path: 'edit-profile/:id', component: ProfilePage }
   
 // Redirect to messagerie by default
 ];

@@ -5,6 +5,7 @@ import { take } from 'rxjs';
 import { PostTransfo } from '../core/transformers/post-transfo';
 import { InternTransfo } from '../core/transformers/intern-transfo';
 import { InternDTO } from '../core/internDto/internDto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,8 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private internService: InternService,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,25 @@ export class ProfilePage implements OnInit {
         error: (error: any) => { },
         complete: () => { }
       })
+  }
+  editProfile() {
+    this.router.navigate(['/edit-profile', this.intern?.id]);
+  }
+
+  shareProfile() {
+    const shareData = {
+      title: `${this.intern?.firstname} ${this.intern?.lastname}`,
+      text: `Check out ${this.intern?.firstname}'s profile`,
+      url: window.location.href // URL of the current profile page
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData)
+        .then(() => console.log('Profile shared successfully'))
+        .catch(error => console.error('Error sharing profile', error));
+    } else {
+      console.log('Sharing not supported on this device');
+    }
   }
 }
 
