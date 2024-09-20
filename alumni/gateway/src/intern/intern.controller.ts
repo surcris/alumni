@@ -63,7 +63,7 @@ export class InternController {
 
 	@Get('findOneByEmail/:email')
 	findOneByEmail(@Param('email') email: string, @Res() res: Response) {
-		Logger.log("findOneByEmail",email)
+		
 		this._service
 			.findOneByEmail(email)
 			.pipe(take(1))

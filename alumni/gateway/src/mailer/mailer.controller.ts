@@ -30,6 +30,12 @@ export class MailerController {
 		const { to, html } = body;
 		return this.mailerService.sendMail(to);
 	}
+
+	@Post('sendCode')
+	async sendCodeByMail(@Body() body: any) {
+		const { to, html } = body;
+		return this.mailerService.sendCode(to);
+	}
 	@Patch('/recup/:token')
 	async changePassword(
 		@Param('token') tokenParam: string,

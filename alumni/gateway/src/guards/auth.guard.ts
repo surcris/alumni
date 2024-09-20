@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -20,6 +21,7 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = request.cookies["mySecureCookie"].refreshToken;
     if (!token) {
+      
       throw new UnauthorizedException();
     }
     try {
@@ -29,6 +31,7 @@ export class AuthGuard implements CanActivate {
           secret: jwtConstants.secretRefresh
         }
       );
+      
       // Vérification du rôle dans le token
       if (!payload.infoU.role || !['Admin', 'Intern','SuperAdmin'].includes(payload.infoU.role)) {
         // Par exemple, ici on vérifie si le rôle est 'admin'
@@ -39,7 +42,7 @@ export class AuthGuard implements CanActivate {
       request['user'] = payload;
       
     } catch {
-      Logger.log("toknt : ",token)
+      
       throw new UnauthorizedException();
     }
     return true;

@@ -11,7 +11,7 @@ import configuration from './configuration/configuration';
 
 import { ConversationController } from './conversation/conversation.controller';
 import { ConversationService } from './conversation/conversation.service';
-import { ConversationSchema } from './schemas/conversation.schema';
+import { ConversationSchema } from './messagerie/schemas/conversation.schema';
 import { ChatEventGateway } from './chat-event/chat-event.gateway';
 @Module({
   imports: [
