@@ -57,15 +57,20 @@ export class MailerService {
 
   async sendCode(to: string) {
 
+    
+    // let code;
+    // this._userService.generateRandomNumber(10).subscribe((num)=>{
+    //   code = num
+    //   console.log("Affiche num :",num)
+    // })  
     const payload = { to };
-    // this._userService.generateRandomNumber(10).
-		const accessToken = await this.jwtService.signAsync(payload, {
+		let accessToken = await this.jwtService.signAsync(payload, {
 			secret: jwtConstants.secret,
-			expiresIn: '15m', // Expire dans 15 minutes
+			expiresIn: '10m', // Expire dans 15 minutes
 		  });
     const subject: string = 'Modification password';
     const text = `Voici le lien de récupération de mot de passe ` 
-    const html: string = htmlCode(1010);
+    const html: string = htmlCode(`http://localhost:8100/first-connexion/password/${accessToken}/`);
     const mailOptions = {
       from: process.env.MAILER, // L'adresse e-mail de l'expéditeur
       to, // Le destinataire

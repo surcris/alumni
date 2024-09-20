@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GiveCodeService } from '../../services/give-code.service';
 import { take } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { MailerService } from 'src/app/core/services/mailer.service';
 
 @Component({
   selector: 'app-give-code',
@@ -20,9 +21,13 @@ export class GiveCodeComponent  implements OnInit {
     private _router: Router,
     private _service: GiveCodeService,
     private _toastController: ToastController,
+    private _mailerService: MailerService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    console.log("ddd")
+    
     this.generateCode()
     this.form = this._formBuilder.group({
       Code: [
@@ -48,23 +53,28 @@ export class GiveCodeComponent  implements OnInit {
   }
 
   async onSubmit(): Promise<void> { 
-    if (this.code === parseInt(this.form.value.Code)){
-      this._router.navigate(['first-connexion/password'])
-    }else {
-      const toast = await this._toastController.create({
-        message: "Vous avez saisi un mauvais code",
-        duration: 10000,
-        position: 'top',
-        buttons: [
-          {
-            text: 'Réessayer',
-          }
-        ]
-      })
-      toast.present().then(() => null)
-      toast.onWillDismiss()
-        .then(() => this.form.reset())
-    }
+    const verificationCode = this.route.snapshot.paramMap.get('code');
+    this._mailerService.sendCode().subscribe(async (responce)=>{
+      console.log(responce)
+      if (responce.body.res==true){
+        this._router.navigate(['first-connexion/password/'+responce.body.token])
+      }else {
+        const toast = await this._toastController.create({
+          message: "Vous avez saisi un mauvais code",
+          duration: 10000,
+          position: 'top',
+          buttons: [
+            {
+              text: 'Réessayer',
+            }
+          ]
+        })
+        toast.present().then(() => null)
+        toast.onWillDismiss()
+          .then(() => this.form.reset())
+      }
+    })
+    
   }
 
 }

@@ -9,6 +9,8 @@ const routes: Routes = [
   {path: '',   redirectTo: 'email', pathMatch: 'full' },
   {path: 'email',component: GiveEmailComponent},
   {path: 'code', component: GiveCodeComponent },
+  {path: 'code/',data: { name: 'CodeVerification' } , component: GiveCodeComponent },
+  {path: 'password/:code', component: ChangePasswordComponent },
   {path: 'password', component: ChangePasswordComponent },
 ];
 

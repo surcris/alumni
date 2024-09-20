@@ -33,8 +33,14 @@ export class MailerController {
 
 	@Post('sendCode')
 	async sendCodeByMail(@Body() body: any) {
-		const { to, html } = body;
-		return this.mailerService.sendCode(to);
+		const { email } = body;
+
+		if (!email) {
+			return { message: 'Email non fourni' };  // Gérer l'erreur si l'email est manquant
+		}
+		console.log("La")
+		// const { to, html } = body;
+		return this.mailerService.sendCode(email);
 	}
 	@Patch('/recup/:token')
 	async changePassword(
@@ -46,7 +52,35 @@ export class MailerController {
 			const verif = await this._jwtService.verifyAsync(tokenParam, {
 				secret: jwtConstants.secret
 			});
-			const objectResponse = this.userService.changePassword({email:"toto@poe.aelion.fr",password:body.password,});
+			const objectResponse = this.userService.changePassword({email:"niel.abdallah@poe.aelion.fr",password:body.password,});
+			return objectResponse.pipe(take(1)).subscribe({
+				next: (response: any) => {
+					if (response.status === 204) {
+						resp.status(HttpStatus.NO_CONTENT).send();
+					} else {
+						resp.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+					}
+				}
+			});
+		} catch {
+			throw new UnauthorizedException();
+		}
+
+		// const { to, html } = body;
+		// return this.mailerService.sendMail(to);
+	}
+
+	@Patch('/recupCode/:token')
+	async changePasswordCode(
+		@Param('token') tokenParam: string,
+		@Body() body: any,
+		@Res() resp: Response
+	) {
+		try {
+			const verif = await this._jwtService.verifyAsync(tokenParam, {
+				secret: jwtConstants.secret
+			});
+			const objectResponse = this.userService.changePassword({email:"niel.abdallah@poe.aelion.fr",password:body.password,});
 			return objectResponse.pipe(take(1)).subscribe({
 				next: (response: any) => {
 					if (response.status === 204) {

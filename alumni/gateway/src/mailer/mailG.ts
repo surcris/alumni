@@ -15,7 +15,7 @@ export const htmlMail = (resetLink:string) =>`
         </div>
 `;
   
-export const htmlCode = (code:number) => `
+export const htmlCode = (code:string) => `
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
   <h2 style="background-color: #007bff; color: white; padding: 20px; text-align: center;">
       Code de première connexion

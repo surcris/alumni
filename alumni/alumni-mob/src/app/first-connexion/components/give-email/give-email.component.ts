@@ -5,6 +5,7 @@ import { GiveEmailService } from '../../services/give-email.service';
 import { Observable, take } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { MailerService } from 'src/app/core/services/mailer.service';
 
 @Component({
   selector: 'app-give-email',
@@ -20,7 +21,8 @@ export class GiveEmailComponent  implements OnInit {
     private _router: Router,
     private _service: GiveEmailService,
     private _toastController: ToastController,
-    private _storage: StorageService
+    private _storage: StorageService,
+    private _mailerService: MailerService
 
   ) { }
 
@@ -43,8 +45,22 @@ export class GiveEmailComponent  implements OnInit {
     ).subscribe({
       next: async (isValidate: boolean) => {
         if (isValidate){
-          this._storage.store('Email', this.form.value.Email)
-          this._router.navigate(['first-connexion/code'])
+          this._mailerService.sendCode().subscribe(async (res)=>{
+            console.log(res)
+            if (res.accepted) {
+              this._storage.store('Email', this.form.value.Email)
+              // this._router.navigate(['first-connexion/code'])
+              const message = "Un email a été envoyer a l'adresse"+res.accepted;
+              const toast = await this._toastController.create({
+                message,
+                duration: 2000,
+                position: 'middle',
+                
+              });
+              await toast.present();
+            }
+          })
+          
         }else {
           const toast = await this._toastController.create({
             message: "Vous avez saisi une mauvaise adresse email ou vous n'êtes pas enregistrer dans le registre de Aelion",
