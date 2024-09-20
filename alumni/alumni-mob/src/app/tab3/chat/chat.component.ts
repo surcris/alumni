@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { InfiniteScrollCustomEvent, ModalController, NavController } from '@ionic/angular';
 import { WsChatService } from 'src/app/core/services/ws-chat-service'; 
 import { SocketMessageType } from '../Dto/socket-message.type'; 
@@ -11,7 +11,7 @@ import { InternType } from 'src/app/core/types/intern/inter-type';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent  implements OnInit {
-
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;  // Accède au conteneur de chat
   public message: string = ''
   public recievedMessages: Array<SocketMessageType> = []
   public sendedMessages: Array<SocketMessageType> = []
@@ -27,18 +27,24 @@ export class ChatComponent  implements OnInit {
     private navCtrl: NavController
   ) { }
 
-  ngOnInit() {
-    this.intern = this._internService.intern!
-
+  ngAfterViewInit() {
+    // this.scrollToBottom()
     this._wsService.receiveMessage()
       .subscribe((filteredMessages: Array<any>) => {
+        this.scrollToBottom()
         this.messages = filteredMessages
       })
   }
+  ngOnInit() {
+    this.intern = this._internService.intern!
+    
+  }
 
   onSend(): void {
+    this.scrollToBottom()
     this._wsService.sendMessage(this.message)
       .subscribe((filteredMessages: Array<any>) => {
+        
         this.message = ''
         this.messages = filteredMessages
       })
@@ -56,4 +62,20 @@ export class ChatComponent  implements OnInit {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
+
+  scrollToBottom(): void {
+    try {
+      
+      const container = this.chatContainer.nativeElement;
+      container.scrollTop = container.scrollHeight; 
+      console.log("Scroll :",container.scrollTop )
+    } catch (err) {
+      console.error('Scroll failed:', err);
+    }
+  }
+
+
+
+
+
 }

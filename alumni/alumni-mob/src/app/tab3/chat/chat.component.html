@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <div class="chat-container">
+  <div class="chat-container" #chatContainer>
       <div 
         [ngClass]="{'chat-message': true, 'received': message.direction === 'in', 'sent': message.direction === 'out'}"
         *ngFor="let message of messages"

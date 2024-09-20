@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, interval, map, merge, Observable, of, tap } from 'rxjs';
 import { InternService } from './intern.service';
 import { StorageService } from './storage.service';
 import { ChatMessageType } from '../types/chat/chat-message.type'; 
@@ -73,14 +73,52 @@ export class WsChatService {
   }
 
   receiveMessage(): Observable<any> {
-    return this._socket.fromEvent('message')
+
+// Observable pour simuler des messages toutes les 3 secondes
+const simulatedMessages$ = interval(3000).pipe(
+  map(() => {
+    const simulatedMessage = this.generateSimulatedMessage();
+    console.log(`Simulated message received: ${JSON.stringify(simulatedMessage)}`);
+    this._messages.push({ ...simulatedMessage, direction: 'in' });
+    return this._updateMessages();
+  })
+);
+
+
+
+
+ // Observable pour les messages reçus via le WebSocket
+ const socketMessages$ =  this._socket.fromEvent('message')
       .pipe(
         map((payload: any) => {
           this._messages.push({...payload, direction: 'in'})
           return this._updateMessages()
         })
       )
+
+  // Fusionner les messages du WebSocket et les messages simulés
+  return merge(socketMessages$, simulatedMessages$);
+
   }
+
+
+  generateSimulatedMessage(): any {
+    // Simule un nouveau message avec un contenu aléatoire
+    const randomId = Math.floor(Math.random() * 1000);
+    return {
+      id: randomId,
+      emitter: this._internService.intern?.id,
+      recipient: this._emitterId,  // L'utilisateur connecté
+      content: `Simulated message ${randomId}`,
+      datetime: new Date()  // Date actuelle
+    };
+  }
+
+
+
+
+  
+  
 
   sendIdentity(message: any): Observable<any> {
     return this._socket.emit('userId:Identity', message)
