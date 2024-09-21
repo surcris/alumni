@@ -33,7 +33,7 @@ export class ChatEventGateway
     // Find the recipient
     // const recipientSocket: any = this.userToSocket(data.recipient);
 
-    this.conversationService.create(data)
+    // this.conversationService.create(data)
 
     const payload: any = {
       datetime: new Date(),

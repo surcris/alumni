@@ -44,7 +44,7 @@ export class ConversationController {
    @Post("/socket/getMy")
     ifConnected(@Body() userId:any):Boolean{
       
-      Logger.log("La")
+      
       return this._chatService.userToSocket(userId.id) ? true : false;
     }
 }
