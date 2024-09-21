@@ -1,0 +1,177 @@
+
+
+ion-content {
+    --ion-background-color: #ffffff;
+    padding: 16px;
+  
+    ion-card {
+      --ion-background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
+  
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+  
+      ion-card-header {
+        background: linear-gradient(135deg, #ff8c00 0%, #ffca28 100%);
+        color: white;
+        border-radius: 5px 5px 0 0;
+        padding: 5px;
+        
+        ion-avatar {
+          width: 100px;
+          height: 100px;
+          img {
+              width: 100%;
+              height: 100%;
+                 }
+        }
+      }
+  
+      ion-card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+  
+      ion-card-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+  
+      ion-card-content {
+        padding: 16px;
+  
+        p {
+          margin: 8px 0;
+          font-size: 1rem;
+          color: #333;
+        }
+  
+        strong {
+          color: #ff8c00;
+        }
+      }
+    }
+  
+    .skills {
+      h3 {
+        font-size: 1.3rem;
+        padding: 16px;
+        color: #ff8c00;
+        margin-bottom: 10px;
+      }
+  
+      div {
+        display: flex;
+        padding: 16px;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        .stars {
+          display: inline-block;
+        }
+        
+        .star {
+          width: 24px;
+          height: 24px;
+          fill: none;
+          stroke: #ffcc00;
+          stroke-width: 2;
+        }
+        
+        .star .full {
+          fill: #ffcc00;
+        }
+        
+        .star.filled .full {
+          fill: #ffcc00; /* Pleine étoile */
+        }
+        
+        .star.empty .full {
+          fill: none; /* Vide étoile */
+        }
+        
+        .star.half-filled .full {
+          fill: url(#half); /* Remplissage partiel avec un gradient */
+        }
+        
+        /* Ajoutez ce style pour gérer les étoiles partiellement remplies */
+        .star.half-filled {
+          position: relative;
+        }
+        
+        .star.half-filled .full {
+          fill: none; /* Cache l'étoile entière */
+        }
+        
+        .star.half-filled:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 50%;
+          height: 100%;
+          background-color: #ffcc00; /* Remplissage de 50% */
+          clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+          z-index: 1;
+        }
+        .profile {
+          margin-bottom: 20px;
+        }
+  
+        .endorsements {
+          font-size: 0.9rem;
+          color: #ff8c00;
+        }
+      }
+    }
+  
+    .posts {
+      h3 {
+        font-size: 1.3rem;
+        padding: 16px;
+        color: #ff8c00;
+        margin-bottom: 10px;
+      }
+  
+      .post {
+        background-color: #fff;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        margin-bottom: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+  
+        p {
+          margin: 5px 0;
+          font-size: 1rem;
+          color: #333;
+  
+          &:first-child {
+            font-weight: bold;
+          }
+  
+          &:last-child {
+            color: #ff8c00;
+          }
+        }
+      }
+    }
+  
+    ng-template {
+      p {
+        font-style: italic;
+        color: #999;
+      }
+    }
+  }
+  

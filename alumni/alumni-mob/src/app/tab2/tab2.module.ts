@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { AccountHomeComponent } from './components/account-home.component';
 import { InternComponent } from '../tab1/components/intern/intern.component';
+import { ProfilePageModule } from '../profile/profile.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { InternComponent } from '../tab1/components/intern/intern.component';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab2PageRoutingModule
+    Tab2PageRoutingModule, ProfilePageModule
   ],
   declarations: [Tab2Page, AccountHomeComponent,InternComponent]
 })
