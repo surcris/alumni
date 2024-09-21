@@ -8,13 +8,15 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { ProfileComponentComponent } from './component/profile-component.component';
+import { Tab1PageModule } from '../tab1/tab1.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    Tab1PageModule
   ],
   declarations: [ProfilePage,ProfileComponentComponent],
   exports : [ProfilePage, ProfileComponentComponent]

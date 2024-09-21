@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, NavParams } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, NavParams } from '@ionic/angular';
 import { take } from 'rxjs';
 import { InternDTO } from 'src/app/core/internDto/internDto';
 import { InternService } from 'src/app/core/services/intern.service';
@@ -13,7 +13,7 @@ import { PostTransfo } from 'src/app/core/transformers/post-transfo';
   templateUrl: './profile-component.component.html',
   styleUrls: ['./profile-component.component.scss'],
 })
-export class ProfileComponentComponent  implements OnInit {
+export class ProfileComponentComponent implements OnInit {
 
   intern: InternDTO | undefined;
   posts: PostTransfo[] = [];
@@ -27,7 +27,7 @@ export class ProfileComponentComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.intern){
+    if (!this.intern) {
       this.retriveUserInfos()
       this.retriveAllUserPost()
     } else {
@@ -85,4 +85,19 @@ export class ProfileComponentComponent  implements OnInit {
   confirm() {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
+
+  // Function to check if the media is an image
+  isImage(media: string | undefined): boolean {
+    if (media)
+      return /\.(jpg|jpeg|png|gif)$/i.test(media);
+    return false
+  }
+
+  // Function to check if the media is a video
+  isVideo(media: string | undefined): boolean {
+    if (media)
+      return /\.(mp4|webm|ogg)$/i.test(media);
+    return false
+  }
+
 }

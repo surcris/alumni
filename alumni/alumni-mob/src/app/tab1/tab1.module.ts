@@ -23,6 +23,7 @@ import { TypePostIconPipe } from '../core/pipes/post/type-post-icon-pipe';
     
     
   ],
-  declarations: [Tab1Page, PostComponent, PostContentComponent, HeaderPostComponent, ToolsBarComponent, TypePostIconPipe]
+  declarations: [Tab1Page, PostComponent, PostContentComponent, HeaderPostComponent, ToolsBarComponent, TypePostIconPipe],
+  exports: [PostContentComponent, ToolsBarComponent, TypePostIconPipe]
 })
 export class Tab1PageModule {}
