@@ -17,8 +17,6 @@ export class ProfileComponentComponent  implements OnInit {
 
   intern: InternDTO | undefined;
   posts: PostTransfo[] = [];
-  foo: any;
-  bar: any;
 
   constructor(
     private internService: InternService,

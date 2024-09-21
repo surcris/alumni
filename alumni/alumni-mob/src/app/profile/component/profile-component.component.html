@@ -1,9 +1,11 @@
- <!-- <ion-header [translucent]="true" color=" warning">
+<ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-icon name="caret-back-outline"></ion-icon>
+      <ion-button color="strong" [strong]="true" (click)="cancel()">Back</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-  -->
 
   <ion-content [fullscreen]="true">
     <ion-card *ngIf="intern">

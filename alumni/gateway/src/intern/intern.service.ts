@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InternType } from './models/intern.type';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
@@ -18,7 +18,6 @@ export class InternService {
 	}
 
 	findOneByEmail(email: string): Observable<InternType> {
-		Logger.log("findOneByEmail 2")
 		const pattern = { cmd: 'findOneByEmail' };
 		return this._client.send<InternType>(pattern, { email });
 	}

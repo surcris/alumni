@@ -165,9 +165,9 @@ export class PostController {
 
 
   @UseGuards(AuthGuard)
-  @Get('user/allPosts')
-  findPostsByAuthor(@Param() internId: number, @Req() req:Request,  @Res() res: Response) {
-    const userId = internId? internId : req['user'].infoU.id
+  @Get('user/allPosts/:internId')
+  findPostsByAuthor(@Param('internId') internId: string, @Req() req:Request,  @Res() res: Response) {
+    const userId = internId != 'undefined' ? internId : req['user'].infoU.id
 	Logger.log("internID: "+JSON.stringify(internId))
 	Logger.log("userid: "+JSON.stringify(userId))
 	this.postService.findPostsByAuthor(userId).subscribe({

@@ -220,7 +220,8 @@ export class PostService implements Crud {
       order: { postedAt: 'DESC' },
     });
     if (!postData || postData.length === 0)
-      throw new NotFoundException('Posts for this author not found!');
+      // throw new NotFoundException('Posts for this author not found!');
+      return [] 
     return postData
   }
 

@@ -53,11 +53,9 @@ export class PostService {
         return 0;
       });
     }
+
     findPostsByAuthor(internId?: number): Observable<Array<PostTransfo>> {
-      const options = internId ?
-      { params: new HttpParams().set('internId', internId) } : undefined;
-      return this._httpClient.get<Array<PostTransfo>>(`${this.URI}/user/allPosts`, options
-      ).pipe(
+      return this._httpClient.get<Array<PostTransfo>>(`${this.URI}/user/allPosts/`+internId).pipe(
         map(data => plainToInstance(PostTransfo, data))
       );
       
