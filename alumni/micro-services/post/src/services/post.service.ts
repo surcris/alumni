@@ -67,7 +67,8 @@ export class PostService implements Crud {
       take: 50,
     });
     if (!postData || postData.length == 0) {
-      throw new NotFoundException('Posts data not found!');
+      // throw new NotFoundException('Posts data not found!');
+      return []
     }
     const updatedPostData = await Promise.all(
       postData.map(async (post) => {

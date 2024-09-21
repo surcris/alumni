@@ -3,7 +3,7 @@ import { InterfaceIntern } from './intern.interface';
 import { InternDto } from 'src/dtos/intern.dto';
 
 export interface Crud {
-  findAll(): Promise<InterfaceIntern[]>;
+  findAll(userId: number): Promise<InterfaceIntern[]>;
   findOne(internId: string): Promise<InterfaceIntern>;
   add(intern: InternDto): Promise<InterfaceIntern>;
   update(internId: string, updateInternDto: UpdateInternDto): Promise<string>;

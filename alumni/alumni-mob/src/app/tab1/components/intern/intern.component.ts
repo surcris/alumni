@@ -46,46 +46,35 @@ export class InternComponent  implements OnInit {
 
 
     this.internService.findAll().subscribe((data: InternDTO[]) => { 
-      // 
-      // Stocker les internes dans la variable locale
       this.interns = data;
-      console.log("init :",this.interns);
-      // Initialiser la visibilité des détails pour chaque interne avec `false`
       this.detailsVisibility = new Array(this.interns.length).fill(false);
       this.userConnected = new Array(this.interns.length).fill(false);
-
-
       
       this._mesService.connectedUsers$.subscribe((connectedUsers: string[]) => {
         this.whosConnected = connectedUsers;
         this.updateDetailsVisibility();
       });
-      // Afficher les internes dans la console pour déboguer
-      // console.log("SS",this.interns,this._mesService.whosConnected);
     });
    }
+
    viewDetails(index: number): void {
     this._mesService.send("hello","Test1","Test2")
      this.detailsVisibility[index] = !this.detailsVisibility[index];
-    // console.log("Who : ",this._mesService.whosConnected)
-    
   }
 
   openChat(intern: InternDTO): void {
-
-    //alert(`Ouverture du chat pour ${intern.firstname} ${intern.lastname}`);
     this.router
-      .navigate(['chat'])  // Navigation vers la route 'tabs/tab3/chat/:id'
-      .then(() => console.log('Routing complete'));  // Log dans la console après la navigation
+      .navigate(['chat'])  
+      .then(() => console.log('Routing complete')); 
   }
 
   updateDetailsVisibility(): void {
     if (this.interns && this.whosConnected) {
       this.interns.forEach((intern: InternDTO, index: number) => {
         if (intern.id && this.whosConnected.includes(intern.id)) {
-          this.userConnected[index] = true; // Rendre visible les détails si l'utilisateur est connecté
+          this.userConnected[index] = true; 
         } else {
-          this.userConnected[index] = false; // Masquer sinon
+          this.userConnected[index] = false; 
         }
       });
     }

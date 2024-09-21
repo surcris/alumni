@@ -50,7 +50,7 @@ export class PostController {
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {
-					if (response) {
+					if (response.length > 0) {
 						res.status(200).send(response);
 					} else {
 						res.status(404).send();

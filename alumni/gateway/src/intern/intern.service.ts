@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 export class InternService {
 	constructor(@Inject('INTERN') private _client: ClientProxy) {}
 
-	findAll(): Observable<Array<InternType>> {
+	findAll(userId: number): Observable<Array<InternType>> {
 		const pattern = { cmd: 'findAll' };
-		return this._client.send<InternType[]>(pattern, {});
+		return this._client.send<InternType[]>(pattern, {userId});
 	}
 
 	findOne(id: string): Observable<InternType> {

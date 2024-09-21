@@ -23,9 +23,9 @@ export class InternController {
 
 	@UseGuards(AuthGuard)
 	@Get()
-	findAll(@Res() res: Response) {
+	findAll(@Req() req: Request, @Res() res: Response) {
 		this._service
-			.findAll()
+			.findAll(req['user'].infoU.id)
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {
