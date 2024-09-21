@@ -11,6 +11,8 @@ import { InternDTO } from 'src/app/core/internDto/internDto';
 import { Router } from '@angular/router';
 import { MessagerieService } from 'src/app/core/services/messagerie.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ProfileComponentComponent } from 'src/app/profile/component/profile-component.component';
+import { SharedSubjectService } from 'src/app/core/services/shared-subject.service';
 
 
 // short resume at the begining of the component and more description before the method
@@ -36,6 +38,7 @@ export class InternComponent  implements OnInit {
   constructor(private internService: InternService,
     private router: Router,
     private _mesService: MessagerieService,
+    private modalCtrl: ModalController,
   ) {} 
   
   ngOnInit(): void { 
@@ -86,6 +89,16 @@ export class InternComponent  implements OnInit {
         }
       });
     }
+  }
+
+  async openModal(intern: InternDTO) {
+    const modal = await this.modalCtrl.create({
+      component: ProfileComponentComponent,
+      componentProps: {
+        intern: intern, // Pass the intern object
+      }
+    });
+    modal.present();
   }
  } 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { PostTransfo } from '../transformers/post-transfo';
@@ -53,9 +53,13 @@ export class PostService {
         return 0;
       });
     }
-    findPostsByAuthor(): Observable<Array<PostTransfo>> {
-      return this._httpClient.get<Array<PostTransfo>>(this.URI +`/user/allPosts`).pipe(
+    findPostsByAuthor(internId?: number): Observable<Array<PostTransfo>> {
+      const options = internId ?
+      { params: new HttpParams().set('internId', internId) } : undefined;
+      return this._httpClient.get<Array<PostTransfo>>(`${this.URI}/user/allPosts`, options
+      ).pipe(
         map(data => plainToInstance(PostTransfo, data))
       );
+      
     }
 }

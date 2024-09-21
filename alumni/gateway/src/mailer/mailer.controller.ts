@@ -38,7 +38,6 @@ export class MailerController {
 		if (!email) {
 			return { message: 'Email non fourni' };  // Gérer l'erreur si l'email est manquant
 		}
-		console.log("La")
 		// const { to, html } = body;
 		return this.mailerService.sendCode(email);
 	}
@@ -52,7 +51,7 @@ export class MailerController {
 			const verif = await this._jwtService.verifyAsync(tokenParam, {
 				secret: jwtConstants.secret
 			});
-			const objectResponse = this.userService.changePassword({email:"niel.abdallah@poe.aelion.fr",password:body.password,});
+			const objectResponse = this.userService.changePassword({email:"thomas_bernard@yahoo.fr",password:body.password,});
 			return objectResponse.pipe(take(1)).subscribe({
 				next: (response: any) => {
 					if (response.status === 204) {

@@ -15,7 +15,7 @@ export class MailerService {
   ) { }
 
   public sendCode() {
-    const email = "niel.abdallah@poe.aelion.fr"
+    const email = "chaimae.mehdaoui@poe.aelion.fr"
     // const email = this._storage.retrieve('Email');
     console.log("Send")
     return this._httpClient.post<any>(this.URI + '/sendCode', { email })
