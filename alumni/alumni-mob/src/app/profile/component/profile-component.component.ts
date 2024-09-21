@@ -17,6 +17,7 @@ export class ProfileComponentComponent  implements OnInit {
 
   intern: InternDTO | undefined;
   posts: PostTransfo[] = [];
+  isModalRequest: boolean = false;
 
   constructor(
     private internService: InternService,

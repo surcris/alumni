@@ -21,7 +21,7 @@ import { AdminGuard } from 'src/guards/admin.guard';
 export class InternController {
 	constructor(private _service: InternService) {}
 
-	// @UseGuards(AuthGuard)
+	@UseGuards(AuthGuard)
 	@Get()
 	findAll(@Res() res: Response) {
 		this._service

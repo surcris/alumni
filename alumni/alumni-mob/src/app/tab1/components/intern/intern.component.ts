@@ -95,7 +95,8 @@ export class InternComponent  implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ProfileComponentComponent,
       componentProps: {
-        intern: intern, // Pass the intern object
+        intern: intern,
+        isModalRequest: true
       }
     });
     modal.present();
