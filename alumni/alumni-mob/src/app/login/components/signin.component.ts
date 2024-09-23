@@ -65,9 +65,11 @@ export class SigninComponent implements OnInit {
   
           // Redirection après authentification réussie
           if (this.desiredUrl) {
-            this._router.navigateByUrl(this.desiredUrl);
+            //if the cookie is persistent this code: { queryParams: { refresh: true } can be deleted
+            this._router.navigate([this.desiredUrl], { queryParams: { refresh: true } });
           } else {
-            this._router.navigateByUrl('tabs/tab1');
+            //if the cookie is persistent this code: { queryParams: { refresh: true } can be deleted
+            this._router.navigate(['tabs/tab1'], { queryParams: { refresh: true } });
           }
   
         } else {
@@ -78,7 +80,7 @@ export class SigninComponent implements OnInit {
       },
       error: async (error) => {
         // Gestion d'une erreur survenue pendant l'appel au service
-        await this.displayErrorToast(`Erreur: ${error.message}`);
+        await this.displayErrorToast('Échec de l\'authentification. Veuillez réessayer.');
         this.form.reset();
       }
     });

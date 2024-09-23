@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { InfiniteScrollCustomEvent, ToastController } from '@ionic/angular';
+import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InfiniteScrollCustomEvent} from '@ionic/angular';
 import { IonInfiniteScrollCustomEvent } from '@ionic/core';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 import { PostService } from 'src/app/core/services/post.service';
@@ -24,11 +25,9 @@ export class PostComponent implements OnInit{
   private _post$: BehaviorSubject<any> = this._service.posts$
 
   constructor(
-    // private _serviceIntern: InternService, // Dependency Injection
     private _service: PostService,
-    private toastController: ToastController
-  ){
-  }
+    private _route: ActivatedRoute
+  ){}
 
   ngOnInit(): void {
     this.page = 0
@@ -38,6 +37,12 @@ export class PostComponent implements OnInit{
         this.posts.unshift(newPost)
       }
     })
+    //if the cookie is persistent this code can be deleted
+    this._route.queryParams.subscribe(params => {
+      if (params['refresh']) {
+        this.retriveAllPost()
+      }
+    });
   }
 
 
@@ -75,3 +80,19 @@ export class PostComponent implements OnInit{
     }
 
 }
+function onIonViewDidEnter(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
+function onIonViewDidLeave(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
+function onIonViewWillEnter(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
+function onIonViewWillLeave(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
