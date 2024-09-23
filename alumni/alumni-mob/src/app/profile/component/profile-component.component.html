@@ -27,7 +27,25 @@
         <p><ion-icon name="school-outline" style="margin-right: 8px;"></ion-icon><strong>POE :</strong> {{ intern.poe?.name }}</p>
         <p><ion-icon name="reader-outline" style="margin-right: 8px;"></ion-icon><strong>Description :</strong> {{ intern.description }}</p>
       </ion-card-content>
-  
+      <ion-card-content *ngIf="isEditMode">
+        <!-- Formulaire d'édition en mode édition -->
+        <ion-item>
+          <ion-label>Occupation</ion-label>
+          <ion-input [(ngModel)]="intern.occupation"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email</ion-label>
+          <ion-input [(ngModel)]="intern.emails"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Phone Number</ion-label>
+          <ion-input [(ngModel)]="intern.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-textarea [(ngModel)]="intern.description"></ion-textarea>
+        </ion-item>
+      </ion-card-content>
       <ion-footer>
         <ion-buttons slot="start">
           <ion-button *ngIf="!isEditMode" color="primary" (click)="enableEditMode()">
