@@ -152,9 +152,9 @@ export class PostController {
 			.subscribe({
 				next: (response: any) => {
 					if (response) {
-						res.status(200).send(response);
+						res.status(200).send(true);
 					} else {
-						res.status(404).send();
+						res.status(404).send(false);
 					}
 				},
 				error: (error: any) => {

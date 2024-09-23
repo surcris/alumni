@@ -76,6 +76,12 @@
       <h3>Posts</h3>
       <ng-container *ngFor="let post of posts">
         <ion-card>
+          <ion-header>
+            <ion-toolbar>
+              <!-- <ion-button slot="start">Edit</ion-button> -->
+              <ion-button slot="end" (click)="presentAlert(post.id!)">Delete</ion-button>
+            </ion-toolbar>
+          </ion-header>
           <!-- Check if the post.media is an image (jpg, jpeg, png, gif) -->
           <div *ngIf="isImage(post.media)">
             <img [src]="'http://localhost:3000/uploads/' + post.media" alt="Media" />

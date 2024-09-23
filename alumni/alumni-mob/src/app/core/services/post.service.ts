@@ -58,6 +58,9 @@ export class PostService {
       return this._httpClient.get<Array<PostTransfo>>(`${this.URI}/user/allPosts/`+internId).pipe(
         map(data => plainToInstance(PostTransfo, data))
       );
-      
+    }
+
+    deletePost(postId: string) {
+      return this._httpClient.delete<boolean>(`${this.URI}/${postId}`);
     }
 }

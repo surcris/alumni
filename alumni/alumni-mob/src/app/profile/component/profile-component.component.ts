@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, ModalController, NavParams, ToastController } from '@ionic/angular';
-import { take } from 'rxjs';
+import { AlertController, InfiniteScrollCustomEvent, ModalController, NavParams, ToastController } from '@ionic/angular';
+import { BehaviorSubject, take } from 'rxjs';
 import { InternDTO } from 'src/app/core/internDto/internDto';
 import { InternService } from 'src/app/core/services/intern.service';
 import { PostService } from 'src/app/core/services/post.service';
@@ -18,13 +18,14 @@ export class ProfileComponentComponent implements OnInit {
   intern: InternDTO | undefined;
   posts: PostTransfo[] = [];
   isModalRequest: boolean = false;
+  private _post$: BehaviorSubject<any> = this.postService.posts$
 
   constructor(
     private internService: InternService,
     private postService: PostService,
     private router: Router,
     private modalCtrl: ModalController,
-    private toastController: ToastController
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -34,6 +35,11 @@ export class ProfileComponentComponent implements OnInit {
     } else {
       this.retriveAllUserPost(this.intern.userId)
     }
+    this._post$.subscribe((newPost: any) => {
+      if (newPost) {
+        this.posts.unshift(newPost)
+      }
+    })
   }
 
 
@@ -101,4 +107,38 @@ export class ProfileComponentComponent implements OnInit {
     return false
   }
 
+  deletePost(postId: string){
+    this.postService.deletePost(postId).pipe(take(1)).subscribe({
+      next: (resp) => {
+        if (resp){
+          this.posts = this.posts.filter(elem => elem.id !== postId);
+        }
+      },
+      error: (error: any) => { },
+      complete: () => { }
+    })
+  }
+
+  async presentAlert(postId: string) {
+    const alert = await this.alertController.create({
+      header: 'Are you Sure you want to delete ?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            this.deletePost(postId)
+          },
+        },
+      ]
+    });
+
+    await alert.present();
+  }
+
+  
 }
