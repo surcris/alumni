@@ -76,7 +76,7 @@
       <h3>Posts</h3>
       <ng-container *ngFor="let post of posts">
         <ion-card>
-          <ion-header>
+          <ion-header *ngIf="!isModalRequest">
             <ion-toolbar>
               <!-- <ion-button slot="start">Edit</ion-button> -->
               <ion-button slot="end" (click)="presentAlert(post.id!)">Delete</ion-button>
