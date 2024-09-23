@@ -10,16 +10,15 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label>Titre</ion-label>
-    <ion-input [(ngModel)]="title" placeholder="Ajoutez un titre"></ion-input>
-  </ion-item>
-  <ion-item>
     <ion-textarea [(ngModel)]="postContent" rows="3" placeholder="Quoi de neuf ?"></ion-textarea>
   </ion-item>
+  <div class="file-upload-container">
+  <input type="file" id="file-upload" class="file-upload" (change)="onFileSelected($event)" style="display: none;">
   <input type="file" class="file-upload" (change)="onFileSelected($event)">
+</div>
   <ion-item>
     <ion-label>Type de post</ion-label>
-    <ion-select [(ngModel)]="typepost">
+    <ion-select [(ngModel)]="typepost" interface="action-sheet">
       <ion-select-option *ngFor="let type of listPostType" [value]="type">
         {{ type }}
       </ion-select-option>
@@ -27,4 +26,6 @@
   </ion-item>
   <ion-button [disabled]="!isFormValid()" expand="full" (click)="addPost()">Publier</ion-button> 
 </ion-content> 
+
+
 

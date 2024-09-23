@@ -93,8 +93,15 @@ export class AddPostComponent implements OnInit {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0]; // Récupérer le fichier sélectionné
   }
+  triggerFileUpload() {
+    const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+    fileInput.click();  // Simule un clic sur l'input
+  }
 
   isFormValid(): boolean {
     return this.postContent.trim() !== '' && this.typepost != undefined;
   }
+
+  
 }
+

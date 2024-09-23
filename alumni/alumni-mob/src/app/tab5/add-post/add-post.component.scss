@@ -1,0 +1,115 @@
+// ion-header {
+//     --background: #f8f9fa;
+//     border-bottom: 1px solid #e9ecef;
+//   }
+//   ion-toolbar {
+//     --background: #0e0e0e00;
+//     --color: #fff;
+//     padding: 0 15px;
+//     font-weight: bold;
+//   }
+  
+// //   /* Button Styles */
+//   ion-button {
+//     --background: #007bff00;
+//     --border-radius: 8px;
+//     --color: #fff;
+//     --padding-start: 15px;
+//     --padding-end: 15px;
+//     font-size: 16px;
+//     transition: background-color 0.3s ease;
+//   }
+  
+  ion-button:disabled {
+    --background: #6c757d;
+  }
+  
+  ion-button:hover {
+    --background: #0056b3;
+  }
+  
+  ion-button[strong="true"] {
+    --background: #28a745;
+  }
+  
+  /* Form Styles */
+  ion-content {
+    background-color: #f4f4f4;
+    padding: 15px;
+  }
+  
+//   ion-item {
+//     --background: #fff;
+//     margin-bottom: 15px;
+//     border-radius: 10px;
+//     padding: 10px;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//   }
+  
+  ion-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #495057;
+  }
+  
+  ion-input, ion-textarea, ion-select {
+    --padding-start: 1px;
+    --padding-end: 1px;
+    --border-radius: 1px;
+    --background: #ffffff00;
+  }
+  
+  ion-textarea {
+    --min-height: 120px;
+  }
+  
+  input[type="file"] {
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: #ffffff00;
+    color: #495057;
+  }
+  
+  /* File Upload Styling */
+//   input[type="file"]::-webkit-file-upload-button {
+//     padding: 8px 16px;
+//     background-color: #ffa60000;
+//     color: rgba(255, 255, 255, 0);
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//   }
+  
+  input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Publish Button */
+  ion-button[expand="full"] {
+    --background: #FFA500;
+    --border-radius: 6px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    --color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  ion-button[expand="full"]:hover {
+    --background: #218838;
+  }
+  .upload-icon {
+    font-size: 32px; /* Taille de l'icône (32px, 48px, etc. selon tes besoins) */
+    cursor: pointer; /* Indicateur visuel que l'icône est cliquable */
+    color: #007bff;  /* Changer la couleur si nécessaire */
+  }
+  
+  .upload-icon:hover {
+    color: #0056b3;  /* Changer la couleur lors du survol */
+  }
+  
