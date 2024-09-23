@@ -54,11 +54,9 @@ export class InternService {
       })
     )
   }
-  // public findById(id: string): Observable<InternType> {
-  //   return this._httpClient.get<InternType>(`${this.URI}/${id}`);
-  // }
-  // public getInternId(): void {
-  //   const getId = this.findAll()
+  public findOne(id: string): Observable<InternType> {
+    return this._httpClient.get<InternType>(`${this.URI}/findOne/${id}`);
+  }
 
   set intern(intern: any) {
     this._intern = intern

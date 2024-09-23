@@ -16,7 +16,8 @@ import { Tab1PageModule } from '../tab1/tab1.module';
     FormsModule,
     IonicModule,
     ProfilePageRoutingModule,
-    Tab1PageModule
+    Tab1PageModule,
+
   ],
   declarations: [ProfilePage,ProfileComponentComponent],
   exports : [ProfilePage, ProfileComponentComponent]

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, ModalController, NavParams } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, NavParams, ToastController } from '@ionic/angular';
 import { take } from 'rxjs';
 import { InternDTO } from 'src/app/core/internDto/internDto';
 import { InternService } from 'src/app/core/services/intern.service';
@@ -24,6 +24,7 @@ export class ProfileComponentComponent implements OnInit {
     private postService: PostService,
     private router: Router,
     private modalCtrl: ModalController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {

@@ -10,6 +10,34 @@
       <ion-title size="large">Mon compte</ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <app-profile></app-profile>
 </ion-content>
+
+<ion-buttons slot="end" style="position: absolute; top:2%; right: 2%;">
+  <ion-button (click)="setOpen(true)">
+    <ion-icon name="qr-code-outline" color="red"></ion-icon>
+  </ion-button>
+  <ion-button (click)="scan()">
+    <ion-icon name="scan-outline"></ion-icon>
+  </ion-button>
+</ion-buttons> 
+     
+
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Share Profile</ion-title>
+        <ion-buttons slot="start">
+          <ion-button (click)="setOpen(false)">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <qr-code value={{intern?.userId}} 
+         size="300" 
+         errorCorrectionLevel="M" />
+    </ion-content>
+  </ng-template>
+</ion-modal>
