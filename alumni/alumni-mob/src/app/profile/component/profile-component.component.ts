@@ -7,6 +7,7 @@ import { InternService } from 'src/app/core/services/intern.service';
 import { PostService } from 'src/app/core/services/post.service';
 import { SharedSubjectService } from 'src/app/core/services/shared-subject.service';
 import { PostTransfo } from 'src/app/core/transformers/post-transfo';
+import { SkillsType } from 'src/app/core/types/skills/skillType';
 
 @Component({
   selector: 'app-profile-component',
@@ -19,6 +20,8 @@ export class ProfileComponentComponent implements OnInit {
   posts: PostTransfo[] = [];
   isModalRequest: boolean = false;
   private _post$: BehaviorSubject<any> = this.postService.posts$
+  isEditMode: boolean = false;
+
 
   constructor(
     private internService: InternService,
@@ -48,7 +51,7 @@ export class ProfileComponentComponent implements OnInit {
       .subscribe({
         next: (intern: InternDTO) => {
           this.intern = intern
-        },
+        }, 
         error: (error: any) => { },
         complete: () => { }
       })
@@ -64,15 +67,12 @@ export class ProfileComponentComponent implements OnInit {
         complete: () => { }
       })
   }
-  editProfile() {
-    this.router.navigate(['/edit-profile', this.intern?.id]);
-  }
-
+  
   shareProfile() {
     const shareData = {
       title: `${this.intern?.firstname} ${this.intern?.lastname}`,
       text: `Check out ${this.intern?.firstname}'s profile`,
-      url: window.location.href // URL of the current profile page
+      url: window.location.href 
     };
 
     if (navigator.share) {
@@ -83,7 +83,39 @@ export class ProfileComponentComponent implements OnInit {
       console.log('Sharing not supported on this device');
     }
   }
+  enableEditMode() {
+    this.isEditMode = true;  
+  }
 
+  cancelEditMode() {
+    this.isEditMode = false;  
+  }
+
+  saveProfile() {
+    const updateItem: any = {
+      description: this.intern?.description,
+      occupation: this.intern?.occupation,
+      emails: this.intern?.emails,
+      phoneNumber: this.intern?.phoneNumber
+    }
+    const newIntern: any ={
+      id: this.intern?.id,
+      updateItem: updateItem
+    }
+      this.internService.updateProfileData(newIntern).pipe(take(1))
+        .subscribe({
+          next: (resp) => {
+            console.log(resp)
+            this.isEditMode = false;  
+            console.log('Profile updated successfully');
+          },
+          error: (error: any) => {
+            console.error('Error updating profile:', error);
+          }
+        });
+    
+  }
+  
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
@@ -92,6 +124,39 @@ export class ProfileComponentComponent implements OnInit {
   confirm() {
     return this.modalCtrl.dismiss(null, 'confirm');
   }
+
+
+  adjustSkill(skill: SkillsType, level: number) {
+    const updateItem: any = {
+      level: this.intern?.skills,
+    }
+    const newIntern: any ={
+      id: this.intern?.id,
+      updateItem: updateItem
+    }
+    if (level > skill.level) {
+      // Increase skill level
+      skill.level = level; // Upgrade the skill level
+      skill.endorsements += 1; // Optionally, increase endorsements
+    } else if (level < skill.level) {
+      // Decrease skill level
+      skill.level = level; // Downgrade the skill level
+      skill.endorsements = Math.max(0, skill.endorsements - 1); // Decrease endorsements, ensuring it's not negative
+    }
+    
+    this.internService.updateSkill(skill).subscribe(
+      response => {
+        console.log('Skill updated successfully', response);
+      },
+      error => {
+        console.error('Error updating skill', error);
+        // Optionally, handle the error (e.g., show a notification)
+      }
+    );
+
+  }
+  
+
 
   // Function to check if the media is an image
   isImage(media: string | undefined): boolean {

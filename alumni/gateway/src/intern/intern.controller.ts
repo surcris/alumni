@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	Logger,
 	Param,
 	Patch,
 	Post,
@@ -16,6 +17,7 @@ import { take } from 'rxjs';
 import { Response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { UpdateInternDto } from './update.intern.dto';
 
 @Controller('intern')
 export class InternController {
@@ -108,10 +110,11 @@ export class InternController {
 			.pipe(take(1))
 			.subscribe({
 				next: (response: any) => {
+					
 					if (response) {
-						res.status(200).send(response);
+						res.status(200).send(true);
 					} else {
-						res.status(404).send();
+						res.status(404).send(false);
 					}
 				},
 				error: (error: any) => {

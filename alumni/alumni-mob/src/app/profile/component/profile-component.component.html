@@ -9,12 +9,12 @@
 
   <ion-content [fullscreen]="true">
     <ion-card *ngIf="intern">
+      
       <ion-card-header>
         <ion-item>
         <ion-avatar slot="start" >
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
-       
       </ion-item>
       <ion-item> <ion-card-title>{{ intern.firstname }} {{ intern.lastname }}</ion-card-title></ion-item>
       </ion-card-header>
@@ -29,20 +29,25 @@
       </ion-card-content>
   
       <ion-footer>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button color="primary" (click)="editProfile()">
-              <ion-icon name="create-outline" slot="start"></ion-icon>
-              Edit Profile
-            </ion-button>
-            <ion-button color="secondary" (click)="shareProfile()">
-              <ion-icon name="share-social-outline" slot="start"></ion-icon>
-              Share Profile
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button *ngIf="!isEditMode" color="primary" (click)="enableEditMode()">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            Edit Profile
+          </ion-button>
+          <ion-button *ngIf="isEditMode" color="success" (click)="saveProfile()">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            Save
+          </ion-button>
+          <ion-button *ngIf="isEditMode" color="light" (click)="cancelEditMode()">
+            <ion-icon name="close-outline" slot="start"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-buttons>
       </ion-footer>
     </ion-card>
+
+
+
      <div class="skills">
       <h3>Compétences</h3>
   <div *ngFor="let skill of intern?.skills">
@@ -59,6 +64,8 @@
               'half-filled': i - 0.5 === skill.level,
               'empty': i > skill.level
             }"
+
+            (click)="adjustSkill(skill, i)"
           >
             <path
               class="full"

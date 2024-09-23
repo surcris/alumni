@@ -15,4 +15,5 @@ export interface InterfaceIntern extends Document {
   readonly poe: PoeType;
   readonly userId: number;
   readonly skills: SkillsType[];
+  readonly description?: string;
 }

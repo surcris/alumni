@@ -7,6 +7,7 @@ import { InternTransformer } from '../transformers/intern.transformer';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
 import { InternTransfo } from '../transformers/intern-transfo';
+import { SkillsType } from '../types/skills/skillType';
 
 
 @Injectable({
@@ -69,6 +70,17 @@ export class InternService {
 
 
   getProfileData(): Observable<InternDTO> {
-    return this._httpClient.get<InternDTO>(`${this.URI}/profile`);
+    return this._httpClient.get<InternDTO>(`${this.URI}/profile`).pipe(
+      map((intern:any) => {
+        // this._intern = intern
+        return InternTransformer.transform(intern)
+      })
+    );
   }
+  updateProfileData(intern: InternDTO): Observable<boolean> {
+    return this._httpClient.patch<boolean>(`${this.URI}`, intern);
+}
+  updateSkill(skill: SkillsType): Observable<any> {
+  return this._httpClient.patch<any>(`${this.URI}`, skill); 
+}
 }

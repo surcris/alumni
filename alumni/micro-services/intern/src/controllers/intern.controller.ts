@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { InternDto } from 'src/dtos/intern.dto';
 import { InternService } from 'src/services/intern.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -37,6 +37,7 @@ export class InternController {
 
   @MessagePattern({ cmd: 'update' })
   async update(@Payload() payload: any) {
+    Logger.log(JSON.stringify(payload))
     try {
       return await this._service.update(payload.id, payload.updateItem);
     } catch (err) {}

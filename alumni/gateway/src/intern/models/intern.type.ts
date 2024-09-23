@@ -16,4 +16,5 @@ export type InternType = {
 	userId: number;
 	skills: SkillsType;
 	posts?: PostType[];
+	description?: string;
 };

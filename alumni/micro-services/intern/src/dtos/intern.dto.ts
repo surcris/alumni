@@ -3,6 +3,7 @@ import {
   ArrayMinSize,
   ArrayNotEmpty,
   IsArray,
+  isNotEmpty,
   // IsArray,
   IsNotEmpty,
   // IsNumber,
@@ -53,4 +54,8 @@ export class InternDto {
 
   @IsArray()
   readonly skills: Skills[];
+
+  @IsString()
+  @IsNotEmpty()
+  description?: string;
 }
