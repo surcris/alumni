@@ -22,7 +22,7 @@ const routes: Routes = [
     loadChildren: () => import('./first-connexion/first-connexion.module').then( m => m.FirstConnexionPageModule)
   },
   { path: 'messagerie', component: MessagerieComponent },
-  { path: 'chat', component: ChatComponent },
+  { path: 'chat', component: ChatComponent},
   // { path: '', redirectTo: '/messagerie', pathMatch: 'full' },   {
   //   path: 'tab4',
   //   loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)

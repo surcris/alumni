@@ -7,10 +7,10 @@
 
 <ion-content class="ion-padding">
  <ion-list>
-    <ion-item *ngFor="let intern of interns" (click)="openChat(intern)">
+    <ion-item *ngFor="let ci of convAndIntern" (click)="openChat(ci.intern)">
       <ion-label>
-        <h2>{{ intern.firstname }} {{ intern.lastname }}</h2>
-        <p>Last message snippet...OK</p>
+        <h2>{{ ci.intern.firstname }} {{ ci.intern.lastname }}</h2>
+        <p>{{ci.conversation.messages[ci.conversation.messages.length - 1]?.content }}</p>
       </ion-label>
       <ion-icon name="chatbubbles-outline" slot="end"></ion-icon>
     </ion-item>

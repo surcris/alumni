@@ -4,6 +4,7 @@ import { WsChatService } from 'src/app/core/services/ws-chat-service';
 import { SocketMessageType } from '../Dto/socket-message.type'; 
 import { InternService } from 'src/app/core/services/intern.service';
 import { InternType } from 'src/app/core/types/intern/inter-type'; 
+import { MessagerieService } from 'src/app/core/services/messagerie.service';
 
 @Component({
   selector: 'app-chat',
@@ -19,36 +20,36 @@ export class ChatComponent  implements OnInit {
   private _sid: string = ''
   public intern!: InternType
   public messages: Array<any> = []
-
+  roomId!: string;
+  
   constructor(
     private _modalController: ModalController,
-    private _wsService: WsChatService,
+    // private _wsService: WsChatService,
+    private _mesService: MessagerieService,
     private _internService: InternService,
     private navCtrl: NavController
   ) { }
 
   ngAfterViewInit() {
     // this.scrollToBottom()
-    this._wsService.receiveMessage()
-      .subscribe((filteredMessages: Array<any>) => {
-        this.scrollToBottom()
-        this.messages = filteredMessages
-      })
+    // this._wsService.receiveMessage()
+    //   .subscribe((filteredMessages: Array<any>) => {
+    //     this.scrollToBottom()
+    //     this.messages = filteredMessages
+    //   })
   }
   ngOnInit() {
-    this.intern = this._internService.intern!
-    
+    this.intern = history.state.intern
+    // this.roomId = history.state.intern;
+    console.log('Room ID:', this.intern);
   }
 
-  onSend(): void {
-    this.scrollToBottom()
-    this._wsService.sendMessage(this.message)
-      .subscribe((filteredMessages: Array<any>) => {
-        
-        this.message = ''
-        this.messages = filteredMessages
-      })
-    
+  onSend() {
+    // Vérifie si un message et un intern ID existent avant d'envoyer
+    if (this.message && this.intern?.id) {
+      console.log("Send")
+      this._mesService.send(this.message, this.intern.id, this._mesService._id)
+    }
   }
 
   onCancel(): void {
@@ -57,11 +58,11 @@ export class ChatComponent  implements OnInit {
     this.navCtrl.back()
   }
 
-  onIonInfinite(ev: any) {
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
-  }
+  // onIonInfinite(ev: any) {
+  //   setTimeout(() => {
+  //     (ev as InfiniteScrollCustomEvent).target.complete();
+  //   }, 500);
+  // }
 
   scrollToBottom(): void {
     try {

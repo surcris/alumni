@@ -15,7 +15,7 @@
         <p>{{ message.content }}</p>
         <p class="datetime">{{ message.datetime | date: 'dd-MM hh:mm'}}</p>
   </div>
-    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll >
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
         position="top"

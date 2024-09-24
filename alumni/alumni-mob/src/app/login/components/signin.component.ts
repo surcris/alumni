@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { InternService } from 'src/app/core/services/intern.service';
 import { MessagerieService } from 'src/app/core/services/messagerie.service';
-import { MailerService } from 'src/app/core/services/mailer.service';
 
 @Component({
   selector: 'app-signin',

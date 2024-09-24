@@ -49,6 +49,7 @@ export class InternComponent  implements OnInit {
       this.interns = data;
       this.detailsVisibility = new Array(this.interns.length).fill(false);
       this.userConnected = new Array(this.interns.length).fill(false);
+      console.log(this.interns)
       
       this._mesService.connectedUsers$.subscribe((connectedUsers: string[]) => {
         this.whosConnected = connectedUsers;
@@ -57,14 +58,14 @@ export class InternComponent  implements OnInit {
     });
    }
 
-   viewDetails(index: number): void {
-    this._mesService.send("hello","Test1","Test2")
-     this.detailsVisibility[index] = !this.detailsVisibility[index];
+  viewDetails(index: number): void {
+      // this._mesService.send("hello","Test1","Test2")
+      this.detailsVisibility[index] = !this.detailsVisibility[index];
   }
 
   openChat(intern: InternDTO): void {
     this.router
-      .navigate(['chat'])  
+      .navigate(['chat'],{ state: { intern } })  
       .then(() => console.log('Routing complete')); 
   }
 
