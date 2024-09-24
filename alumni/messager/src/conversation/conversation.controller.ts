@@ -25,6 +25,12 @@ export class ConversationController {
     return this.conversationService.findOne(data);
   }
 
+  @Post('findAllMyConv')
+  findAllMyConv(@Body() data: any) {
+    console.log('findAllMyConv')
+    return this.conversationService.findAllMyConv(data);
+  }
+
   @Patch('addMessage')
   update(@Body() data: any) {
     return this.conversationService.update( data);

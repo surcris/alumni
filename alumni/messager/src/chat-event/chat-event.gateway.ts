@@ -29,11 +29,12 @@ export class ChatEventGateway
 
   @SubscribeMessage('message')
   async chat(@MessageBody() data: any): Promise<any> {
+    const { sockets } = this.wsServer.sockets;
     Logger.log(`Received ${JSON.stringify(data)}`);
     // Find the recipient
     // const recipientSocket: any = this.userToSocket(data.recipient);
 
-    // this.conversationService.create(data)
+    this.conversationService.create(data)
 
     const payload: any = {
       datetime: new Date(),
@@ -41,7 +42,7 @@ export class ChatEventGateway
     };
     // Logger.log(`Emit : ${JSON.stringify(payload)} to ${recipientSocket.id}`);
 
-    // recipientSocket.emit('message', payload);
+    this.wsServer.emit('message', payload);
   }
 
   @SubscribeMessage('changeStatut')

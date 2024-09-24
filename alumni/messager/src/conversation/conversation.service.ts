@@ -38,6 +38,7 @@ export class ConversationService {
         userIdDest: dataReceive.userDest,
         userIdExpe: dataReceive.userExp,
         messages: [newMessage],
+        statut: "non lu"
       });
       return newConversation;
     }
@@ -58,6 +59,17 @@ export class ConversationService {
         // recherche A&B ou B&A
         {userIdDest: dataReceive.userDest,userIdExpe: dataReceive.userExp},
         {userIdDest: dataReceive.userExp,userIdExpe: dataReceive.userDest}
+      ]
+    });
+    
+    return newConversation
+  }
+  async findAllMyConv(dataReceive: any) {
+    const newConversation = await this.conversationModel.find({
+      $or:[
+        // recherche A ou B
+        {userIdDest: dataReceive.userId},
+        {userIdExpe: dataReceive.userId}
       ]
     });
     
