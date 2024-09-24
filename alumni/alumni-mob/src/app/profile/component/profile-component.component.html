@@ -47,7 +47,7 @@
         </ion-item>
       </ion-card-content>
       <ion-footer>
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" *ngIf="!isModalRequest">
           <ion-button *ngIf="!isEditMode" color="primary" (click)="enableEditMode()">
             <ion-icon name="create-outline" slot="start"></ion-icon>
             Edit Profile
